@@ -28,7 +28,6 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	 * 
 	 * @see cn.live.service.BaseService#save(java.lang.Object)
 	 */
-	@Override
 	public void save(T t) {
 		baseDao.save(t);
 	}
@@ -44,7 +43,6 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	 * cn.live.service.BaseService#findOne(org.springframework.data.mongodb.
 	 * core.query.Query)
 	 */
-	@Override
 	public T findOne(Query query, Class<T> entityClass) {
 
 		return baseDao.findOne(query, entityClass);
@@ -59,7 +57,6 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	 * 
 	 * @see cn.live.service.BaseService#deleted(java.lang.Object)
 	 */
-	@Override
 	public void remove(Query query, Class<T> entityClass) {
 		baseDao.remove(query, entityClass);
 	}
@@ -75,7 +72,6 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	 * cn.live.service.BaseService#remove(org.springframework.data.mongodb.core
 	 * .query.Query, java.lang.String)
 	 */
-	@Override
 	public void remove(Query query, String collectionName) {
 		baseDao.remove(query, collectionName);
 	}

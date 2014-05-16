@@ -39,7 +39,6 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	 * 
 	 * @see cn.live.base.dao.BaseDao#findOne()
 	 */
-	@Override
 	public T findOne(Query query, Class<T> entityClass) {
 		return (T) mongoTemplate.findOne(query, entityClass);
 	}
@@ -51,7 +50,6 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	 * 
 	 * @see cn.live.base.dao.BaseDao#save(java.lang.Object)
 	 */
-	@Override
 	public void save(T t) {
 		mongoTemplate.save(t);
 	}
@@ -65,7 +63,6 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	 * 
 	 * @see cn.live.base.dao.BaseDao#deleted(java.lang.Object)
 	 */
-	@Override
 	public void remove(Query query, Class<T> entityClass) {
 		mongoTemplate.remove(query, entityClass);
 	}
@@ -75,7 +72,6 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	 * 
 	 * @see cn.live.base.dao.BaseDao#remove()
 	 */
-	@Override
 	public void remove(Query query, String collectionName) {
 		mongoTemplate.remove(query, collectionName);
 	}
