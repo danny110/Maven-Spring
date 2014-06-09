@@ -12,7 +12,7 @@
 	<context:annotation-config />
 	<context:component-scan base-package="cn.live.base.dao" />
 	
-	<!-- 输出数据库操作 -->
+	<!-- 输出数据库操作 S -->
 	<bean id="sysProps" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
 		<property name="targetClass" value="java.lang.System" />
 		<property name="targetMethod" value="getProperties" />
@@ -39,6 +39,7 @@
 			</list>
 		</property>
 	</bean>
+	<!-- 输出数据库操作 E -->
 
 	<!-- 加载mongodb的属性配置文件 -->
 	<context:property-placeholder location="classpath:mongodb.properties" />
