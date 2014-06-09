@@ -1,7 +1,7 @@
 Maven-Spring
 ============
-
-使用 Maven 搭建 Spring 框架
-
-工程说明
+概要
 ------------
+Maven 的 Spring 仓库
+##项目名称 Maven-Spring-MongoDB
+NoSQL 实现
