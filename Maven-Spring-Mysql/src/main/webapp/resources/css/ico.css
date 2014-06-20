@@ -1,0 +1,19 @@
+@charset "utf-8";
+.readTimes{background-image:url(../images/ico/mydocs.gif);}
+.reTimes{background-image:url(../images/ico/re.gif);}
+.newsTimes{background-image:url(../images/ico/eye.gif);}
+.prosTimes{background-image:url(../images/ico/star.gif);}
+.serTimes{background-image:url(../images/ico/usergroup.gif);}
+.rolesTimes{background-image:url(../images/ico/folders.gif);}
+.mbico{background-image:url(../images/ico/mbico.gif);}
+.favico{background-image:url(../images/ico/fav.gif);}
+.manageico{background-image:url(../images/ico/manage.gif);}
+.userpng{background-image:url(../images/ico/userpng.png);}
+.managepng{background-image:url(../images/ico/managepng.png);}
+.helppng{background-image:url(../images/ico/helppng.png);}
+.quitpng{background-image:url(../images/ico/quitpng.png);}
+.bottonAdd{background-image:url(../images/ico/add.png);}
+.bottonDel{background-image:url(../images/ico/delete.png);}
+.bottonLock{background-image:url(../images/ico/freeze.png);}
+.bottonCheck{background-image:url(../images/ico/check.png);}
+.bottonhelp{background-image:url(../images/ico/helppng.png);}

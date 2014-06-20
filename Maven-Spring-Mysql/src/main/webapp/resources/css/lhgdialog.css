@@ -1,0 +1,841 @@
+﻿@charset "utf-8";
+/*
+ * lhgdialog 默认皮肤
+ * (C) 2009-2011 【一丝冰凉】, http://t.qq.com/yisibl, QQ:50167214
+ * This is licensed under the GNU LGPL, version 2.1 or later.
+ * For details, see: http://creativecommons.org/licenses/LGPL/2.1/
+ * Edit by Vison 2013-8-1
+ */
+/*==================制作新皮肤从这里开始复制==================*/
+/*基本重置*/
+body{ _margin:0; }/*IE6 BUG*/
+.ui_lock_scroll{ *overflow:hidden; }
+.ui_lock_scroll body{ overflow:hidden; }
+
+/*结构层*/
+.ui_content,.ui_title,.ui_buttons input{ font:12px tahoma,arial,\5b8b\4f53,sans-serif; }
+table.ui_border,table.ui_dialog{ width:auto;border-spacing:0;border-collapse:collapse;}
+.ui_border td,.ui_border div,.ui_dialog td,.ui_dialog div{ padding:0; overflow:visible;}
+.ui_dialog{ background:#FFF; }
+
+/*标题部分开始*/
+.ui_title{ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;cursor:move;background:#DDD;-moz-user-select:none;-webkit-user-select:none;padding:0 100px 0 0; }
+.ui_title_buttons{ position:absolute;cursor:pointer;font-size:0;letter-spacing:-.5em; }
+
+/*对齐自适应*/
+.ui_main{ min-width:6em;min-width:0\9;text-align:center; }
+.ui_content{ display:inline-block;*display:inline;zoom:1;text-align:left; }
+.ui_content.ui_state_full{ display:block;width:100%;height:100%;margin:0;padding:0!important; }
+.ui_content.ui_state_full iframe{ border-radius:0 0 5px 5px; }
+.ui_loading{ width:96px;height:32px;text-align:left;text-indent:-9999em;overflow:hidden;background:url(../images/skins/icons/loading.gif) no-repeat center center; }
+.ui_icon_bg{ margin:20px 0 20px 15px; }
+
+/*标题纯CSS按钮开始 min 最小化，max最大化，res还原，rese恢复，close关闭*/
+.ui_min,.ui_max,.ui_close,.ui_res{ position:relative;text-decoration:none;letter-spacing:normal;text-align:center;display:inline-block;*display:inline;zoom:1;vertical-align:top;font-family:tahoma,arial,\5b8b\4f53,sans-serif; }
+.ui_min b,.ui_max b,.ui_res_t,.ui_res_b{ display:block;position:absolute;overflow:hidden;cursor:pointer; }
+.ui_close{ font-weight:500;text-decoration:none;outline:0 none; }
+.ui_close:hover{ text-decoration:none; }
+
+/*Tips部分*/
+.ui_state_tips .ui_main{ min-width:3em; }
+.ui_state_tips .ui_content{ margin-top:-2px;padding:8px 10px!important; }
+.ui_state_tips .ui_icon_bg{ margin:5px 0 6px 9px; }
+.ui_state_tips .ui_title,.ui_state_tips .ui_title_buttons,.ui_res{ display:none; } /* 还原按钮也在这里隐藏，这样可节省代码，注间这段一定要写在上面那段代码的下面*/
+
+#ldg_lockmask{ background:#DCE2F1;filter:alpha(opacity=60);opacity:.6; }
+/*==================制作新皮肤到这里结束复制==================*/
+/*==================默认皮肤开始==================*/
+/*样式层开始*/
+.default .ui_inner{ border:1px solid #999; }
+.default .ui_border{ border-radius:4px; }
+
+.default .ui_lt,.default .ui_rt,.default .ui_lb,.default .ui_rb{ width:6px;height:6px;display:block; }
+.default .ui_lt{ border-radius:4px 0 0 0; }
+.default .ui_rt{ border-radius:0 4px 0 0; }
+.default .ui_rb{ border-radius:0 0 4px 0; }
+.default .ui_lb{ border-radius:0 0 0 4px; }
+.default .ui_lt,.default .ui_rt,.default .ui_l,.default .ui_r,.default .ui_lb,.default .ui_b,.default .ui_t,.default .ui_rb{ background:#666;filter:alpha(opacity=30);opacity:0.3 }
+
+/*标题栏样式*/
+.default .ui_title_bar{ position:relative;height:100%;border-bottom:1px solid #317ebd; }
+.default .ui_title{ height:26px;line-height:26px;font-size:14px;font-weight:bold;color:#DDD;padding-left:7px;border-bottom:1px solid #6da6e1;
+background:linear-gradient(to bottom,#46a0e1,#3280bf);/*IE10*/
+background:-webkit-gradient(linear,0% 0%, 0% 100%,from(#46a0e1),to(#3280bf)); 
+background:-moz-linear-gradient(top,#46a0e1,#3280bf); 
+background:-o-linear-gradient(top,#46a0e1,#3280bf);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#46a0e1',endColorstr='#3280bf');*background:#DDD; }
+ 
+.default .ui_state_focus .ui_title{ color:#FFF;text-shadow:0 1px 0 #333; }
+.default .ui_state_drag .ui_title { border-bottom:1px solid #82bee6;text-shadow: 0 -1px 0 #333;
+background:linear-gradient(to bottom,#3280bf,#46a0e1); 
+background:-moz-linear-gradient(top,#3280bf,#46a0e1); 
+background:-webkit-gradient(linear,0% 0%, 0% 100%,from(#3280bf),to(#46a0e1));
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#3280bf',endColorstr='#46a0e1'); }
+
+/*标题纯CSS按钮定位部分*/
+.default .ui_title_buttons{ top:3px;right:5px; }
+.default .ui_min,.default .ui_max,.default .ui_close,.default .ui_res{ color:#FFF;font-size:22px;width:22px;height:22px;line-height:18px; }
+.default .ui_min_b{ top:10px;left:5px;width:12px;height:2px;border-bottom:2px solid #FFF; }
+.default .ui_max_b{ top:5px;left:5px;width:10px;height:7px; }
+.default .ui_res_t,.default .ui_res_b{ top:8px;left:3px;width:10px;height:5px; }
+.default .ui_res_b{ top:4px;left:6px; }
+.default .ui_res_t,.default .ui_res_b,.default .ui_max_b{ border:1px solid #FFF;border-top-width:3px; }
+.default .ui_res_t{ background:#3d8cce; }
+.default .ui_min:hover b,.default .ui_max:hover b,.default .ui_res:hover b{ border-color:#555; }
+.default .ui_close{ vertical-align:baseline;_line-height:22px; }
+.default .ui_close:hover,.default .ui_close:focus{ color:#c93333; }
+
+/*底部按钮样式*/
+.default .ui_buttons{ white-space:nowrap;padding:4px 8px;text-align:right;background-color:#F6F6F6;border-top:solid 1px #DADEE5; }
+.default .ui_buttons input::-moz-focus-inner{ border:0;padding:0;margin:0; }
+
+.default .ui_buttons input{ padding:3px 10px 3px 12px;padding:5px 10px 2px 12px\0;*padding:4px 10px 2px 10px;margin-left:6px;cursor:pointer;display:inline-block; 
+text-align:center;line-height:1;height:23px;letter-spacing:3px;overflow:visible;color:#333;border:solid 1px #999;border-radius:3px;border-radius:0\9;background:#DDD;
+background:linear-gradient(to bottom,#FAFAFA,#E4E4E4);
+background:-moz-linear-gradient(top,#FAFAFA,#E4E4E4);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FAFAFA),to(#E4E4E4));
+background:-o-linear-gradient(top,#FAFAFA,#E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA',endColorstr='#E4E4E4');
+text-shadow:0 1px 1px rgba(255,255,255,1);box-shadow:0 1px 0 rgba(255,255,255,.7),0 -1px 0 rgba(0,0,0,.09);
+-moz-transition:-moz-box-shadow linear .2s;-webkit-transition:-webkit-box-shadow linear .2s;transition:box-shadow linear .2s; }
+.default .ui_buttons input:focus{ outline:0 none;box-shadow:0 0 3px #0e78c9; }
+.default .ui_buttons input:hover{ color:#000;border-color:#666;box-shadow:none; }
+.default .ui_buttons input:active{ border-color:#666;
+background:linear-gradient(to bottom,#FAFAFA,#E4E4E4);
+background:-moz-linear-gradient(top,#FAFAFA,#E4E4E4);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FAFAFA),to(#E4E4E4));
+background:-o-linear-gradient(top,#FAFAFA,#E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA',endColorstr='#E4E4E4'); }
+.default .ui_buttons input[disabled]{ cursor:default;color:#666;background:#DDD;border:solid 1px #999;filter:alpha(opacity=50);opacity:.5;box-shadow:none; }
+
+.default input.ui_state_highlight{ color:#FFF;border:solid 1px #1c6a9e;text-shadow:0 -1px 1px #1c6a9e;background:#2288cc;
+background:linear-gradient(to bottom,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+.default input.ui_state_highlight:hover{ color:#FFF;border-color:#555; }
+.default input.ui_state_highlight:active{ border-color:#1c6a9e;
+background:linear-gradient(to bottom,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+
+/*Tips 部分开始*/
+.default .ui_state_tips,.default .ui_state_tips .ui_inner,.default .ui_state_tips .ui_title_bar{ border:0 none;box-shadow:none; }
+.default .ui_state_tips .ui_lt,.default .ui_state_tips .ui_rt,.default .ui_state_tips .ui_lb,.default .ui_state_tips .ui_rb{ width:5px;height:5px; }
+/*==================默认皮肤结束==================*/
+/*==================chrome皮肤开始==================*/
+/*样式层开始*/
+.chrome .ui_inner{ background:#FFF; }
+.chrome .ui_title_bar{ width:100%;height:0;position:relative;bottom:24px;_bottom:0;_margin-top:-24px; }
+.chrome .ui_title_buttons{ top:-1px;*top:-2px;_top:-1px;right:0; }
+.chrome .ui_title { display:block;font-weight:bold;height:22px;line-height:22px;color:#FFF;background:none;font-size:14px; }
+
+.chrome .ui_lt,.chrome .ui_rt,.chrome .ui_lb,.chrome .ui_rb,.chrome .ui_l,.chrome .ui_r{ background-image:url(../images/skins/chrome/chrome_s.gif);background-repeat:no-repeat; }
+.chrome .ui_lt{ width:5px;height:26px;background-position:-121px -8px; }
+.chrome .ui_rt{ width:5px;height:26px;background-position:-128px -8px; }
+.chrome .ui_lb{ width:5px;height:5px;background-position:-121px -2px; }
+.chrome .ui_rb{ width:5px;height:5px;background-position:-128px -2px; }
+
+.chrome .ui_t,.chrome .ui_b{ background-image:url(../images/skins/chrome/chrome_s2.gif);background-repeat:repeat-x; }
+.chrome .ui_t{ background-position:0 0; }
+.chrome .ui_b{ background-position:0 -26px; }
+.chrome .ui_l,.chrome .ui_r{ background-repeat:repeat-y; }
+.chrome .ui_l{ background-position:-135px 0; }
+.chrome .ui_r{ background-position:-140px 0; }
+
+/*标题纯CSS按钮定位部分*/
+.chrome .ui_min,.chrome .ui_max,.chrome .ui_close,.chrome .ui_res{ background-image:url(../images/skins/chrome/chrome_s.gif);background-repeat:no-repeat;color:#FFF;width:25px;height:18px;line-height:18px; }
+.chrome .ui_min{ background-position:0 0; }
+.chrome .ui_min:hover{ background-position:0 -18px; }
+.chrome .ui_max{ background-position:-25px 0; }
+.chrome .ui_max:hover{ background-position:-25px -18px; }
+.chrome .ui_res{ background-position:-50px 0; }
+.chrome .ui_res:hover{ background-position:-50px -18px; }
+.chrome .ui_close{ background-position:-75px 0;_z-index:1;font-size:0;line-height:0;overflow:hidden;_margin-left:0;width:44px; }
+.chrome .ui_close:hover,.chrome .ui_close:focus{ background-position:-75px -18px; }
+
+/*底部按钮样式*/
+.chrome .ui_buttons{ white-space:nowrap;padding:4px 8px;text-align:right;background-color:#F6F6F6;border-top:solid 1px #DADEE5; }
+.chrome .ui_buttons input::-moz-focus-inner{ border:0;padding:0;margin:0; }
+
+.chrome .ui_buttons input{ padding:3px 10px 3px 12px;padding:5px 10px 2px 12px\0;*padding:4px 10px 2px 10px;margin-left:6px;cursor:pointer;display:inline-block; 
+text-align:center;line-height:1;height:23px;letter-spacing:3px;overflow:visible;color:#333;border:solid 1px #999;border-radius:3px;border-radius:0\9;background:#DDD;
+background:linear-gradient(to bottom,#FAFAFA,#E4E4E4);
+background:-moz-linear-gradient(top,#FAFAFA,#E4E4E4);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FAFAFA),to(#E4E4E4));
+background:-o-linear-gradient(top,#FAFAFA,#E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA',endColorstr='#E4E4E4');
+text-shadow:0 1px 1px rgba(255,255,255,1);box-shadow:0 1px 0 rgba(255,255,255,.7),0 -1px 0 rgba(0,0,0,.09);
+-moz-transition:-moz-box-shadow linear .2s;-webkit-transition:-webkit-box-shadow linear .2s;transition:box-shadow linear .2s; }
+.chrome .ui_buttons input:focus{ outline:0 none;box-shadow:0 0 3px #0e78c9; }
+.chrome .ui_buttons input:hover{ color:#000;border-color:#666;box-shadow:none; }
+.chrome .ui_buttons input:active{ border-color:#666;
+background:linear-gradient(to bottom,#FAFAFA,#E4E4E4);
+background:-moz-linear-gradient(top,#FAFAFA,#E4E4E4);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FAFAFA),to(#E4E4E4));
+background:-o-linear-gradient(top,#FAFAFA,#E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA',endColorstr='#E4E4E4'); }
+.chrome .ui_buttons input[disabled]{ cursor:default;color:#666;background:#DDD;border:solid 1px #999;filter:alpha(opacity=50);opacity:.5;box-shadow:none; }
+
+.chrome input.ui_state_highlight{ color:#FFF;border:solid 1px #1c6a9e;text-shadow:0 -1px 1px #1c6a9e;background:#2288cc;
+background:linear-gradient(to bottom,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+.chrome input.ui_state_highlight:hover{ color:#FFF;border-color:#555; }
+.chrome input.ui_state_highlight:active{ border-color:#1c6a9e;
+background:linear-gradient(to bottom,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+
+/*Tips 部分开始(可删除)*/
+.chrome .ui_state_tips .ui_lt,.chrome .ui_state_tips .ui_rt,.chrome .ui_state_tips .ui_t{ height:5px;background-image:url(../images/skins/chrome/chrome_s3.gif);background-repeat:no-repeat; }
+.chrome .ui_state_tips .ui_lt{ background-position:0 -5px; }
+.chrome .ui_state_tips .ui_rt{ background-position:0 -10px; }
+.chrome .ui_state_tips .ui_t{ background-position:0 0; background-repeat:repeat-x; }
+/*==================chrome皮肤结束==================*/
+/*==================blue皮肤开始==================*/
+.blue .ui_inner{ background:#FFF; }
+.blue .ui_title_bar{ width:100%;height:0;position:relative;bottom:24px;_bottom:0;_margin-top:-24px; }
+.blue .ui_title_buttons{ top:2px;right:0; }
+.blue .ui_title{ display:block;font-weight:bold;height:22px;line-height:22px;line-height:24px\9;color:#FFF;background:none;font-size:14px; }
+
+.blue .ui_lt,.blue .ui_rt,.blue .ui_lb,.blue .ui_rb,.blue .ui_l,.blue .ui_r{ background-image:url(../images/skins/blue/blue_s.png);background-repeat:no-repeat; }
+.blue .ui_lt{ width:13px;height:33px;background-position:-114px -2px;_png:../images/skins/blue/ie6/ui_lt.png; }
+.blue .ui_rt{ width:13px;height:33px;background-position:-129px -2px;_png:../images/skins/blue/ie6/ui_rt.png; }
+.blue .ui_lb{ width:13px;height:13px;background-position:-144px -22px;_png:../images/skins/blue/ie6/ui_lb.png; }
+.blue .ui_rb{ width:13px;height:13px;background-position:-144px -3px;_png:../images/skins/blue/ie6/ui_rb.png; }
+
+.blue .ui_t,.blue .ui_b{ background-image:url(../images/skins/blue/blue_s2.png);background-repeat:repeat-x; }
+.blue .ui_t{ background-position: 0 0;_png:../images/skins/blue/ie6/ui_t.png; }
+.blue .ui_b{ background-position: 0 -33px;_png:../images/skins/blue/ie6/ui_b.png; }
+.blue .ui_l,.blue .ui_r{ background-repeat:repeat-y; }
+.blue .ui_l{ background-position:0 0;_png:../images/skins/blue/ie6/ui_l.png; }
+.blue .ui_r{ background-position:-15px 0;_png:../images/skins/blue/ie6/ui_r.png; }
+
+/*标题纯CSS按钮定位部分*/
+.blue .ui_min,.blue .ui_max,.blue .ui_close,.blue .ui_res{ background-image:url(../images/skins/blue/blue_s.png);background-repeat:no-repeat;margin-left:3px;color:#FFF;width:19px;height:18px;line-height:18px;_background-image:url(../images/skins/blue/ie6/blue_titbtn.gif); }
+.blue .ui_min{ background-position:-31px 0;_background-position:0 0; }
+.blue .ui_min:hover{ background-position:-31px -19px;_background-position:0 -19px; }
+.blue .ui_max{ background-position:-51px 0;_background-position:-20px 0; }
+.blue .ui_max:hover{ background-position:-51px -19px;_background-position:-20px -19px; }
+.blue .ui_res{ background-position:-91px 0;_background-position:-60px 0; }
+.blue .ui_res:hover{ background-position:-91px -19px;_background-position:-60px -19px; }
+.blue .ui_close{ background-position:-71px 0;_z-index:1;font-size:0;line-height:0;overflow:hidden;_background-position:-40px 0;*margin-left:0; }
+.blue .ui_close:hover,.blue .ui_close:focus{ background-position:-71px -19px;_background-position:-40px -19px; }
+
+/*底部按钮样式*/
+.blue .ui_buttons{ white-space:nowrap;padding:4px 8px;text-align:right;background-color:#F6F6F6;border-top:solid 1px #DADEE5; }
+.blue .ui_buttons input::-moz-focus-inner{ border:0;padding:0;margin:0; }
+
+.blue .ui_buttons input{ padding:3px 10px 3px 12px;padding:5px 10px 2px 12px\0;*padding:4px 10px 2px 10px;margin-left:6px;cursor:pointer;display:inline-block; 
+text-align:center;line-height:1;height:23px;letter-spacing:3px;overflow:visible;color:#333;border:solid 1px #999;border-radius:3px;border-radius:0\9;background:#DDD;
+background:linear-gradient(to bottom,#FAFAFA,#E4E4E4);
+background:-moz-linear-gradient(top,#FAFAFA,#E4E4E4);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FAFAFA),to(#E4E4E4));
+background:-o-linear-gradient(top,#FAFAFA,#E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA',endColorstr='#E4E4E4');
+text-shadow:0 1px 1px rgba(255,255,255,1);box-shadow:0 1px 0 rgba(255,255,255,.7),0 -1px 0 rgba(0,0,0,.09);
+-moz-transition:-moz-box-shadow linear .2s;-webkit-transition:-webkit-box-shadow linear .2s;transition:box-shadow linear .2s; }
+.blue .ui_buttons input:focus{ outline:0 none;box-shadow:0 0 3px #0e78c9; }
+.blue .ui_buttons input:hover{ color:#000;border-color:#666;box-shadow:none; }
+.blue .ui_buttons input:active{ border-color:#666;
+background:linear-gradient(to bottom,#FAFAFA,#E4E4E4);
+background:-moz-linear-gradient(top,#FAFAFA,#E4E4E4);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FAFAFA),to(#E4E4E4));
+background:-o-linear-gradient(top,#FAFAFA,#E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA',endColorstr='#E4E4E4'); }
+.blue .ui_buttons input[disabled]{ cursor:default;color:#666;background:#DDD;border:solid 1px #999;filter:alpha(opacity=50);opacity:.5;box-shadow:none; }
+
+.blue input.ui_state_highlight{ color:#FFF;border:solid 1px #1c6a9e;text-shadow:0 -1px 1px #1c6a9e;background:#2288cc;
+background:linear-gradient(to bottom,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+.blue input.ui_state_highlight:hover{ color:#FFF;border-color:#555; }
+.blue input.ui_state_highlight:active{ border-color:#1c6a9e;
+background:linear-gradient(to bottom,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+
+/*Tips 部分开始(可删除)*/
+.blue .ui_state_tips .ui_lt,.blue .ui_state_tips .ui_rt{ height:13px;background-repeat:no-repeat;background-position: 0 0; }
+.blue .ui_state_tips .ui_lt{ background-image:url(../images/skins/blue/ie6/ui_lt2.png);_png:../images/skins/blue/ie6/ui_lt2.png; }
+.blue .ui_state_tips .ui_rt{ background-image:url(../images/skins/blue/ie6/ui_rt2.png);_png:../images/skins/blue/ie6/ui_rt2.png; }
+.blue .ui_state_tips .ui_t{ background-image:url(../images/skins/blue/ie6/ui_t2.png);background-repeat:repeat-x;background-position:0 0;_png:../images/skins/blue/ie6/ui_t2.png; }
+/*==================blue皮肤结束==================*/
+/*==================discuz皮肤开始==================*/
+.discuz .ui_inner{ border:1px solid #888; }
+.discuz .ui_border{ border-radius:4px; }
+.discuz .ui_lt,.discuz .ui_rt,.discuz .ui_lb,.discuz .ui_rb{ width:7px;height:7px;display:block; }/*防止改变浏览器大小挤压窗口边框*/
+.discuz .ui_lt{ border-radius:4px 0 0 0; }.ui_rt{ border-radius:0 4px 0 0; }.ui_rb{ border-radius:0 0 4px 0; }.ui_lb{ border-radius:0 0 0 4px; }
+.discuz .ui_lt,.discuz .ui_rt,.discuz .ui_l,.discuz .ui_r,.discuz .ui_lb,.discuz .ui_b,.discuz .ui_t,.discuz .ui_rb{ background:#000;filter:alpha(opacity=20);opacity:.2 }
+
+/*标题栏样式*/
+.discuz .ui_title_bar{ position:relative;height:100%; }
+.discuz .ui_title{ height:30px;line-height:30px;font-size:14px;font-weight:bold;color:#888;border-bottom:1px solid #DDD\9;background:none;padding-left:7px; }
+.discuz .ui_title:after{ content:"";display:block;height:8px;width:100%;position:absolute;top:26px;left:0;
+background:-moz-radial-gradient(center,ellipse cover,#c8c8c8 10%,#FFFFFF 75%); /* FF3.6+ */
+background:-webkit-radial-gradient(center,ellipse cover,#c8c8c8 10%,#FFFFFF 75%); /* Chrome10+,Safari5.1+ */
+background:-o-radial-gradient(center,ellipse cover,#c8c8c8 10%,#FFFFFF 75%); /* Opera 12+ */
+background:-ms-radial-gradient(center,ellipse cover,#c8c8c8 10%,#FFFFFF 75%); /* IE10+ */
+background:radial-gradient(center,ellipse cover,#c8c8c8 10%,#FFFFFF 75%);/* W3C */display:none\9; }
+.discuz .ui_title:before{ content:"";display:block;height:5px;width:100%;position:absolute;top:26px;left:0;background:#FFF;z-index:1;display:none\9; }
+.discuz .ui_state_focus .ui_title { color:#336699; }
+.discuz .ui_state_drag .ui_title { border-top-color:#4E84C0; }
+
+/*标题纯CSS按钮定位部分*/
+.discuz .ui_title_buttons{ top:5px;right:5px; }
+.discuz .ui_min,.discuz .ui_max,.discuz .ui_close,.discuz .ui_res{ margin-left:2px;color:#888;font-size:20px;width:20px;height:20px;line-height:18px;border-radius:2px; }
+.discuz .ui_min_b{ top:10px;left:4px;width:12px;height:2px;border-bottom:2px solid #888; }
+.discuz .ui_max_b{ top:5px;left:4px;width:10px;height:7px; }
+.discuz .ui_res_t,.discuz .ui_res_b{ top:8px;left:2px;width:10px;height:5px; }
+.discuz .ui_res_b{ top:4px;left:6px; }
+.discuz .ui_res_t,.discuz .ui_res_b,.discuz .ui_max_b{ border:1px solid #888;border-top-width:3px; }
+.discuz .ui_res_t{ background:#FFF; }/*还原按钮底部框背景与标题背景融合*/
+.discuz .ui_close{ vertical-align:baseline;_line-height:22px;margin-left:0; }
+.discuz .ui_close:hover,.discuz .ui_close:focus { color:#FFF;outline:0 none;background:#c72327; }
+.discuz .ui_min:hover b,.discuz .ui_max:hover b,.discuz .ui_res:hover b{ border-color:#FFF; }
+.discuz .ui_res:hover b{ background:#039ed0;}
+.discuz .ui_min:hover,.discuz .ui_max:hover,.discuz .ui_res:hover{ background:#039ed0; }
+/*标题按钮结束*/
+
+/*底部按钮样式*/
+.discuz .ui_buttons{ white-space:nowrap;padding:4px 8px;text-align:right;background-color:#F6F6F6;border-top:solid 1px #DADEE5; }
+.discuz .ui_buttons input::-moz-focus-inner{ border:0;padding:0;margin:0; }
+
+.discuz .ui_buttons input{ padding:3px 10px 3px 12px;padding:5px 10px 2px 12px\0;*padding:4px 10px 2px 10px;margin-left:6px;cursor:pointer;display:inline-block; 
+text-align:center;line-height:1;height:23px;letter-spacing:3px;overflow:visible;color:#333;border:solid 1px #999;border-radius:3px;border-radius:0\9;background:#DDD;
+background:linear-gradient(to bottom,#FAFAFA,#E4E4E4);
+background:-moz-linear-gradient(top,#FAFAFA,#E4E4E4);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FAFAFA),to(#E4E4E4));
+background:-o-linear-gradient(top,#FAFAFA,#E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA',endColorstr='#E4E4E4');
+text-shadow:0 1px 1px rgba(255,255,255,1);box-shadow:0 1px 0 rgba(255,255,255,.7),0 -1px 0 rgba(0,0,0,.09);
+-moz-transition:-moz-box-shadow linear .2s;-webkit-transition:-webkit-box-shadow linear .2s;transition:box-shadow linear .2s; }
+.discuz .ui_buttons input:focus{ outline:0 none;box-shadow:0 0 3px #0e78c9; }
+.discuz .ui_buttons input:hover{ color:#000;border-color:#666;box-shadow:none; }
+.discuz .ui_buttons input:active{ border-color:#666;
+background:linear-gradient(to bottom,#FAFAFA,#E4E4E4);
+background:-moz-linear-gradient(top,#FAFAFA,#E4E4E4);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FAFAFA),to(#E4E4E4));
+background:-o-linear-gradient(top,#FAFAFA,#E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA',endColorstr='#E4E4E4'); }
+.discuz .ui_buttons input[disabled]{ cursor:default;color:#666;background:#DDD;border:solid 1px #999;filter:alpha(opacity=50);opacity:.5;box-shadow:none; }
+
+.discuz input.ui_state_highlight{ color:#FFF;border:solid 1px #1c6a9e;text-shadow:0 -1px 1px #1c6a9e;background:#2288cc;
+background:linear-gradient(to bottom,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+.discuz input.ui_state_highlight:hover{ color:#FFF;border-color:#555; }
+.discuz input.ui_state_highlight:active{ border-color:#1c6a9e;
+background:linear-gradient(to bottom,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+
+/*Tips 部分开始*/
+.discuz .ui_state_tips,.discuz .ui_state_tips .ui_inner,.discuz .ui_state_tips .ui_title_bar{ border:0 none;box-shadow:none; }
+.discuz .ui_state_tips .ui_lt,.discuz .ui_state_tips .ui_rt,.discuz .ui_state_tips .ui_lb,.discuz .ui_state_tips .ui_rb{ width:5px;height:5px; }
+/*==================discuz皮肤结束==================*/
+/*==================iblack皮肤开始==================*/
+.iblack .ui_inner{ background:#FFF; }
+.iblack .ui_title_bar{ width:100%;height:0;position:relative;bottom:27px;_bottom:0;_margin-top:-27px; }
+.iblack .ui_title{ display:block;font-weight:bold;height:22px;line-height:22px;line-height:24px\9;color:#FFF;background:none;font-size:14px;padding-left:7px; }
+
+
+.iblack .ui_lt,.iblack .ui_rt,.ui_lb,.iblack .ui_rb,.iblack .ui_t,.iblack .ui_b{ background-image:url(../images/skins/iblack/iblack_s.png);background-repeat:no-repeat; }
+.iblack .ui_lt{ width:13px;height:36px;background-position:0 0;_png:../images/skins/iblack/ie6/ui_lt.png; }
+.iblack .ui_rt{ width:13px;height:36px;background-position:-13px 0;_png:../images/skins/iblack/ie6/ui_rt.png; }
+.iblack .ui_lb{ width:13px;height:16px;background-position:0 -36px;_png:../images/skins/iblack/ie6/ui_lb.png; }
+.iblack .ui_rb{ width:13px;height:16px;background-position:-13px -36px;_png:../images/skins/iblack/ie6/ui_rb.png; }
+
+.iblack .ui_t,.iblack .ui_b{ background-repeat:repeat-x; }
+.iblack .ui_t{ background-position: 0 -52px;_png:../images/skins/iblack/ie6/ui_t.png; }
+.iblack .ui_b{ background-position: 0 -88px;_png:../images/skins/iblack/ie6/ui_b.png; }
+.iblack .ui_l,.iblack .ui_r{ background-image:url(../images/skins/iblack/iblack_s2.png);background-repeat:repeat-y; }
+.iblack .ui_l{ background-position:0 0;_png:../images/skins/iblack/ie6/ui_l.png; }
+.iblack .ui_r{ background-position:-13px 0;_png:../images/skins/iblack/ie6/ui_r.png; }
+
+/*标题纯CSS按钮定位部分*/
+.iblack .ui_title_buttons{ top:2px;right:5px; }
+.iblack .ui_min,.iblack .ui_max,.ui_close,.iblack .ui_res{ color:#FFF;font-size:22px;width:22px;height:22px;line-height:18px; }
+.iblack .ui_min_b{ top:10px;left:5px;width:12px;height:2px;border-bottom:2px solid #FFF; }
+.iblack .ui_max_b{ top:5px;left:5px;width:10px;height:7px; }
+.iblack .ui_res_t,.ui_res_b{ top:8px;left:3px;width:10px;height:5px; }
+.iblack .ui_res_b{ top:4px;left:6px; }
+.iblack .ui_res_t,.iblack .ui_res_b,.iblack .ui_max_b{ border:1px solid #FFF;border-top-width:3px; }
+.iblack .ui_res_t{ background:#3d8cce; }
+.iblack .ui_min:hover b,.iblack .ui_max:hover b,.iblack .ui_res:hover b{ border-color:#555; }
+.iblack .ui_close{ vertical-align:baseline;_line-height:22px; }
+.iblack .ui_close:hover,.iblack .ui_close:focus{ color:#c93333; }
+
+/*底部按钮样式*/
+.iblack .ui_buttons{ white-space:nowrap;padding:4px 8px;text-align:right;background-color:#FFF; }
+.iblack .ui_buttons input::-moz-focus-inner{ border:0;padding:0;margin:0; }
+
+.iblack .ui_buttons input{ padding:3px 10px 3px 12px;padding:5px 10px 2px 12px\0;*padding:4px 10px 2px 10px;margin-left:6px;cursor:pointer;display:inline-block; 
+text-align:center;line-height:1;height:23px;letter-spacing:3px;overflow:visible;color:#333;border:solid 1px #999;border-radius:3px;border-radius:0\9;background:#DDD;
+background:linear-gradient(to bottom,#FAFAFA,#E4E4E4);
+background:-moz-linear-gradient(top,#FAFAFA,#E4E4E4);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FAFAFA),to(#E4E4E4));
+background:-o-linear-gradient(top,#FAFAFA,#E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA',endColorstr='#E4E4E4');
+text-shadow:0 1px 1px rgba(255,255,255,1);box-shadow:0 1px 0 rgba(255,255,255,.7),0 -1px 0 rgba(0,0,0,.09);
+-moz-transition:-moz-box-shadow linear .2s;-webkit-transition:-webkit-box-shadow linear .2s;transition:box-shadow linear .2s; }
+.iblack .ui_buttons input:focus{ outline:0 none;box-shadow:0 0 3px #0e78c9; }
+.iblack .ui_buttons input:hover{ color:#000;border-color:#666;box-shadow:none; }
+.iblack .ui_buttons input:active{ border-color:#666;
+background:linear-gradient(to bottom,#FAFAFA,#E4E4E4);
+background:-moz-linear-gradient(top,#FAFAFA,#E4E4E4);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FAFAFA),to(#E4E4E4));
+background:-o-linear-gradient(top,#FAFAFA,#E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA',endColorstr='#E4E4E4'); }
+.iblack .ui_buttons input[disabled]{ cursor:default;color:#666;background:#DDD;border:solid 1px #999;filter:alpha(opacity=50);opacity:.5;box-shadow:none; }
+
+.iblack input.ui_state_highlight{ color:#FFF;border:solid 1px #1c6a9e;text-shadow:0 -1px 1px #1c6a9e;background:#2288cc;
+background:linear-gradient(to bottom,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+.iblack input.ui_state_highlight:hover{ color:#FFF;border-color:#555; }
+.iblack input.ui_state_highlight:active{ border-color:#1c6a9e;
+background:linear-gradient(to bottom,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+
+/*Tips 部分开始(可删除)*/
+.iblack .ui_state_tips .ui_lt,.iblack .ui_state_tips .ui_rt{ height:16px;background-repeat:no-repeat;background-position: 0 0; }
+.iblack .ui_state_tips .ui_lt{ background-image:url(../images/skins/iblack/ie6/ui_lt2.png);_png:../images/skins/iblack/ie6/ui_lt2.png; }
+.iblack .ui_state_tips .ui_rt{ background-image:url(../images/skins/iblack/ie6/ui_rt2.png);_png:../images/skins/iblack/ie6/ui_rt2.png; }
+.iblack .ui_state_tips .ui_t{ background-image:url(../images/skins/iblack/ie6/ui_t2.png);background-repeat:repeat-x;background-position:0 0;_png:../images/skins/iblack/ie6/ui_t2.png; }
+/*==================iblack皮肤结束==================*/
+/*==================iblue皮肤开始==================*/
+.iblue .ui_inner{ background:#FFF; }
+.iblue .ui_title_bar{ width:100%;height:0;position:relative;bottom:27px;_bottom:0;_margin-top:-27px; }
+.iblue .ui_title{ display:block;font-weight:bold;height:22px;line-height:22px;line-height:24px\9;color:#FFF;background:none;font-size:14px;padding-left:7px; }
+
+
+.iblue .ui_lt,.iblue .ui_rt,.iblue .ui_lb,.iblue .ui_rb,.iblue .ui_t,.iblue .ui_b{ background-image:url(../images/skins/iblue/iblue_s.png);background-repeat:no-repeat; }
+.iblue .ui_lt{ width:13px;height:36px;background-position:0 0;_png:../images/skins/iblue/ie6/ui_lt.png; }
+.iblue .ui_rt{ width:13px;height:36px;background-position:-13px 0;_png:../images/skins/iblue/ie6/ui_rt.png; }
+.iblue .ui_lb{ width:13px;height:16px;background-position:0 -36px;_png:../images/skins/iblue/ie6/ui_lb.png; }
+.iblue .ui_rb{ width:13px;height:16px;background-position:-13px -36px;_png:../images/skins/iblue/ie6/ui_rb.png; }
+
+.iblue .ui_t,.iblue .ui_b{ background-repeat:repeat-x; }
+.iblue .ui_t{ background-position: 0 -52px;_png:../images/skins/iblue/ie6/ui_t.png; }
+.iblue .ui_b{ background-position: 0 -88px;_png:../images/skins/iblue/ie6/ui_b.png; }
+.iblue .ui_l,.iblue .ui_r{ background-image:url(../images/skins/iblue/iblue_s2.png);background-repeat:repeat-y; }
+.iblue .ui_l{ background-position:0 0;_png:../images/skins/iblue/ie6/ui_l.png; }
+.iblue .ui_r{ background-position:-13px 0;_png:../images/skins/iblue/ie6/ui_r.png; }
+
+/*标题纯CSS按钮定位部分*/
+.iblue .ui_title_buttons{ top:2px;right:5px; }
+.iblue .ui_min,.iblue .ui_max,.iblue .ui_close,.iblue .ui_res{ color:#FFF;font-size:22px;width:22px;height:22px;line-height:18px; }
+.iblue .ui_min_b{ top:10px;left:5px;width:12px;height:2px;border-bottom:2px solid #FFF; }
+.iblue .ui_max_b{ top:5px;left:5px;width:10px;height:7px; }
+.iblue .ui_res_t,.iblue .ui_res_b{ top:8px;left:3px;width:10px;height:5px; }
+.iblue .ui_res_b{ top:4px;left:6px; }
+.iblue .ui_res_t,.iblue .ui_res_b,.iblue .ui_max_b{ border:1px solid #FFF;border-top-width:3px; }
+.iblue .ui_res_t{ background:#3d8cce; }
+.iblue .ui_min:hover b,.iblue .ui_max:hover b,.iblue .ui_res:hover b{ border-color:#555; }
+.iblue .ui_close{ vertical-align:baseline;_line-height:22px; }
+.iblue .ui_close:hover,.iblue .ui_close:focus{ color:#c93333; }
+
+/*底部按钮样式*/
+.iblue .ui_buttons{ white-space:nowrap;padding:4px 8px;text-align:right;background-color:#FFF; }
+.iblue .ui_buttons input::-moz-focus-inner{ border:0;padding:0;margin:0; }
+
+.iblue .ui_buttons input{ padding:3px 10px 3px 12px;padding:5px 10px 2px 12px\0;*padding:4px 10px 2px 10px;margin-left:6px;cursor:pointer;display:inline-block; 
+text-align:center;line-height:1;height:23px;letter-spacing:3px;overflow:visible;color:#333;border:solid 1px #999;border-radius:3px;border-radius:0\9;background:#DDD;
+background:linear-gradient(to bottom,#FAFAFA,#E4E4E4);
+background:-moz-linear-gradient(top,#FAFAFA,#E4E4E4);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FAFAFA),to(#E4E4E4));
+background:-o-linear-gradient(top,#FAFAFA,#E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA',endColorstr='#E4E4E4');
+text-shadow:0 1px 1px rgba(255,255,255,1);box-shadow:0 1px 0 rgba(255,255,255,.7),0 -1px 0 rgba(0,0,0,.09);
+-moz-transition:-moz-box-shadow linear .2s;-webkit-transition:-webkit-box-shadow linear .2s;transition:box-shadow linear .2s; }
+.iblue .ui_buttons input:focus{ outline:0 none;box-shadow:0 0 3px #0e78c9; }
+.iblue .ui_buttons input:hover{ color:#000;border-color:#666;box-shadow:none; }
+.iblue .ui_buttons input:active{ border-color:#666;
+background:linear-gradient(to bottom,#FAFAFA,#E4E4E4);
+background:-moz-linear-gradient(top,#FAFAFA,#E4E4E4);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FAFAFA),to(#E4E4E4));
+background:-o-linear-gradient(top,#FAFAFA,#E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA',endColorstr='#E4E4E4'); }
+.iblue .ui_buttons input[disabled]{ cursor:default;color:#666;background:#DDD;border:solid 1px #999;filter:alpha(opacity=50);opacity:.5;box-shadow:none; }
+
+.iblue input.ui_state_highlight{ color:#FFF;border:solid 1px #1c6a9e;text-shadow:0 -1px 1px #1c6a9e;background:#2288cc;
+background:linear-gradient(to bottom,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+.iblue input.ui_state_highlight:hover{ color:#FFF;border-color:#555; }
+.iblue input.ui_state_highlight:active{ border-color:#1c6a9e;
+background:linear-gradient(to bottom,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+
+/*Tips 部分开始(可删除)*/
+.iblue .ui_state_tips .ui_lt,.iblue .ui_state_tips .ui_rt{ height:16px;background-repeat:no-repeat;background-position:0 0; }
+.iblue .ui_state_tips .ui_lt{ background-image:url(../images/skins/iblue/ie6/ui_lt2.png);_png:../images/skins/iblue/ie6/ui_lt2.png; }
+.iblue .ui_state_tips .ui_rt{ background-image:url(../images/skins/iblue/ie6/ui_rt2.png);_png:../images/skins/iblue/ie6/ui_rt2.png; }
+.iblue .ui_state_tips .ui_t{ background-image:url(../images/skins/iblue/ie6/ui_t2.png);background-repeat:repeat-x;background-position:0 0;_png:../images/skins/iblue/ie6/ui_t2.png; }
+/*==================iblue皮肤结束==================*/
+/*==================idialog皮肤开始==================*/
+.idialog .ui_inner{ background:#FFF; }
+.idialog .ui_title_bar{ width:100%;position:relative; }
+.idialog .ui_title{ display:block;height:26px;line-height:26px;border-bottom:1px solid #DDD\9;font-size:14px;font-weight:bold;color:#888;background:#FFF;background:none;padding-left:3px; }
+.idialog .ui_state_focus .ui_title{ color:#505050; }
+.idialog .ui_lt,.idialog .ui_rt,.idialog .ui_lb,.idialog .ui_rb,.idialog .ui_t,.idialog .ui_b,.idialog .ui_close { background-image:url(../images/skins/idialog/idialog_s.png);background-repeat:no-repeat; }
+.idialog .ui_lt{ width:15px;height:15px;background-position:0 0;_png:../images/skins/idialog/ie6/ui_lt.png; }
+.idialog .ui_rt{ width:15px;height:15px;background-position:-15px 0;_png:../images/skins/idialog/ie6/ui_rt.png; }
+.idialog .ui_lb{ width:15px;height:15px;background-position:0 -15px; _png:../images/skins/idialog/ie6/ui_lb.png; }
+.idialog .ui_rb{ width:15px;height:15px;background-position:-15px -15px;_png:../images/skins/idialog/ie6/ui_rb.png; }
+.idialog .ui_t,.idialog .ui_b{ background-repeat:repeat-x; }
+.idialog .ui_t{ background-position:0 -30px;_png:../images/skins/idialog/ie6/ui_t.png; }
+.idialog .ui_b{ background-position:0 -45px;_png:../images/skins/idialog/ie6/ui_b.png; }
+.idialog .ui_l,.idialog .ui_r{ background-image:url(../images/skins/idialog/idialog_s2.png);background-repeat:repeat-y; }
+.idialog .ui_l{ background-position:left top;_png:../images/skins/idialog/ie6/ui_l.png; }
+.idialog .ui_r{ background-position:right bottom;_png:../images/skins/idialog/ie6/ui_r.png; }
+
+/*标题纯CSS按钮定位部分*/
+.idialog .ui_title_buttons{ top:0;right:5px; }
+.idialog .ui_max,.idialog .ui_res{ margin-right:10px; }
+.idialog .ui_min,.idialog .ui_max,.idialog .ui_close,.idialog .ui_res{ margin-left:3px;color:#888;font-size:20px;width:22px;height:22px;line-height:18px; }
+.idialog .ui_min{ margin-left:0;}
+.idialog .ui_min_b{ top:10px;left:5px;width:12px;height:2px;border-bottom:2px solid #888; }
+.idialog .ui_max_b{ top:5px;left:5px;width:10px;height:7px; }
+.idialog .ui_res_t,.idialog .ui_res_b{ top:8px;left:3px;width:10px;height:5px; }
+.idialog .ui_res_b{ top:4px;left:6px; }
+.idialog .ui_res_t,.idialog .ui_res_b,.idialog .ui_max_b{ border:1px solid #888;border-top-width:3px; }
+.idialog .ui_res_t{ background:#FFF; }/*还原按钮底部框背景与标题背景融合*/
+.idialog .ui_min:hover b,.idialog .ui_max:hover b,.idialog .ui_res:hover b,.idialog .ui_rese:hover b{ border-color:#2492FF; }
+.idialog .ui_close { position:absolute;right:-26px;top:-21px;_z-index:1;width:34px;height:34px;font-size:0;line-height:0;overflow:hidden;background-position:0 -60px;_png:../images/skins/idialog/ie6/ui_close.png; }
+.idialog .ui_close:hover,.idialog .ui_close:focus{ background-position:0 -94px;_png:../images/skins/idialog/ie6/ui_close.hover.png;cursor:pointer; }
+/*标题按钮结束*/
+
+@media screen and (min-width:0){/* css3 */
+	.idialog .ui_lt, .ui_rt, .ui_lb, .ui_rb{ width:5px; height:5px; }
+	.idialog .ui_lt, .ui_t, .ui_rt, .ui_l, .ui_r, .ui_lb, .ui_b, .ui_rb { background:none;}
+	.idialog .ui_lb, .ui_b, .ui_rb { background:url(../images/skins/idialog/idialog_s.png) repeat-x 0 -45px; }
+	.idialog .ui_lb { border-radius:0 0 0 5px; }
+	.idialog .ui_rb { border-radius:0 0 5px 0; }
+	.idialog .ui_border {border-radius:5px; background:#FFF;  border:1px solid #929292; border-radius:5px; box-shadow:0 1px 6px rgba(0, 0, 0, .3); -moz-transition:-moz-box-shadow linear .2s; -webkit-transition: -webkit-box-shadow linear .2s; transition: -webkit-box-shadow linear .2s; }
+	.idialog .ui_state_drag .ui_border,.idialog .ui_state_drag.ui_state_lock .ui_border  { box-shadow:none; }
+	.idialog .ui_state_lock .ui_border { box-shadow:0 3px 18px rgba(0, 0, 0, .6); }
+	.idialog .ui_state_tips:active {border-radius:5px;  box-shadow:0 1px 8px rgba(0, 0, 0, .5)}
+.idialog .ui_title:after{ content:"";display:block;height:8px;width:100%;position:absolute;top:26px;left:0;
+background:-moz-radial-gradient(center,ellipse cover,#c8c8c8 10%,#FFFFFF 75%); /* FF3.6+ */
+background:-webkit-radial-gradient(center,ellipse cover,#c8c8c8 10%,#FFFFFF 75%); /* Chrome10+,Safari5.1+ */
+background:-o-radial-gradient(center,ellipse cover,#c8c8c8 10%,#FFFFFF 75%); /* Opera 12+ */
+background:-ms-radial-gradient(center,ellipse cover,#c8c8c8 10%,#FFFFFF 75%); /* IE10+ */
+background:radial-gradient(center,ellipse cover,#c8c8c8 10%,#FFFFFF 75%);/* W3C */display:none\9; }
+.idialog .ui_title:before{ content:"";display:block;height:5px;width:100%;position:absolute;top:26px;left:0;background:#FFF;z-index:1;display:none\9; }
+}
+
+/*底部按钮样式*/
+.idialog .ui_buttons{ white-space:nowrap; padding:4px 8px; text-align:right; }
+.idialog .ui_buttons input::-moz-focus-inner{ border:0; padding:0; margin:0; }
+
+.idialog .ui_buttons input{ padding:2px 10px 2px 12px; padding:4px 10px 1px 12px\0; *padding:3px 10px 1px 10px; margin-left:6px; cursor:pointer; display:inline-block; 
+text-align:center; line-height:1; height:23px; letter-spacing:3px; overflow:visible; color:#333; border:solid 1px #999; border-radius:3px; border-radius:0\9; background:#DDD;
+background:linear-gradient(to bottom, #FAFAFA, #E4E4E4);
+background:-moz-linear-gradient(top, #FAFAFA, #E4E4E4);
+background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FAFAFA), to(#E4E4E4));
+background:-o-linear-gradient(top, #FAFAFA, #E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA', endColorstr='#E4E4E4');
+text-shadow:0 1px 1px rgba(255, 255, 255, 1); box-shadow:0 1px 0 rgba(255, 255, 255, .7), 0 -1px 0 rgba(0, 0, 0, .09);
+-moz-transition:-moz-box-shadow linear .2s; -webkit-transition:-webkit-box-shadow linear .2s; transition:box-shadow linear .2s; }
+.idialog .ui_buttons input:focus{ outline:0 none; box-shadow:0 0 3px #0e78c9; }
+.idialog .ui_buttons input:hover{ color:#000; border-color:#666; box-shadow:none; }
+.idialog .ui_buttons input:active{ border-color:#666;
+background:linear-gradient(to bottom, #FAFAFA, #E4E4E4);
+background:-moz-linear-gradient(top, #FAFAFA, #E4E4E4);
+background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FAFAFA), to(#E4E4E4));
+background:-o-linear-gradient(top, #FAFAFA, #E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA', endColorstr='#E4E4E4'); }
+.idialog .ui_buttons input[disabled]{ cursor:default; color:#666; background:#DDD; border:solid 1px #999; filter:alpha(opacity=50); opacity:.5; box-shadow:none; }
+
+.idialog input.ui_state_highlight{ color:#FFF; border:solid 1px #1c6a9e; text-shadow: 0 -1px 1px #1c6a9e; background:#2288cc;
+background:linear-gradient(to bottom, #33bbee, #2288cc);
+background:-moz-linear-gradient(top, #33bbee, #2288cc);
+background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#33bbee), to(#2288cc));
+background:-o-linear-gradient(top, #33bbee, #2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee', endColorstr='#2288cc'); }
+.idialog input.ui_state_highlight:hover{ color:#FFF; border-color:#555; }
+.idialog input.ui_state_highlight:active{ border-color:#1c6a9e;
+background:linear-gradient(to bottom, #33bbee, #2288cc);
+background:-moz-linear-gradient(top, #33bbee, #2288cc);
+background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#33bbee), to(#2288cc));
+background:-o-linear-gradient(top, #33bbee, #2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee', endColorstr='#2288cc'); }
+
+/*Tips 部分开始*/
+.idialog .ui_state_tips .ui_content{ text-align:center;font-weight:bold;color:#323232; }
+/*==================idialog皮肤结束==================*/
+/*==================igreen皮肤开始==================*/
+.igreen .ui_inner{ background:#FFF; }
+.igreen .ui_title_bar{ width:100%;height:0;position:relative;bottom:27px;_bottom:0;_margin-top:-27px; }
+.igreen .ui_title{ display:block;font-weight:bold;height:22px;line-height:22px;line-height:24px\9;color:#FFF;background:none;font-size:14px;padding-left:7px; }
+
+
+.igreen .ui_lt,.igreen .ui_rt,.igreen .ui_lb,.igreen .ui_rb,.igreen .ui_t,.igreen .ui_b{ background-image:url(../images/skins/igreen/igreen_s.png);background-repeat:no-repeat; }
+.igreen .ui_lt{ width:13px;height:36px;background-position:0 0;_png:../images/skins/igreen/ie6/ui_lt.png; }
+.igreen .ui_rt{ width:13px;height:36px;background-position:-13px 0;_png:../images/skins/igreen/ie6/ui_rt.png; }
+.igreen .ui_lb{ width:13px;height:16px;background-position:0 -36px;_png:../images/skins/igreen/ie6/ui_lb.png; }
+.igreen .ui_rb{ width:13px;height:16px;background-position:-13px -36px;_png:../images/skins/igreen/ie6/ui_rb.png; }
+
+.igreen .ui_t,.igreen .ui_b{ background-repeat:repeat-x; }
+.igreen .ui_t{ background-position: 0 -52px;_png:../images/skins/igreen/ie6/ui_t.png; }
+.igreen .ui_b{ background-position: 0 -88px;_png:../images/skins/igreen/ie6/ui_b.png; }
+.igreen .ui_l,.igreen .ui_r{ background-image:url(../images/skins/igreen/igreen_s2.png);background-repeat:repeat-y; }
+.igreen .ui_l{ background-position:0 0;_png:../images/skins/igreen/ie6/ui_l.png; }
+.igreen .ui_r{ background-position:-13px 0;_png:../images/skins/igreen/ie6/ui_r.png; }
+
+/*标题纯CSS按钮定位部分*/
+.igreen .ui_title_buttons{ top:2px;right:5px; }
+.igreen .ui_min,.igreen .ui_max,.igreen .ui_close,.igreen .ui_res{ color:#FFF;font-size:22px;width:22px;height:22px;line-height:18px; }
+.igreen .ui_min_b{ top:10px;left:5px;width:12px;height:2px;border-bottom:2px solid #FFF; }
+.igreen .ui_max_b{ top:5px;left:5px;width:10px;height:7px; }
+.igreen .ui_res_t,.igreen .ui_res_b{ top:8px;left:3px;width:10px;height:5px; }
+.igreen .ui_res_b{ top:4px;left:6px; }
+.igreen .ui_res_t,.igreen .ui_res_b,.igreen .ui_max_b{ border:1px solid #FFF;border-top-width:3px; }
+.igreen .ui_res_t{ background:#3d8cce; }
+.igreen .ui_min:hover b,.igreen .ui_max:hover b,.igreen .ui_res:hover b{ border-color:#555; }
+.igreen .ui_close{ vertical-align:baseline;_line-height:22px; }
+.igreen .ui_close:hover,.igreen .ui_close:focus{ color:#c93333; }
+
+/*底部按钮样式*/
+.igreen .ui_buttons{ white-space:nowrap;padding:4px 8px;text-align:right;background-color:#FFF; }
+.igreen .ui_buttons input::-moz-focus-inner{ border:0;padding:0;margin:0; }
+
+.igreen .ui_buttons input{ padding:3px 10px 3px 12px;padding:5px 10px 2px 12px\0;*padding:4px 10px 2px 10px;margin-left:6px;cursor:pointer;display:inline-block; 
+text-align:center;line-height:1;height:23px;letter-spacing:3px;overflow:visible;color:#333;border:solid 1px #999;border-radius:3px;border-radius:0\9;background:#DDD;
+background:linear-gradient(to bottom,#FAFAFA,#E4E4E4);
+background:-moz-linear-gradient(top,#FAFAFA,#E4E4E4);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FAFAFA),to(#E4E4E4));
+background:-o-linear-gradient(top,#FAFAFA,#E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA',endColorstr='#E4E4E4');
+text-shadow:0 1px 1px rgba(255,255,255,1);box-shadow:0 1px 0 rgba(255,255,255,.7),0 -1px 0 rgba(0,0,0,.09);
+-moz-transition:-moz-box-shadow linear .2s;-webkit-transition:-webkit-box-shadow linear .2s;transition:box-shadow linear .2s; }
+.igreen .ui_buttons input:focus{ outline:0 none;box-shadow:0 0 3px #0e78c9; }
+.igreen .ui_buttons input:hover{ color:#000;border-color:#666;box-shadow:none; }
+.igreen .ui_buttons input:active{ border-color:#666;
+background:linear-gradient(to bottom,#FAFAFA,#E4E4E4);
+background:-moz-linear-gradient(top,#FAFAFA,#E4E4E4);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FAFAFA),to(#E4E4E4));
+background:-o-linear-gradient(top,#FAFAFA,#E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA',endColorstr='#E4E4E4'); }
+.igreen .ui_buttons input[disabled]{ cursor:default;color:#666;background:#DDD;border:solid 1px #999;filter:alpha(opacity=50);opacity:.5;box-shadow:none; }
+
+.igreen input.ui_state_highlight{ color:#FFF;border:solid 1px #1c6a9e;text-shadow:0 -1px 1px #1c6a9e;background:#2288cc;
+background:linear-gradient(to bottom,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+.igreen input.ui_state_highlight:hover{ color:#FFF;border-color:#555; }
+.igreen input.ui_state_highlight:active{ border-color:#1c6a9e;
+background:linear-gradient(to bottom,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+
+/*Tips 部分开始(可删除)*/
+.igreen .ui_state_tips .ui_lt,.igreen .ui_state_tips .ui_rt{ height:16px;background-repeat:no-repeat;background-position:0 0; }
+.igreen .ui_state_tips .ui_lt{ background-image:url(../images/skins/igreen/ie6/ui_lt2.png);_png:../images/skins/igreen/ie6/ui_lt2.png; }
+.igreen .ui_state_tips .ui_rt{ background-image:url(../images/skins/igreen/ie6/ui_rt2.png);_png:../images/skins/igreen/ie6/ui_rt2.png; }
+.igreen .ui_state_tips .ui_t{ background-image:url(../images/skins/igreen/ie6/ui_t2.png);background-repeat:repeat-x;background-position:0 0;_png:../images/skins/igreen/ie6/ui_t2.png; }
+/*==================igreen皮肤结束==================*/
+/*==================jtop皮肤开始==================*/
+.jtop .ui_dialog{ border:1px solid #0097BD;border-radius:5px;box-shadow:0 1px 6px rgba(0,0,0,.5);
+-moz-transition:-moz-box-shadow linear .2s;
+-webkit-transition: -webkit-box-shadow linear .2s;
+transition: -webkit-box-shadow linear .2s; }
+.jtop .ui_state_lock .ui_dialog{ box-shadow:0 3px 10px rgba(0,0,0,.5); }/*锁屏时遮罩*/
+.jtop .ui_state_drag .ui_dialog,.jtop .ui_state_lock.ui_state_drag .ui_dialog{ box-shadow:none; }/*拖动时隐藏阴影，通过css3实现渐变动画*/
+
+.jtop .ui_lt,.jtop .ui_rt,.jtop .ui_lb,.jtop .ui_rb{ width:0;height:0;*width:1px;*height:1px; }/*边框宽度*/
+.jtop .ui_rb{ display:block;width:12px;height:12px;position:absolute;bottom:0;right:0;background:none; } /*重新显示右下角拖动，设为负值会造成浏览器显示滚动条*/
+
+/*标题栏样式*/
+.jtop .ui_title_bar{ position:relative;height:100%;border-bottom:1px solid #0096be; }/*外线*/
+.jtop .ui_title{ height:26px;line-height:26px;font-size:14px;font-weight:bold;color:#DDD;border-radius:4px 4px 0 0;padding-left:5px;border-bottom:1px solid #3fc7f5;
+background:linear-gradient(to bottom,#00c8ef,#00a6c8);
+background:-webkit-gradient(linear,0% 0%, 0% 100%,from(#00c8ef),to(#00a6c8)); 
+background:-moz-linear-gradient(top,#00c8ef,#00a6c8); 
+background:-o-linear-gradient(top,#00c8ef,#00a6c8);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#00c8ef',endColorstr='#00a6c8');*background:#DDD;/*IE haslayout 勿删除*/ }
+ 
+.jtop .ui_state_focus .ui_title{ color:#FFF; }
+.jtop .ui_state_drag .ui_title{ border-bottom:1px solid #82d8f5;
+background:linear-gradient(to bottom,#00a6c8,#00caed); 
+background:-webkit-gradient(linear,0% 0%, 0% 100%,from(#00a6c8),to(#00caed));
+background:-moz-linear-gradient(top,#00a6cf,#00caed); 
+background:-o-linear-gradient(top,#00c8ef,#00a6c8);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#00a6c8',endColorstr='#00caed'); }
+
+/*标题纯CSS按钮定位部分*/
+.jtop .ui_title_buttons{ top:3px;right:5px; }
+.jtop .ui_min,.jtop .ui_max,.jtop .ui_close,.jtop .ui_res{ color:#FFF;font-size:18px;width:22px;height:22px;line-height:18px; }
+.jtop .ui_min_b{ top:10px;left:6px;width:10px;height:2px;border-bottom:2px solid #FFF; }
+.jtop .ui_max_b{ top:6px;left:6px;width:9px;height:6px; }
+.jtop .ui_res_t,.jtop .ui_res_b{ top:9px;left:5px;width:9px;height:4px; }
+.jtop .ui_res_b{ top:5px;left:7px; }
+.jtop .ui_res_t,.jtop .ui_res_b,.jtop .ui_max_b { border:1px solid #FFF;border-top-width:3px; }
+.jtop .ui_res_t{ background:#00b7dd; }
+.jtop .ui_min:hover b,.jtop .ui_max:hover b,.jtop .ui_res:hover b{ border-color:#555; }
+.jtop .ui_close{ vertical-align:baseline;_line-height:21px; }
+.jtop .ui_close:hover,.jtop .ui_close:focus { color:#bf160b; }
+
+/*底部按钮样式*/
+.jtop .ui_buttons{ white-space:nowrap;padding:4px 8px;text-align:right;background-color:#F6F6F6;border-top:solid 1px #DADEE5; }
+.jtop .ui_buttons input::-moz-focus-inner{ border:0;padding:0;margin:0; }
+
+.jtop .ui_buttons input{ padding:3px 10px 3px 12px;padding:5px 10px 2px 12px\0;*padding:4px 10px 2px 10px;margin-left:6px;cursor:pointer;display:inline-block; 
+text-align:center;line-height:1;height:23px;letter-spacing:3px;overflow:visible;color:#333;border:solid 1px #999;border-radius:3px;border-radius:0\9;background:#DDD;
+background:linear-gradient(to bottom,#FAFAFA,#E4E4E4);
+background:-moz-linear-gradient(top,#FAFAFA,#E4E4E4);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FAFAFA),to(#E4E4E4));
+background:-o-linear-gradient(top,#FAFAFA,#E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA',endColorstr='#E4E4E4');
+text-shadow:0 1px 1px rgba(255,255,255,1);box-shadow:0 1px 0 rgba(255,255,255,.7),0 -1px 0 rgba(0,0,0,.09);
+-moz-transition:-moz-box-shadow linear .2s;-webkit-transition:-webkit-box-shadow linear .2s;transition:box-shadow linear .2s; }
+.jtop .ui_buttons input:focus{ outline:0 none;box-shadow:0 0 3px #0e78c9; }
+.jtop .ui_buttons input:hover{ color:#000;border-color:#666;box-shadow:none; }
+.jtop .ui_buttons input:active{ border-color:#666;
+background:linear-gradient(to bottom,#FAFAFA,#E4E4E4);
+background:-moz-linear-gradient(top,#FAFAFA,#E4E4E4);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FAFAFA),to(#E4E4E4));
+background:-o-linear-gradient(top,#FAFAFA,#E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA',endColorstr='#E4E4E4'); }
+.jtop .ui_buttons input[disabled]{ cursor:default;color:#666;background:#DDD;border:solid 1px #999;filter:alpha(opacity=50);opacity:.5;box-shadow:none; }
+
+.jtop input.ui_state_highlight{ color:#FFF;border:solid 1px #1c6a9e;text-shadow:0 -1px 1px #1c6a9e;background:#2288cc;
+background:linear-gradient(to bottom,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+.jtop input.ui_state_highlight:hover{ color:#FFF;border-color:#555; }
+.jtop input.ui_state_highlight:active{ border-color:#1c6a9e;
+background:linear-gradient(to bottom,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+
+/*Tips 部分开始*/
+.jtop .ui_state_tips .ui_title_bar{ border:0 none; }
+.jtop .ui_state_tips .ui_dialog{ border-color:#40B3FF;background-color:#E5F5FF;box-shadow:2px 2px 3px rgba(0,0,0,.2); }
+.jtop .green .ui_state_tips .ui_dialog{ border-color:#4DBF00;background-color:#F0FFE5;box-shadow:2px 2px 3px rgba(0,0,0,.2); }
+.jtop .red .ui_state_tips .ui_dialog{ border-color:#FF8080;background-color:#FFF2F2;box-shadow:2px 2px 3px rgba(0,0,0,.2); }
+/*==================jtop皮肤结束==================*/
+/*==================mac皮肤开始==================*/
+.mac .ui_dialog{ border:1px solid #888;border-radius:5px;box-shadow:0 1px 6px rgba(0,0,0,.6);-moz-transition:-moz-box-shadow linear .2s;-webkit-transition:-webkit-box-shadow linear .2s;transition:-webkit-box-shadow linear .2s; }
+.mac .ui_state_lock .ui_dialog{ box-shadow:0 3px 18px rgba(0,0,0,.5); }/*锁屏时遮罩*/
+.mac .ui_state_drag .ui_dialog,.mac .ui_state_lock.ui_state_drag .ui_dialog { box-shadow:none; }/*拖动时隐藏阴影，通过css3实现渐变动画*/
+.mac .ui_state_focus .ui_title{ color:#505050; }
+
+.mac .ui_lb,.mac .ui_rb,.mac .ui_lt,.mac .ui_rt{ width:0;height:0;*width:1px;*height:1px; }/*隐藏边框*/
+.mac .ui_rb{ display:block;width:12px;height:12px;position:absolute;bottom:0;right:0;background:none; }/*重新显示右下角拖动，设为负值会造成浏览器显示滚动条*/
+
+/*标题栏样式*/
+.mac .ui_title_bar{ position:relative;height:100%;border-bottom:1px solid #aaa; }
+.mac .ui_title{ font-size:14px;font-weight:bold;height:28px;line-height:28px;border-radius:4px 4px 0 0;color:#838383;
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#ebebeb),to(#c3c3c3));
+background:-moz-linear-gradient(top,#ebebeb,#c3c3c3 ); 
+background:-o-linear-gradient(top,#ebebeb,#c3c3c3); 
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ebebeb',endColorstr='#c3c3c3');*background:#DDD;
+border:1px solid f5f5f5;border-bottom:1px solid #e6e6e6;border-radius:4px 4px 0 0;text-shadow: 0 1px 0 #EEE;padding-left:5px; }
+.mac .ui_state_drag .ui_title { text-shadow:0 -1px 0 #EEE;
+background:#ebebeb;
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#c3c3c3),to(#ebebeb));
+background:-moz-linear-gradient(top,#c3c3c3,#ebebeb);background:-o-linear-gradient(top,#c3c3c3,#ebebeb);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c3c3c3',endColorstr='#ebebeb'); }
+
+/*标题纯CSS按钮定位部分*/
+.mac .ui_title_buttons{ top:4px;right:5px; }
+.mac .ui_min,.mac .ui_max,.mac .ui_close,.mac .ui_res{ color:#636363;font-size:22px;width:22px;height:22px;line-height:18px; }
+.mac .ui_min_b{ top:10px;left:5px;width:12px;height:2px;border-bottom:2px solid #636363; }
+.mac .ui_max_b{ top:5px;left:5px;width:10px;height:7px; }
+.mac .ui_res_t,.mac .ui_res_b{ top:8px;left:3px;width:10px;height:5px; }
+.mac .ui_res_b{ top:4px;left:6px; }
+.mac .ui_res_t,.mac .ui_res_b,.mac .ui_max_b{ border:1px solid #636363;border-top-width:3px; }
+.mac .ui_res_t{ background:#DDD; }/*还原按钮底部框背景与标题背景融合*/
+.mac .ui_close{ vertical-align:baseline;_line-height:22px; }/*IE6关闭按钮垂直居中*/
+.mac .ui_close:hover,.mac .ui_close:focus{ color:#bf160b; }
+.mac .ui_min:hover b,.mac .ui_max:hover b,.mac .ui_res:hover b{ border-color:#2492FF; }
+
+/*按钮结构部分*/
+.mac .ui_buttons{ padding:4px 8px;text-align:right;white-space:nowrap;border-radius:0 0 4px 4px;
+border-top:1px solid #bebebe;border-bottom:1px solid #DDD;border-radius:0 0 4px 4px;
+background:#f5f5f5;background:-webkit-gradient(linear,0% 0%,0% 100%,from(#f5f5f5),to(#d7d7d7)); 
+background:-moz-linear-gradient(top,rgb(245,245,245),rgb(215,215,215));
+background:-o-linear-gradient(top,#f5f5f5,#d7d7d7);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5',endColorstr='#d7d7d7'); }
+.mac .ui_buttons input::-moz-focus-inner{ border:0;padding:0;margin:0; }
+
+.mac .ui_buttons input{ padding:3px 10px 3px 12px;padding:5px 10px 2px 12px\0;*padding:4px 10px 2px 10px;margin-left:6px;cursor:pointer;display:inline-block; 
+text-align:center;line-height:1;height:23px;letter-spacing:3px;overflow:visible;color:#333;border:solid 1px #999;border-radius:3px;border-radius:0\9;background:#DDD;
+background:linear-gradient(to bottom,#FAFAFA,#E4E4E4);
+background:-moz-linear-gradient(top,#FAFAFA,#E4E4E4);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FAFAFA),to(#E4E4E4));
+background:-o-linear-gradient(top,#FAFAFA,#E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA',endColorstr='#E4E4E4');
+text-shadow:0 1px 1px rgba(255,255,255,1);box-shadow:0 1px 0 rgba(255,255,255,.7),0 -1px 0 rgba(0,0,0,.09);
+-moz-transition:-moz-box-shadow linear .2s;-webkit-transition:-webkit-box-shadow linear .2s;transition:box-shadow linear .2s; }
+.mac .ui_buttons input:focus{ outline:0 none;box-shadow:0 0 3px #0e78c9; }
+.mac .ui_buttons input:hover{ color:#000;border-color:#666;box-shadow:none; }
+.mac .ui_buttons input:active{ border-color:#666;
+background:linear-gradient(to bottom,#FAFAFA,#E4E4E4);
+background:-moz-linear-gradient(top,#FAFAFA,#E4E4E4);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#FAFAFA),to(#E4E4E4));
+background:-o-linear-gradient(top,#FAFAFA,#E4E4E4);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA',endColorstr='#E4E4E4'); }
+.mac .ui_buttons input[disabled]{ cursor:default;color:#666;background:#DDD;border:solid 1px #999;filter:alpha(opacity=50);opacity:.5;box-shadow:none; }
+
+input.mac .ui_state_highlight{ color:#FFF;border:solid 1px #1c6a9e;text-shadow:0 -1px 1px #1c6a9e;background:#2288cc;
+background:linear-gradient(to bottom,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+input.mac .ui_state_highlight:hover{ color:#FFF;border-color:#555; }
+input.mac .ui_state_highlight:active{ border-color:#1c6a9e;
+background:linear-gradient(to bottom,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+
+/*Tips 部分开始*/
+/*基本重置*/
+.mac .ui_state_tips ,.mac .ui_state_tips .ui_inner,.mac .ui_state_tips .ui_dialog,.mac .ui_state_tips .ui_title_bar{ border:0 none;background:none;box-shadow:none;border-radius:0;filter:none; }
+.mac .ui_state_tips .ui_content{ font-weight:bold;font-size:14px;color:#323232;text-align:center; }
+/*Tips(图片背景，IE6也支持圆角) End*/
+.mac .ui_state_tips .ui_dialog,.mac .ui_state_tips .ui_l,.mac .ui_state_tips .ui_r{ background-image:url(../images/skins/icons/gb_tip_layer.png);_background-image:url(../images/skins/icons/gb_tip_layer_ie6.png);background-repeat:no-repeat; }/*共用背景图片*/
+.mac .ui_state_tips .ui_l{ background-position:-6px 0;width:5px; }/*左侧背景侧样式*/
+.mac .ui_state_tips .ui_r{ background-position:0 0;width:5px; }/*右侧背景样式*/
+.mac .ui_state_tips .ui_dialog{ background-position: 0 -54px;background-repeat:repeat-x;height:54px;overflow:hidden; }/*主体内容背景*/
+/*==================mac皮肤结束==================*/

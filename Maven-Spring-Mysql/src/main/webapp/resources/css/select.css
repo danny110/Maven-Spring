@@ -1,0 +1,92 @@
+@charset "utf-8";
+/*所有下拉列表的样式*/
+
+
+/*下拉列表标题的样式*/
+a.sctble_display{display:inline-block; *display:inline; zoom:1; height:24px; text-decoration:none; cursor: pointer; border:none; background:url(../images/skins/select_right.png) right top no-repeat;}
+
+/*下拉列表标题文字的样式*/
+a.sctble_display span{display:inline-block; color:#333; padding-left:7px; height:24px; line-height:24px; overflow:hidden; background:url(../images/skins/select_left.png) left top no-repeat;}
+a.sctble_display.kselect2{height:22px; background:url(../images/skins/ktop.jpg) 0 0 no-repeat;}
+a.sctble_display.kselect2 span{background:none; height:22px;}
+a.sctble_display.fenye_s{float:left; width:50px; height:22px; background:url(../images/skins/kfenye.jpg) 0 -22px no-repeat;}
+a.sctble_display.fenye_s span{background:none; height:22px; width:43px;}
+a.sctble_display.fenye_s2{float:left; width:63px; height:22px; background:url(../skins/images/kfenye.jpg) 0 0 no-repeat;}
+a.sctble_display.fenye_s2 span{background:none; height:22px; width:56px;}
+
+/*点击下拉列表后标题背景的样式*/
+a.sctble_focus{background-position:right -24px !important}
+a.sctble_focus.fenye_s{background-position:0 -22px !important}
+a.sctble_focus.fenye_s2{background-position:0 0 !important}
+
+
+/************************无分组的样式********************/
+
+/*下拉列表的样式*/
+div.sBox{margin-top:-9px; display:block; overflow:auto; overflow-x:hidden; background:#fff; border:none;}
+
+/*下拉列表单个选项的样式*/
+div.sBox a{border:solid #dfdfdf 1px; padding-left:7px; display:block; text-decoration:none; color:#1972ea; height:24px; line-height:24px; font-weight:bold; overflow:hidden; margin-top:-1px;}
+div.sBox.kselect2 a{color:#333; font-weight:normal; height:22px;}
+div.sBox.fenye_s a{height:20px; line-height:20px; color:#333; font-weight:normal;}
+div.sBox.fenye_s2 a{height:20px; line-height:20px; color:#333; font-weight:normal;}
+
+/*最后一个选项，没有下边框*/
+/*div.sBox a.last-child{border-bottom:none;}*//
+/*鼠标放上去的样式*/
+div.sBox a:hover{background:#eee; color:#333;}
+div.sBox.kselect2 a:hover{color:#fff; border-bottom:none; background:url(../images/skins/ktop.jpg) 0 -22px no-repeat;}
+div.sBox.fenye_s a:hover{color: #f00;}
+div.sBox.fenye_s2 a:hover{color: #f00;}
+
+
+
+/************************有分组的样式********************/
+/***div.sctble_mat {*整个下拉列表的样式*
+	border: solid #ff0 1px;*最外的边框*
+	border-top: none;
+	border-left: none;
+	background: #e1ead6;
+}
+
+div.sctble_mat dl {*下拉具体内容的样式*
+	margin: 0;
+	border: solid #f00 1px;*靠内部一个像素的边框，有层次感*
+	border-top: none;
+	border-left: none;
+	padding: 1em 1em 0;
+}
+
+div.sctble_mat dl dt {*分组的样式*
+	float: left;
+	margin: 0 0 1em 0 !important;
+	border: none !important;
+	padding: 0 !important;
+	width: 4.5em;
+	color: #f00;
+	font-weight: bold;
+}
+
+div.sctble_mat dl dd {*具体选项的样式*
+	margin: 0 0 1em 4.5em !important;
+	border-left: solid #333 2px !important;
+	padding: 0 0 0 1.5em !important;
+}
+
+div.sctble_mat a {*具体选项字体的样式*
+	padding-right: .7em;
+	color: #ff0;
+	font-weight: bold;
+}****/
+/****************************暂时用不到的样式****************************/
+/***a.sctble_display:hover {下拉列表标题箭头鼠标移动上去的样式
+	background-position: right -25px;
+}
+
+a.sctble_display:hover span { 下拉列表标题标题鼠标移动上去的样式
+	background-position: left -25px;
+}
+
+a.sctble_focus span {点击下拉列表后标题字体背景的样式
+	background-position: left -50px !important
+}****/

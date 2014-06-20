@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xmlns="http://www.springframework.org/schema/beans"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd" >
+   
+	<!-- transaction manager, use JtaTransactionManager for global tx -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- 使用annotation定义事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	 <!-- 这是事务通知操作，使用的事务管理器引用自 transactionManager -->    
+   <tx:advice id="txAdvice" transaction-manager="transactionManager">    
+       <tx:attributes>    
+           <tx:method name="insert*" propagation="REQUIRED" />    
+           <tx:method name="update*" propagation="REQUIRED" />    
+           <tx:method name="delete*" propagation="REQUIRED" />    
+           <tx:method name="get*" propagation="REQUIRED" read-only="true"/>    
+           <tx:method name="query*" propagation="REQUIRED" read-only="true"/>    
+           <tx:method name="*" propagation="REQUIRED" />    
+       </tx:attributes>    
+   </tx:advice>   
+     
+    <!-- 需要引入aop的命名空间 -->    
+   <aop:config>    
+       <!-- 切入点指明了在执行Service的所有方法时产生事务拦截操作 -->    
+       <aop:pointcut id="daoMethods" expression="execution(* com.tl..serviceimpl.*.*(..))" />        
+       <!-- 定义了将采用何种拦截操作，这里引用到 txAdvice -->    
+       <aop:advisor advice-ref="txAdvice" pointcut-ref="daoMethods" />    
+   </aop:config>   
+   
+	
+    <context:component-scan base-package="cn.live.*" >
+    	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
+    
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" >
+        <property name="locations" >
+            <list>
+                <value>classpath:jdbc.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" >
+        <property name="url" >
+            <value>${datasource.url}</value>
+        </property>
+        <property name="username" >
+            <value>${datasource.username}</value>
+        </property>
+        <property name="password" >
+            <value>${datasource.password}</value>
+        </property>
+        <property name="driverClassName" >
+            <value>${datasource.driverClassName}</value>
+        </property>
+        <property name="maxActive" value="${dataSource.maxActive}" />
+        <property name="maxIdle" value="${dataSource.maxIdle}" />
+        <property name="minIdle" value="${dataSource.minIdle}" />
+        <property name="maxWait" value="${dataSource.maxWait}" />
+        <property name="defaultAutoCommit" value="${dataSource.defaultAutoCommit}" />
+        <property name="removeAbandoned" value="${dataSource.removeAbandoned}" />
+        <property name="removeAbandonedTimeout" value="${dataSource.removeAbandonedTimeout}" />
+        <property name="logAbandoned" value="${dataSource.logAbandoned}" />
+    </bean>
+    
+	<bean id="c3p0dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${datasource.driverClassName}"></property>
+		<property name="jdbcUrl" value="${datasource.url}"></property>
+		<property name="user" value="${datasource.username}"></property>
+		<property name="password" value="${datasource.password}"></property>
+		<property name="acquireIncrement" value="${c3p0.acquireIncrement}"></property>
+		<property name="initialPoolSize" value="${c3p0.initialPoolSize}"></property>
+		<property name="maxIdleTime" value="${c3p0.maxIdleTime}"></property>
+		<property name="maxPoolSize" value="${c3p0.maxPoolSize}"></property>
+		<property name="minPoolSize" value="${c3p0.minPoolSize}"></property>
+
+		<property name="acquireRetryDelay" value="1000"></property>
+		<property name="acquireRetryAttempts" value="60"></property>
+		<property name="breakAfterAcquireFailure" value="false"></property>
+	</bean>  
+    
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" >
+        <property name="dataSource" ref="c3p0dataSource" />
+        <property name="packagesToScan" value="cn.live.*" />
+        <property name="hibernateProperties" >
+            <props>
+                <prop key="hibernate.dialect" >${hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql" >false</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <!-- <prop key="hibernate.hbm2ddl.auto">update</prop>   -->
+                <prop key="hibernate.bytecode.use_reflection_optimizer" >true</prop>
+            </props>
+        </property>
+    </bean>
+    
+</beans>

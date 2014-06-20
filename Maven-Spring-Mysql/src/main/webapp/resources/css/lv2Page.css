@@ -1,0 +1,141 @@
+@charset "utf-8";
+/* CSS Document */
+.leftlinkbox{width:219px;float:left; margin-right:10px;border-top:1px #cccccc dotted;border-bottom:1px #cccccc dotted;border-right:1px #cccccc dotted; position:absolute;_overflow:hidden;}
+#leftNav{font-size:14px; margin-top:-5px;}
+#leftNav li.sliderTag h3,#leftNav li.sliderTag a{width:180px;padding:5px 19px;margin:5px 0 5px 0; display:block;}
+#leftNav li.sliderTag h3{color:#fff;background:#375f5f;font-size:14px;border:1px solid #375f5f; text-align:center;}
+#leftNav li.sliderTag a{color:#666;background:#e2e2e2;border:1px solid #e2e2e2;text-decoration:none;font-size:13px;}
+#leftNav li.sliderTag a:hover{color:#000;}
+#leftNav li.sliderTag h4{text-align:center; padding:0px; margin:0 0 5px 0; padding-top:5px; cursor:pointer;}
+.rightTextbox{width:740px;float:right;background:#eeeeee;min-height:700px;_height:700px;_overflow:visible;border-top:1px #cccccc dotted;border-left:1px #cccccc dotted;}
+.rightTextbox100{width:100%;float:none;background:#eeeeee;min-height:700px;_min-height:700px;border-top:1px #cccccc dotted;border-left:0px;}
+.rightTextbox .toplink{ background-color:#7ec6cf;height:21px; padding:5px 18px; line-height:21px; font-size:13px; font-weight:bolder;}
+.rightTextbox .toplink .ico{height:21px;background:url(../images/Li_bg.png) left center no-repeat;float:left; width:12px;}
+.rightTextbox .toplink .textTitle{float:left;padding-right:7px;}
+.rightTextbox .textBigTitle{ text-align:center; padding:10px 5px 8px 5px;border-bottom:1px dotted #cccccc; background-color:#d7faff;}
+.rightTextbox .textSmallTitle{ text-align:right; font-size:12px; font-weight:normal; padding:5px 10px;border-top:1px dotted #cccccc; background-color:#f0f0f0; color:#999;}
+.rightTextbox h4 p{ margin:0px 5px 0px 10px; float:right; padding:0px 3px 0px 3px;height:16px;}
+.rightTextbox h4 p img{margin:0px 3px; cursor:pointer;}
+.rightTextbox .textContent{padding:10px 20px;font-size:12px; line-height:25px; text-indent:2em;}
+.rightTextbox .textShortContent{padding:10px;border:1px solid #cccccc; background-color:#fbf9f9; color:#666; font-weight:normal; margin:5px -5px;}
+.leftlinkbox .imgAndLinkli{text-align:center;line-height:21px;}
+.leftlinkbox .imgAndLinkli img{ border:1px #cccccc solid; padding:4px; width:160px; height:100px; background-color:#e9eaec;}
+.top3ServiceDiv{width:700px;}
+.ServiceDiv .top3imgAndLinkDiv{width:660px;float:none; margin-left:20px; position:static;}
+.ServiceDiv .top3imgAndLinkul{ width:660px; position:static;}
+.ServiceDiv .top3imgAndLinkli{text-align:center;line-height:21px; width:220px;}
+.ServiceListdiv{width:720px; margin:0 auto; margin-top:10px;min-height:138px; border-top:5px #7ec6cf solid;padding-bottom:6px;}
+.ServiceListdiv .imgAndLinkli{text-align:center;line-height:19px;float:left; width:144px; padding-top:10px; height:115px;}
+.ServiceListdiv .imgAndLinkli img{ border:1px #cccccc solid; padding:4px;width:120px; height:75px; background-color:#e9eaec;}
+#flashMap{width:600px; height:400px;}
+.netServiceTop{ float:none; width:720px; margin:0 auto; margin-top:10px; height:auto;}
+.netServiceDiv{width:730px; margin:0 auto; margin-top:10px; height:auto; border-top:5px #7ec6cf solid;padding-bottom:10px;}
+.netServiceDiv .rootLine{border-bottom:5px #7ec6cf solid;padding-bottom:10px;}
+.netServiceDiv li{width:720px; margin:0 auto; margin-top:10px; height:auto; border:1px #CCCCCC solid; background-color:#FFF; padding-bottom:15px;}
+.netServiceDiv .fei{background-color:#e3ebf0; border-color:#2c81bb}
+.netServiceDiv li h1{font-size:14px; line-height:27px; padding-left:29px; height:27px; overflow:hidden; background:url(../images/top_ico.png) no-repeat;}
+.netServiceDiv li h1 span{font-size:12px; font-weight:normal; color:#999; margin-left:3px; margin-top:7px;line-height:15px; float:left;}
+.netServiceDiv li h1 a{font-size:14px;float:left;}
+.netServiceDiv li h1 p{ margin:0px; float:right; padding:6px 3px 0px 3px;height:16px;}
+.netServiceDiv li h1 p img{margin:0px 3px; cursor:pointer;}
+.netServiceDiv li h2{font-size:13px;line-height:23px; text-align:center; width:120px; float:left; margin-left:10px; margin-right:10px; margin-top:5px; display:inline;}
+.netServiceDiv li h2 .imageico{border:1px #cccccc solid; padding:4px; width:100px; height:75px; background-color:#e2e2e2;}
+.netServiceDiv li h3 .buy{width:100px;height:29px; margin-top:19px; cursor:pointer; float:right; margin-right:20px;}
+.netServiceDiv li h3{ float:right; width:559px; text-indent:2em; line-height:21px; font-size:12px; font-weight:normal; padding:5px 10px;border-left:1px #cccccc dotted;min-height:90px;_min-height:90px;}
+#imgdiv{margin: 0 auto;border:1px solid #999;padding:5px;background:#FFFFFF;display:none; position: absolute;}
+#ZoomPic{ width:971px; margin:0 auto; margin-top:5px;}
+/*��ҳ�벿��*/
+.Pager
+{
+	float:right; padding-top:4px;
+}
+.Pager_Info
+{
+	float:left;
+	margin-right:2px;
+	padding:4px 8px;
+	padding-bottom:3px;
+	border:solid 1px #CCE7FD;
+	background-color:#ECF4FB;
+}
+.Pager_Number
+{
+	float:left;
+	margin-right:2px;
+	padding-top:4px;
+	padding-bottom:4px;
+	padding-left:8px;
+	padding-right:8px;
+	border:solid 1px #CCE7FD;
+	background-color:#F9FBFD;
+}
+.Pager_Pointer
+{
+	float:left;
+	margin-right:2px;
+	padding-top:7px;
+	padding-bottom:7px;
+	padding-left:7px;
+	padding-right:7px;
+	border:solid 1px #CCE7FD;
+	background-color:#ECF4FB;
+}
+.Pager_Input
+{
+	float:left;
+	text-align:center;
+	width:100px;
+	padding:1px;
+	border:solid 1px #CCE7FD;
+	background-color:#ECF4FB;
+}
+.Pager_Input input
+{
+	height:12px;
+	width:30px;
+}
+.Pager_Current
+{
+	margin-left:-9px;
+	margin-right:-9px;
+	background-color:#CCE7FD;
+	padding-top:4px;
+	padding-bottom:4px;
+	padding-left:8px;
+	padding-right:8px;
+}
+.Hidden
+{
+	overflow:hidden;
+}
+.Cursor
+{
+	cursor:pointer
+}
+.CommentTable
+{
+    margin:5px auto; font-size:14px;
+    background-color:#FFFFFF;
+    color:#000000;
+}
+.CommentTd
+{
+    border:solid 1px #CCCCCC; padding:1px;font-size:14px;
+}
+.CommentTitle
+{
+    height:26px; padding-top:4px; background-color:#F1f1f1;border-bottom:solid 1px #CCCCCC; padding-left:12px; font-size:13px;
+}
+.CommentAbout
+{
+    padding:14px;font-size:13px;
+}
+.ReCommentTitle
+{
+    height:26px;text-indent:0em; padding-top:4px;border:solid 1px #9BAACB; margin-top:15px;padding-left:12px;font-size:13px; font-weight:bolder;
+}
+.ReCommentAbout
+{
+    padding:10px; background-color:#EAEFF3;border:solid 1px #9BAACB;border-top:solid 0px #9BAACB;font-size:13px;font-weight:bolder;
+}
+

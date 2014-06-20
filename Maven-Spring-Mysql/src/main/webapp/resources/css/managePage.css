@@ -1,0 +1,46 @@
+@charset "utf-8";
+/* CSS Document */
+body,td,th,div,li,ul{font-size:12px;font-family:"微软雅黑",Arial, Helvetica, sans-serif;color: #000;}
+body{margin:0px;padding:0px; background-color:#FFF;}
+a {font-size:12px;color: #000;}
+a:hover,a:active,a:visited {color: #000;}
+h1,h2,h3,h4,h5,h6 {font-weight:bold;margin:0px;padding:0px;}
+h1 {font-size: 16px;color: #000;}
+h2 {font-size: 14px;color: #000;}
+h3 {font-size: 12px;color: #000;}
+li,ul,div,p,img,a,form,td,tr{list-style:none;padding:0px; margin:0px;border:0px;}
+.divleft{float:left;}
+.divright{float:right;}
+.divclear{clear:both;height:0px; overflow:hidden;}
+#tooltip {background:#fff;; padding: 10px; border-radius: 5px; border: 1px solid #cccccc; width:255px; position:absolute; z-index: 1000; box-shadow: 0px 0px 3px #333; -webkit-border-radius: 5px; -moz-box-shadow: 0px 0px 3px #333; -webkit-box-shadow: 0px 0px 3px #333; -moz-border-radius: 5px;
+}
+#tooltip p {color:#000; line-height: 25px; font-size: 13px;}
+#Head{margin:5px; height:31px; line-height:31px; text-align:center; font-size:16px; font-weight:bolder; background-color:#2a94ff; color:#FFF;}
+/*搜索和操作区域开始*/
+#ButtonDiv{height:72px; background-image:url(../images/mian/menu_bg_72.gif); border-bottom:1px solid #ccc;border-top:1px solid #ccc;}
+#SearchTable{margin-left:20px;}
+#SearchTable td{padding:5px 2px 0px 2px; vertical-align:top;}
+#SearchTable .inputtext{padding:2px 3px; height:15px; line-height:15px; border:1px solid #ccc;}
+#SearchTable .selectclass{border:1px solid #ccc;min-width:100px; height:21px;}
+#SearchTable .checkboxclass{margin:3px 2px 0px 2px; line-height:18px; display:block;}
+.buttonTop{height:5px; width:100%; clear:both;}
+.bottonlist{ margin-left:25px;}
+.ButtonTd{border:1px solid #ccc; border-left:0px; background-image:url(../images/mian/menu_bg_31.gif);}
+.TdLast{ border-right:0px;}
+a.ButtonAll{border:0px;height:31px;line-height:31px;background-repeat:no-repeat; background-position:5px center; padding:0px 8px 0px 25px; display:block;text-decoration:none;}
+a.ButtonAll:hover{color:#F00;}
+.ListTable{ margin:5px;background-color:#ccc}
+#ListTable{}
+#ListTable tr{background-color:#FFF; cursor:pointer;}
+#ListTable tr td{height:25px;line-height:23px; padding:2px 0px; text-align:center; overflow:hidden; font-size:13px;}
+#ListTable tr td a{ font-size:13px; color:#F00;}
+#ListTable tr td.tdleft{ text-align:left;padding-left:3px;}
+#ListTable tr.Single{background-color:#f8f8f8;}
+#ListTable tr.MouseOn{background-color:#e2f0ff;}
+#ListTable tr.title{background:url(../images/mian/menu_bg_32.gif); height:32px;}
+#ListTable tr.title td{line-height:32px;height:32px; text-align:center; font-size:13px; font-weight:bolder;padding:0px;}
+
+#FormPage{ border-top:1px solid #ccc;}
+#FormPage .tdright{ width:120px; padding-right:10px; line-height:35px; text-align:right; font-size:14px;}
+#FormPage .inputstyle{padding:1px 2px; height:21px; line-height:21px; border:1px solid #7e9db9; width:99%;}
+#FormPage .reqstyle{padding:9px 3px 9px 21px; height:17px; line-height:17px;background-repeat:no-repeat; background-position:0px 9px; vertical-align:top;}

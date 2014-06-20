@@ -1,0 +1,389 @@
+﻿/**全局部分**/
+BODY
+{
+	font: 12px Tahoma, Verdana;
+	background:#DFDFE0;
+	width:100%;
+	margin:0px auto;
+}
+P
+{
+	margin:3px;
+}
+DIV
+{
+	text-align:left;
+	word-break :break-all;
+}
+img{
+	border:0px;
+}
+.Button
+{
+	border:solid 1px #87A3C1;
+	margin:1px;
+	background:#FFFFFF url('../images/button_bg.gif');
+	line-height:18px;
+	height:21px;
+	font-size:12px;
+	padding:1px 3px;
+}
+.BodyBlock
+{
+	border:solid 3px #DADADA;
+	background:#FFFFFF;
+	margin:0px auto;
+	text-align:center;
+}
+A
+{
+	text-decoration:none;
+}
+A:link 
+{
+	text-decoration: none;
+	color: #000000;
+}
+A:visited
+{
+	text-decoration: none;
+	color: #000000;
+}
+A:hover
+{
+	text-decoration: none;
+	color: #FF0000;
+}
+dl
+{
+	background-color:#EFF4F8;
+	margin:1px 0px 0px;
+	width:100%;
+	padding:0px;
+	overflow:hidden
+	word-break :break-all;
+}
+dl dd{
+	margin:0px;padding:5px 0px 2px 3px;
+}
+ul
+{
+	background-color:#EFF4F8;
+	margin:1px;
+	height:23px;
+	line-height:23px;
+	padding:0px;
+	list-style:none;
+	word-break :break-all;
+}
+ul li{
+	float:left;padding:0px 0px 0px 3px;word-break :break-all;
+}
+ul li img{
+	margin:5px 0px 0px;
+}
+.Cursor
+{
+	cursor:pointer
+}
+.Block
+{
+	border:solid 1px #A8C5E4;
+	padding:1px;
+	margin:5px auto;
+	width:98%;
+}
+.DottedBlock
+{
+	border:1px #A8C5E4 dashed;
+	padding:1px;
+	margin:5px auto;
+	width:98%;
+}
+.BlankBlock
+{
+	padding:1px;
+	margin:5px auto;
+	width:98%;
+}
+.Title
+{
+	background-color:#68A6E4;
+	margin:1px;
+	font-weight:bold;
+	color:#FFFFFF
+}
+.Title A
+{
+	color:#FFFFFF;
+}
+.Title A:visited
+{
+	color:#FFFFFF;
+}
+.SmallTitle
+{
+	background-color:#68A6E4;
+	margin:1px;
+	color:#FFFFFF
+}
+.SmallTitle A
+{
+	color:#FFFFFF;
+}
+.SmallTitle A:visited
+{
+	color:#FFFFFF;
+}
+.Header
+{
+	background-color:#CCE7FD;
+}
+.Middle
+{
+	background-color:#EFF4F8;
+}
+
+.Footer
+{
+	background-color:#ECF4FB;
+}
+
+/*分页码部分*/
+.Pager
+{
+	float:right;
+}
+.Pager_Info
+{
+	float:left;
+	margin-right:2px;
+	padding:4px 8px;
+	padding-bottom:3px;
+	border:solid 1px #CCE7FD;
+	background-color:#ECF4FB;
+}
+.Pager_Number
+{
+	float:left;
+	margin-right:2px;
+	padding-top:4px;
+	padding-bottom:4px;
+	padding-left:8px;
+	padding-right:8px;
+	border:solid 1px #CCE7FD;
+	background-color:#F9FBFD;
+}
+.Pager_Pointer
+{
+	float:left;
+	margin-right:2px;
+	padding-top:7px;
+	padding-bottom:7px;
+	padding-left:7px;
+	padding-right:7px;
+	border:solid 1px #CCE7FD;
+	background-color:#ECF4FB;
+}
+.Pager_Input
+{
+	float:left;
+	text-align:center;
+	width:100px;
+	padding:1px;
+	border:solid 1px #CCE7FD;
+	background-color:#ECF4FB;
+}
+.Pager_Input input
+{
+	height:12px;
+	width:30px;
+}
+.Pager_Current
+{
+	margin-left:-9px;
+	margin-right:-9px;
+	background-color:#CCE7FD;
+	padding-top:4px;
+	padding-bottom:4px;
+	padding-left:8px;
+	padding-right:8px;
+}
+/**其他**/
+.MenuLead
+{
+	background-color:#EFF4F8;
+	color:#DFDFDF;
+
+	padding:1px;
+	text-align:right;
+}
+.ForumIcon
+{
+	width:310px; 
+	border-left:1px #DFDFDF dotted;
+	float:right;
+	text-align:center;
+}
+.ForumIcon div
+{
+	width:60px;
+	float:right;
+	text-align:center
+}
+.Possition
+{
+	background-image: url('../images/table_lead.gif');
+	color : #6E6E6E;
+	height:22px;
+	font-weight:bold;
+}
+.Possition A:link 
+{
+	TEXT-DECORATION: none;
+	COLOR: #6E6E6E;
+}
+.Possition A:visited
+{
+	TEXT-DECORATION: none;
+	COLOR: #6E6E6E;
+}
+.Possition A:hover
+{
+	TEXT-DECORATION: none;
+	COLOR: #FF0000;
+}
+.Sred {
+color:#FF0000;
+ padding:0px 2px;
+}
+.H15
+{
+	height:15px;
+}
+.H20
+{
+	height:20px;
+}
+.H22
+{
+	height:22px;
+}
+.H25
+{
+	height:25px;
+}
+.P1
+{
+	padding:1px;
+}
+.P2
+{
+	padding:2px;
+}
+.P5
+{
+	padding:5px;
+}
+.P10
+{
+	padding:10px;
+}
+.PTB5
+{
+	padding:5px 0px
+}
+.PRL5
+{
+	padding:0px 5px
+}
+.PT5
+{
+	padding-top:5px;
+}
+.M1
+{
+	margin:1px
+}
+.M5
+{
+	margin:5px;
+}
+.LH20
+{
+	line-height:20px
+}
+.LH22
+{
+	line-height:22px
+}
+.LH25
+{
+	line-height:25px
+}
+.Left
+{
+	float:left;
+}
+.Right
+{
+	float:right;
+}
+.Hidden
+{
+	overflow:hidden;
+}
+.TC
+{
+	text-align:center;
+}
+.TL
+{
+	text-align:left;
+}
+.TR
+{
+	text-align:right;
+}
+.Red
+{
+	color:Red;
+}
+.Blue
+{
+	color:Blue;
+}
+.B
+{
+	font-weight:bold
+}
+.BT
+{
+	border-top:1px #FFFFFF solid
+}
+.BB
+{
+	border-bottom:1px #FFFFFF solid
+}
+.BL
+{
+	border-left:1px #FFFFFF solid;
+	padding-top:2px;
+}
+.BR
+{
+	border-right:1px #FFFFFF solid
+}
+/**被屏式样**/
+.PostHidden
+{
+	overflow:hidden;
+	border: 1px dashed #75BEFA;
+	border-top:3px double #75BEFA;
+	text-align : center;
+	color:#00008B;
+	margin :5px;
+	padding:5px;
+	background-color : #F6F4EB;
+	float:right;
+}
