@@ -5,17 +5,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
+<link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/jquery.ui.css"/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/jqGrid/css/ui.jqgrid.css'/>"/> 
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/lhgdialog.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/loginPage.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/ico.css'/>"/>
-<link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/jquery.ui.css"/>"/>
 
-<script type="text/javascript" src="<c:url value='/resources/js/jquery-1.7.2.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/jqGrid/js/jquery-1.9.0.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/jqGrid/js/jquery.jqGrid.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.lhgdialog.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.validity.js'/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/jquery.ui.js"/>"></script>
-<script type="text/javascript" src="<c:url value='/resources/jqGrid/js/jquery.jqGrid.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/jqGrid/js/i18n/grid.locale-cn.js"/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/Common.js'/>"></script>
 
@@ -98,6 +98,11 @@ EvPNG.fix(".png");
 		<span>当前路径：系统管理 - 原料管理</span>
 	</div>
 	<!-- 路径结束 -->
+	<!-- 操作按钮开始 -->
+	<div>
+		<input id="new" name="new" type="button" value="新增" onclick="<c:url value = '/admin/rawMaterial/add'/>" />
+	</div>
+	<!-- 操作按钮结束 -->
 	<!-- jqGrid 开始 -->
 	<table id="list"></table>
     <div id="pager"></div>
@@ -144,10 +149,10 @@ $(function () {
 			{name: "mark", width: 100,sortable:false},
 			{name: "enabled", width: 100},
 			{name: "createDate", width: 100},
-			{name: "id", width: 100, sortable:false},
+			{name: "id", width: 100, sortable:false, formatter:operateFormatter},
 		],
 	    sortname: 'id',
-    	datatype: 'json',
+	    datatype: 'json',
         mtype: 'GET',
         hidegrid: false,
         rownumbers: true,
@@ -156,12 +161,18 @@ $(function () {
         rowList: [10, 15, 20],
         sortorder: 'asc',
         viewrecords: true,
-        pager: $('#pager'),
-        height: 'auto',
-        gridId: '#list',
+        pager: '#pager',
+        height: 'auto'
 	}).jqGrid('navGrid', '#pager', {edit: false, add: false, del: false, search: false});
 });
  
+function operateFormatter(cellvalue, options, rowObject){
+    var retVal="";
+    retVal+="<span><a href='admin/project/view" + cellvalue + "'>删除</a></span>";
+    retVal+="&nbsp&nbsp&nbsp&nbsp";
+    retVal+="<span><a href='admin/project/edit" + cellvalue + "'>启用/禁用</a></span>";
+    return retVal;
+};
 /*jqGrid 结束*/
 </script>
 </body>

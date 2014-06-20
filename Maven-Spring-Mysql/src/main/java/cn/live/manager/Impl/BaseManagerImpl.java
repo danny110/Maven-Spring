@@ -57,6 +57,7 @@ public class BaseManagerImpl<T, ID extends Serializable> implements BaseManager<
 		dao.update(entity);
 	}
 	
+	
 	/* (non-Javadoc)
 	 * <p>Title: getResultJson</p> 
 	 * <p>Description: </p> 
@@ -67,8 +68,7 @@ public class BaseManagerImpl<T, ID extends Serializable> implements BaseManager<
 	 * @return 
 	 * @see cn.live.manager.BaseManager#getResultJson(java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String) 
 	 */
-	@Override
-	public ResultJson<T> getResultJson(Integer page, Integer rows, String sidx,	String sord) {
-		return dao.getResultJson(page, rows, sidx, sord);
+	public ResultJson getResultJson(Integer page, Integer rows, String sidx, String sord, String[] propertyNames) {
+		return dao.getResultJson(page, rows, sidx, sord, propertyNames);
 	}
 }

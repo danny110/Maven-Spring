@@ -3,6 +3,7 @@ package cn.live.dao.Impl;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -11,8 +12,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.springframework.util.Assert;
 
 import cn.live.dao.BaseDao;
+import cn.live.util.BaseUtils;
 import cn.live.util.ResultJson;
 
 /**
@@ -104,7 +107,7 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public ResultJson<T> getResultJson(Integer page, Integer rows, String sidx, String sord) {
+	public ResultJson getResultJson(Integer page, Integer rows, String sidx, String sord, String[] propertyNames) {
 		Criteria criteria = (Criteria) this.getSession().createCriteria(clazz);
 		long records = (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
 		if ("asc".equals(sord.toLowerCase())) 
@@ -115,7 +118,26 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 		criteria.setFirstResult((page - 1) * rows);
 		criteria.setMaxResults(rows);
 		List<T> temp = criteria.list();
-		return new ResultJson<T>(page, records, records % rows == 0 ? records / rows : records / rows + 1, temp);
+		ResultJson resultJson = new ResultJson(page, records, records % rows == 0 ? records / rows : records / rows + 1);
+		fillJQueryGridData(resultJson, temp, (String[]) propertyNames);
+        return resultJson;
 	}
+	
+	/** 
+	 * @Title: fillJQueryGridData 
+	 * @Description: TODO 填充数据
+	 * @param @param resultJson
+	 * @param @param list
+	 * @param @param propertyNames 
+	 * @return void
+	 * @throws 
+	 */
+	private void fillJQueryGridData(ResultJson resultJson, List<T> list, String[] propertyNames) {
+		Assert.notNull(propertyNames);
+		Assert.notNull(list);
+		List<Map<String, Object>> rows = BaseUtils.list2ResultJson(list, propertyNames);
+		resultJson.setRows(rows);
+	}
+	
 	
 }

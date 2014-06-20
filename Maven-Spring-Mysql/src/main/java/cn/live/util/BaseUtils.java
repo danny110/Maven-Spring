@@ -1,6 +1,17 @@
 package cn.live.util;
 
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.util.Assert;
 
 /**
  * @ClassName: BaseUtils
@@ -9,7 +20,7 @@ import java.security.MessageDigest;
  * @date 2014年6月17日 下午10:36:03
  *
  */
-public class BaseUtils {
+public final class BaseUtils {
 	
 	/** 
 	 * @Title: getMD5 
@@ -39,5 +50,64 @@ public class BaseUtils {
 			e.printStackTrace();
 		}
 		return s;
+	}
+	
+	 /** 
+	 * @Title: list2ResultJson 
+	 * @Description: TODO list 转换成 ResultJson
+	 * @param @param list
+	 * @param @param propertyNames
+	 * @param @return 
+	 * @return List<Map<String,Object>>
+	 * @throws 
+	 */
+	public static List<Map<String, Object>> list2ResultJson(List<?> list, String... propertyNames) {
+		 List<Map<String, Object>> rows = new ArrayList<Map<String,Object>>();
+	        for (Object o : list) {
+	        	Map<String, Object> row = new HashMap<String, Object>();
+	            for (String propertyName : propertyNames) {
+	                Object val = getPropertyValueByCascadeName(o, propertyName);
+	                row.put(propertyName, val);
+	            }
+	            rows.add(row);
+	        }
+	        return rows;
+	    }
+	 
+	public static Object getPropertyValueByCascadeName(Object o, String cascadeName) {
+		Assert.notNull(o);
+		Assert.notNull(cascadeName);
+		Object propertyValue = o;
+		for (String simplePropertyName : cascadeName.split("\\.")) {
+			propertyValue = getPropertyValueBySimpleName(propertyValue, simplePropertyName);
+		}
+		return propertyValue;
+	}
+	 
+	public static Object getPropertyValueBySimpleName(Object o, String propertyName) {
+		try {
+			if (o == null) {
+				return null;
+			}
+			PropertyDescriptor[] propertyDescriptors = Introspector.getBeanInfo(o.getClass()).getPropertyDescriptors();
+			if (propertyDescriptors == null) {
+				return null;
+			}
+			for (PropertyDescriptor descriptor : propertyDescriptors) {
+				if (!propertyName.equals(descriptor.getName()) || descriptor.getReadMethod() == null) {
+					continue;
+				}
+				Method method = descriptor.getReadMethod();
+				return method.invoke(o);
+			}
+
+		} catch (IntrospectionException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

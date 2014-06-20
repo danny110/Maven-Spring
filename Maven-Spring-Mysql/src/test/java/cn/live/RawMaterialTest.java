@@ -13,7 +13,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cn.live.bean.RawMaterial;
 import cn.live.manager.RawMaterialManager;
-import cn.live.util.ResultJson;
 
 /**
  * @ClassName: RawMaterialTest
@@ -47,8 +46,8 @@ public class RawMaterialTest {
 	
 	@Test
 	public void test2() {
-		ResultJson<RawMaterial> resultJson = new ResultJson<RawMaterial>();
-		resultJson = rawMaterialManager.getResultJson(1, 10, "id", "asc");
-		System.out.println(resultJson);
+//		ResultJson<RawMaterial> resultJson = new ResultJson<RawMaterial>();
+//		resultJson = rawMaterialManager.getResultJson(1, 10, "id", "asc");
+//		System.out.println(resultJson);
 	}
 }

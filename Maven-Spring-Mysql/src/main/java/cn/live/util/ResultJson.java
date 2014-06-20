@@ -2,6 +2,7 @@ package cn.live.util;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: ResultJson
@@ -10,7 +11,7 @@ import java.util.List;
  * @date 2014年6月19日 上午8:21:50
  * 
  */
-public class ResultJson<T> implements Serializable {
+public final class ResultJson implements Serializable {
 
 	/**
 	 * @Fields serialVersionUID : 序列化 ID
@@ -19,7 +20,7 @@ public class ResultJson<T> implements Serializable {
 	private int page; // 当前页码
 	private long records; // 总数据
 	private long total; // 总页码
-	private List<T> rows; // 数据集
+	private List<Map<String, Object>> rows; // 数据集
 	
 	/** 
 	 * <p>Title: </p> 
@@ -35,11 +36,10 @@ public class ResultJson<T> implements Serializable {
 	 * @param totlal
 	 * @param rows 
 	 */
-	public ResultJson(int page, long records, long totlal, List<T> rows){
+	public ResultJson(int page, long records, long totlal){
 		this.page = page;
 		this.records = records;
 		this.total = totlal;
-		this.rows = rows;
 	};
 	
 
@@ -67,11 +67,11 @@ public class ResultJson<T> implements Serializable {
 		this.total = total;
 	}
 
-	public List<T> getRows() {
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List<T> rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 

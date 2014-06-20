@@ -48,9 +48,10 @@ public interface BaseDao<T, ID extends Serializable> {
 	 * @param @param rows 每页记录条数
 	 * @param @param sidx 排序字段
 	 * @param @param sord 排序类型
+	 * @param @param sord 属性名称
 	 * @param @return 
-	 * @return ResultJson<T>
+	 * @return ResultJson
 	 * @throws 
 	 */
-	ResultJson<T> getResultJson(Integer page, Integer rows, String sidx, String sord);
+	ResultJson getResultJson(Integer page, Integer rows, String sidx, String sord, String[] propertyNames);
 }

@@ -5,8 +5,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.live.bean.RawMaterial;
 import cn.live.manager.RawMaterialManager;
 import cn.live.util.ResultJson;
 
@@ -47,11 +47,12 @@ public class RawMaterialController {
 	 * @return ResultJson<RawMaterial>
 	 * @throws 
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/data", method = RequestMethod.GET)
-	public ResultJson<RawMaterial> data(Integer page, Integer rows, String sidx, String sord) {
-		ResultJson<RawMaterial> resultJson = new ResultJson<RawMaterial>();
+	public ResultJson data(Integer page, Integer rows, String sidx, String sord) {
+		ResultJson resultJson = new ResultJson();
 		try {
-			resultJson = rawMaterialManager.getResultJson(page, rows, sidx, sord);
+			resultJson = rawMaterialManager.getResultJson(page, rows, sidx, sord, new String[]{"id","name","mark","enabled","createDate"});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
