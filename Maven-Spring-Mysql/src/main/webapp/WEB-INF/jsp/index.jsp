@@ -43,42 +43,15 @@ EvPNG.fix(".png");
 </head>
 <body>
 <div id="MianTable">
-
 <!--顶部开始-->
-<div class="topTd" id="MianTop">
-	<div class="topTitle">管理系统框架</div>
-	    <ul class="topIco"><li class="textLi userpng png"><a href="UserInfo.html">Administrator，您好</a></li><li class="splitLi2px"></li>
-	    <li class="textLi managepng png"><a href="UserInfo.html">设置</a></li><li class="splitLi2px"></li>
-	    <li class="textLi helppng png"><a href="Help.html">帮助</a></li><li class="splitLi2px"></li> <li class="textLi quitpng png"><a href="Login.html">退出</a></li>
-	    </ul>
-	</div>
-<div class="midTd" id="MianMid"><img src="<c:url value='../resources/images/height5px.gif'/>" width="8" height="5" /></div>
+	<%@include file="framework/header.jsp"%>
 <!--顶部结束-->
 
 <!--中间工作区域开始-->
 <div class="WorkMian" id="MianWork">
 <!--左边导航开始-->
 <div class="menuTd" id="MenuTd">
-<!--导航菜单二开始-->
-<div class="menuLi_Li" id="MenuTd_1">
-<ul>
-	<li class="DownLi">
-		<a href="javascript:void(0)" class="DownA">库存管理</a>
-		<ul>
-			<li><a href="javascript:void(0)" onClick="AddMenu('登&nbsp;&nbsp;录','Login.html')">库存统计</a></li>
-      	</ul>
-	</li>
-	<li class="DownLi">
-		<a href="javascript:void(0)" class="DownA">系统管理</a>
-		<ul>
-			<li><a href="<c:url value='/admin/rawMaterial/list'/>">原料管理</a></li>
-			<li><a href="<c:url value='/admin/specification/list'/>">规格管理</a></li>
-			<li><a href="<c:url value='/admin/client/list'/>">客户管理</a></li>
-      	</ul>
-	</li>
-</ul>
-</div>
-	
+	<%@include file="framework/left.jsp"%>
 </div>
 <!--左边导航结束-->
 
@@ -99,7 +72,7 @@ EvPNG.fix(".png");
 <!--中间工作区域结束-->
 
 <!--底部版权区域区域开始-->
-<div id="MianRoot">版权所有</div>
+	<%@include file="framework/footer.jsp"%>
 <!--底部版权区域区域结束-->
 </div>
 <script type="text/javascript">
