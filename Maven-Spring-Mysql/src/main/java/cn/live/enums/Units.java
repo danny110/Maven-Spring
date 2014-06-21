@@ -1,4 +1,4 @@
-package enums;
+package cn.live.enums;
 
 /**
  * @ClassName: Units

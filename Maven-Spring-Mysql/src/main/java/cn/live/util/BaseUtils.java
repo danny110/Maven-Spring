@@ -13,8 +13,9 @@ import java.util.Map;
 
 import org.springframework.util.Assert;
 
-import enums.Gender;
-import enums.Units;
+import cn.live.enums.Gender;
+import cn.live.enums.Units;
+
 
 /**
  * @ClassName: BaseUtils

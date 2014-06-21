@@ -6,7 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import enums.Units;
+import cn.live.enums.Units;
+
 
 /**
  * @ClassName: RawMaterial

@@ -12,9 +12,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cn.live.bean.User;
+import cn.live.enums.OperateCode;
 import cn.live.manager.UserManager;
 import cn.live.util.BaseUtils;
-import enums.OperateCode;
 
 /**
  * @ClassName: UserTest

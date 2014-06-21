@@ -8,7 +8,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import enums.Gender;
+import cn.live.enums.Gender;
+
 
 /**
  * @ClassName: Client

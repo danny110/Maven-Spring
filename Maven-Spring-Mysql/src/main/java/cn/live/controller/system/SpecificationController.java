@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.live.bean.RawMaterial;
 import cn.live.bean.Specification;
+import cn.live.enums.OperateCode;
 import cn.live.manager.RawMaterialManager;
 import cn.live.manager.SpecificationManager;
 import cn.live.manager.SpecificationViewManager;
 import cn.live.util.Filter;
 import cn.live.util.OperateResult;
 import cn.live.util.ResultJson;
-import enums.OperateCode;
 
 /**
  * @ClassName: SpecificationController
