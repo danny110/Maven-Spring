@@ -1,7 +1,10 @@
 package cn.live.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
+import cn.live.util.Filter;
+import cn.live.util.Order;
 import cn.live.util.ResultJson;
 
 /**
@@ -33,13 +36,34 @@ public interface BaseDao<T, ID extends Serializable> {
 	T findById(ID id);
 	
 	/** 
-	 * @Title: update 
+	 * @Title: merge 
 	 * @Description: TODO 更新对象到数据库
 	 * @param @param entity 
 	 * @return void
 	 * @throws 
 	 */
-	void update(T entity);
+	void merge(T entity);
+	
+	/** 
+	 * @Title: getList 
+	 * @Description: TODO 获取列表
+	 * @param @param filters
+	 * @param @return 
+	 * @return List<T>
+	 * @throws 
+	 */
+	List<T> getList(Filter[] filters);
+	
+	/** 
+	 * @Title: getList 
+	 * @Description: TODO 获取列表
+	 * @param @param filters
+	 * @param @param orders
+	 * @param @return 
+	 * @return List<T>
+	 * @throws 
+	 */
+	List<T> getList(Filter[] filters, Order[] orders);
 	
 	/** 
 	 * @Title: getResultJson 
@@ -48,10 +72,11 @@ public interface BaseDao<T, ID extends Serializable> {
 	 * @param @param rows 每页记录条数
 	 * @param @param sidx 排序字段
 	 * @param @param sord 排序类型
-	 * @param @param sord 属性名称
+	 * @param @param propertyNames 属性名称
+	 * @param @param filters g过滤器
 	 * @param @return 
 	 * @return ResultJson
 	 * @throws 
 	 */
-	ResultJson getResultJson(Integer page, Integer rows, String sidx, String sord, String[] propertyNames);
+	ResultJson getResultJson(Integer page, Integer rows, String sidx, String sord, String[] propertyNames, Filter[] filters);
 }

@@ -22,8 +22,8 @@
 	<!-- 使用annotation定义事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
-	 <!-- 这是事务通知操作，使用的事务管理器引用自 transactionManager -->    
-   <tx:advice id="txAdvice" transaction-manager="transactionManager">    
+	<!-- 这是事务通知操作，使用的事务管理器引用自 transactionManager -->    
+   	<!-- <tx:advice id="txAdvice" transaction-manager="transactionManager">    
        <tx:attributes>    
            <tx:method name="insert*" propagation="REQUIRED" />    
            <tx:method name="update*" propagation="REQUIRED" />    
@@ -32,25 +32,36 @@
            <tx:method name="query*" propagation="REQUIRED" read-only="true"/>    
            <tx:method name="*" propagation="REQUIRED" />    
        </tx:attributes>    
-   </tx:advice>   
+   </tx:advice> -->   
      
     <!-- 需要引入aop的命名空间 -->    
-   <aop:config>    
+  <!--  <aop:config>   -->  
        <!-- 切入点指明了在执行Service的所有方法时产生事务拦截操作 -->    
-       <aop:pointcut id="daoMethods" expression="execution(* com.tl..serviceimpl.*.*(..))" />        
+       <!-- <aop:pointcut id="daoMethods" expression="execution(* com.tl..serviceimpl.*.*(..))" />   -->      
        <!-- 定义了将采用何种拦截操作，这里引用到 txAdvice -->    
-       <aop:advisor advice-ref="txAdvice" pointcut-ref="daoMethods" />    
-   </aop:config>   
+       <!-- <aop:advisor advice-ref="txAdvice" pointcut-ref="daoMethods" />   -->  
+<!--    </aop:config>   --> 
    
 	
-    <context:component-scan base-package="cn.live.*" >
+<!--     <context:component-scan base-package="cn.live.*" >
     	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-    </context:component-scan>
+    </context:component-scan> -->
     
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" >
         <property name="locations" >
             <list>
                 <value>classpath:jdbc.properties</value>
+                <value>classpath:manage.properties</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="staticMethod" value="java.lang.System.setProperty"/>
+        <property name="arguments">
+            <list>
+                <value>system.project_name</value>
+                <value>${system.project_name}</value>
             </list>
         </property>
     </bean>

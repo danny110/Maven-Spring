@@ -46,8 +46,9 @@ public class RawMaterialTest {
 	
 	@Test
 	public void test2() {
-//		ResultJson<RawMaterial> resultJson = new ResultJson<RawMaterial>();
-//		resultJson = rawMaterialManager.getResultJson(1, 10, "id", "asc");
-//		System.out.println(resultJson);
+		RawMaterial rawMaterial = rawMaterialManager.findById("51fe3bf2-350a-4a4f-935d-581a3e4f9195");
+		rawMaterial.setIsDeleted(true);
+		rawMaterialManager.merge(rawMaterial);
+		System.out.println("OK.");
 	}
 }

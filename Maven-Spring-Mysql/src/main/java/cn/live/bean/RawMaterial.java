@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import enums.Units;
+
 /**
  * @ClassName: RawMaterial
  * @Description: TODO 原料表
@@ -25,6 +27,7 @@ public class RawMaterial implements Serializable {
 	@Id
 	private String id; // id
 	private String name; // 名称
+	private Units units; // 单位
 	private String mark; // 备注
 	private String createDate; // 创建时间
 	private Boolean enabled; // 标记，启用/禁用
@@ -45,6 +48,14 @@ public class RawMaterial implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Units getUnits() {
+		return units;
+	}
+
+	public void setUnits(Units units) {
+		this.units = units;
 	}
 
 	public String getMark() {

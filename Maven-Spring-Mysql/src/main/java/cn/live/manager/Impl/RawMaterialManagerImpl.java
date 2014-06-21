@@ -3,7 +3,6 @@ package cn.live.manager.Impl;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import cn.live.bean.RawMaterial;
 import cn.live.dao.BaseDao;
@@ -17,7 +16,6 @@ import cn.live.manager.RawMaterialManager;
  *
  */
 @Service("rawMaterialManager")
-@Transactional
 public class RawMaterialManagerImpl extends BaseManagerImpl<RawMaterial, String> implements RawMaterialManager {
 	
 	@Resource(name = "rawMaterialDao")  

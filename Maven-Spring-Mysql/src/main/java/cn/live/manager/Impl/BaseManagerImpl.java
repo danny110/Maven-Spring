@@ -1,11 +1,14 @@
 package cn.live.manager.Impl;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.live.dao.BaseDao;
 import cn.live.manager.BaseManager;
+import cn.live.util.Filter;
+import cn.live.util.Order;
 import cn.live.util.ResultJson;
 
 /**
@@ -42,21 +45,46 @@ public class BaseManagerImpl<T, ID extends Serializable> implements BaseManager<
 	 * @see cn.live.manager.BaseManager#findById(java.io.Serializable) 
 	 */
 	@Override
+	@Transactional(readOnly = true)
 	public T findById(ID id) {
 		return dao.findById(id);
 	}
 	
 	/* (non-Javadoc)
-	 * <p>Title: update</p> 
+	 * <p>Title: merge</p> 
 	 * <p>Description: </p> 
 	 * @param entity 
-	 * @see cn.live.manager.BaseManager#update(java.lang.Object) 
+	 * @see cn.live.manager.BaseManager#merge(java.lang.Object) 
 	 */
 	@Override
-	public void update(T entity) {
-		dao.update(entity);
+	public void merge(T entity) {
+		dao.merge(entity);
 	}
 	
+	/* (non-Javadoc)
+	 * <p>Title: getList</p> 
+	 * <p>Description: </p> 
+	 * @param filters
+	 * @return 
+	 * @see cn.live.manager.BaseManager#getList(java.util.List) 
+	 */
+	@Override
+	public List<T> getList(Filter[] filters) {
+		return dao.getList(filters);
+	}
+	
+	/* (non-Javadoc)
+	 * <p>Title: getList</p> 
+	 * <p>Description: </p> 
+	 * @param filters
+	 * @param orders
+	 * @return 
+	 * @see cn.live.manager.BaseManager#getList(java.util.List, java.util.List) 
+	 */
+	@Override
+	public List<T> getList(Filter[] filters, Order[] orders) {
+		return dao.getList(filters, orders);
+	}
 	
 	/* (non-Javadoc)
 	 * <p>Title: getResultJson</p> 
@@ -68,7 +96,8 @@ public class BaseManagerImpl<T, ID extends Serializable> implements BaseManager<
 	 * @return 
 	 * @see cn.live.manager.BaseManager#getResultJson(java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String) 
 	 */
-	public ResultJson getResultJson(Integer page, Integer rows, String sidx, String sord, String[] propertyNames) {
-		return dao.getResultJson(page, rows, sidx, sord, propertyNames);
+	@Transactional(readOnly = true)
+	public ResultJson getResultJson(Integer page, Integer rows, String sidx, String sord, String[] propertyNames, Filter[] filters) {
+		return dao.getResultJson(page, rows, sidx, sord, propertyNames, filters);
 	}
 }

@@ -13,6 +13,9 @@ import java.util.Map;
 
 import org.springframework.util.Assert;
 
+import enums.Gender;
+import enums.Units;
+
 /**
  * @ClassName: BaseUtils
  * @Description: 基础工具类
@@ -67,7 +70,7 @@ public final class BaseUtils {
 	        	Map<String, Object> row = new HashMap<String, Object>();
 	            for (String propertyName : propertyNames) {
 	                Object val = getPropertyValueByCascadeName(o, propertyName);
-	                row.put(propertyName, val);
+	                row.put(propertyName, val instanceof Gender ? val.toString() : val instanceof Units ? val.toString() : val);
 	            }
 	            rows.add(row);
 	        }

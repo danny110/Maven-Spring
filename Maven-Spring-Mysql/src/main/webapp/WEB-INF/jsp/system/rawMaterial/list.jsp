@@ -18,9 +18,14 @@
 <script type="text/javascript" src="<c:url value="/resources/js/jquery.ui.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/jqGrid/js/i18n/grid.locale-cn.js"/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/Common.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/baseJS.js'/>"></script>
+<script type="text/javascript">
+var webRoot='${pageContext.request.contextPath}';
+</script>
+<script type="text/javascript" src="<c:url value="/resources/js/zDialog.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/zDrag.js"/>"></script>
 
 <script type="text/javascript">
-var webRootPath="${pageContext.request.contextPath}";
 var LeftLiTdHeight=0;
 //计算页面一些元素的高度和宽度
 function SetBodySize(){
@@ -100,7 +105,7 @@ EvPNG.fix(".png");
 	<!-- 路径结束 -->
 	<!-- 操作按钮开始 -->
 	<div>
-		<input id="new" name="new" type="button" value="新增" onclick="<c:url value = '/admin/rawMaterial/add'/>" />
+		<input id="btn_new" name="btn_new" type="button" value="新增"/>
 	</div>
 	<!-- 操作按钮结束 -->
 	<!-- jqGrid 开始 -->
@@ -142,16 +147,17 @@ if(ShowMenu=="0"){
 $(function () {
 	$("#list").jqGrid({
 		url: "<c:url value = '/admin/rawMaterial/data'/>",
-		colNames: ["id", "原料名称", "原料备注", "是否启用", "创建时间", "操作"],
+		colNames: ["id", "原料名称", "原料单位", "原料备注", "是否启用", "创建时间", "操作"],
 		colModel: [
 			{name: "id", index: "id", hidden: true, key: true},
 			{name: "name", width: 100},
+			{name: "units", width: 100},
 			{name: "mark", width: 100,sortable:false},
 			{name: "enabled", width: 100},
 			{name: "createDate", width: 100},
 			{name: "id", width: 100, sortable:false, formatter:operateFormatter},
 		],
-	    sortname: 'id',
+	    sortname: 'createDate',
 	    datatype: 'json',
         mtype: 'GET',
         hidegrid: false,
@@ -159,18 +165,36 @@ $(function () {
         autowidth: true,
         rowNum: 10,
         rowList: [10, 15, 20],
-        sortorder: 'asc',
+        sortorder: 'desc',
         viewrecords: true,
         pager: '#pager',
         height: 'auto'
 	}).jqGrid('navGrid', '#pager', {edit: false, add: false, del: false, search: false});
+	
+	/*新增原料*/
+    $("#btn_new").click(function() {
+        var diag = new Dialog();
+        diag.Width = 450;
+        diag.Height = 200;
+        diag.URL = '<c:url value="/admin/rawMaterial/new"/>';
+        diag.Title = "新增";
+        diag.CancelEvent = function () {
+            diag.close();
+            $("#list").trigger("reloadGrid");
+        };
+        diag.show();
+    });
 });
  
 function operateFormatter(cellvalue, options, rowObject){
     var retVal="";
-    retVal+="<span><a href='admin/project/view" + cellvalue + "'>删除</a></span>";
+    retVal+="<span><a optype='delete' opurl='<c:url value='/admin/rawMaterial/del'/>' ids='" + cellvalue + "' callback='$(\"#list\").trigger(\"reloadGrid\")'>删除</a></span>";
     retVal+="&nbsp&nbsp&nbsp&nbsp";
-    retVal+="<span><a href='admin/project/edit" + cellvalue + "'>启用/禁用</a></span>";
+    if (rowObject["enabled"] == true) {
+    	retVal+="<span><a optype='enabled' opurl='<c:url value='/admin/rawMaterial/enabled'/>' ids='" + cellvalue + "' enabled='false' callback='$(\"#list\").trigger(\"reloadGrid\")'>禁用</a></span>";
+    } else {
+    	retVal+="<span><a optype='enabled' opurl='<c:url value='/admin/rawMaterial/enabled'/>' ids='" + cellvalue + "' enabled='true' callback='$(\"#list\").trigger(\"reloadGrid\")'>启用</a></span>";
+    }
     return retVal;
 };
 /*jqGrid 结束*/

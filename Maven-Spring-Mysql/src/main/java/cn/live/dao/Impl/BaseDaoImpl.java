@@ -2,34 +2,32 @@ package cn.live.dao.Impl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.util.Assert;
 
 import cn.live.dao.BaseDao;
 import cn.live.util.BaseUtils;
+import cn.live.util.Filter;
 import cn.live.util.ResultJson;
 
 /**
  * @ClassName: BaseDaoImpl
- * @Description: 实现了对持久化对象的操作方法接口
+ * @Description: TODO 实现了对持久化对象的操作方法接口
  * @author FOAMVALUE FOAMVALUE@LIVE.CN
- * @date 2014年6月17日 下午9:18:01
- * 
- */
-/**
- * @ClassName: BaseDaoImpl
- * @Description: TODO
- * @author FOAMVALUE FOAMVALUE@LIVE.CN
- * @date 2014年6月17日 下午11:13:26
+ * @date 2014年6月21日 上午9:01:44
  *
  * @param <T>
  * @param <ID>
@@ -68,6 +66,7 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 	@Override
 	public void create(T entity) {
 		this.getSession().save(entity);
+		this.getSession().flush();
 
 	}
 	
@@ -85,15 +84,52 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 	}
 	
 	/* (non-Javadoc)
-	 * <p>Title: update</p> 
+	 * <p>Title: merge</p> 
 	 * <p>Description: </p> 
 	 * @param entity 
-	 * @see cn.live.dao.BaseDao#update(java.lang.Object) 
+	 * @see cn.live.dao.BaseDao#merge(java.lang.Object) 
 	 */
 	@Override
-	public void update(T entity) {
+	public void merge(T entity) {
+		Assert.notNull(entity);
 		this.getSession().merge(entity);
+		this.getSession().flush();
 	}
+	
+	/* (non-Javadoc)
+	 * <p>Title: getList</p> 
+	 * <p>Description: </p> 
+	 * @param filters
+	 * @return 
+	 * @see cn.live.dao.BaseDao#getList(java.util.List) 
+	 */
+	@Override
+	public List<T> getList(Filter[] filters) {
+		return getList(filters, null);
+	}
+	
+	/* (non-Javadoc)
+	 * <p>Title: getList</p> 
+	 * <p>Description: </p> 
+	 * @param filters
+	 * @param orders
+	 * @return 
+	 * @see cn.live.dao.BaseDao#getList(java.util.List, java.util.List) 
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> getList(Filter[] filters, cn.live.util.Order[] orders) {
+		Criteria criteria = (Criteria) this.getSession().createCriteria(clazz);
+		if (filters != null) {
+            setQueryCriteria(criteria, Arrays.asList(filters));
+        }
+		if (orders != null) {
+			setQueryOrders(criteria, Arrays.asList(orders));
+		}
+		List<T> temp = criteria.list();
+		return temp;
+	}
+	
 	
 	/* (non-Javadoc)
 	 * <p>Title: getResultJson</p> 
@@ -102,13 +138,18 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 	 * @param rows
 	 * @param sidx
 	 * @param sord
+	 * @param propertyNames
+	 * @param filters
 	 * @return 
-	 * @see cn.live.dao.BaseDao#getResultJson(java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String) 
+	 * @see cn.live.dao.BaseDao#getResultJson(java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String[], cn.live.util.Filter[]) 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public ResultJson getResultJson(Integer page, Integer rows, String sidx, String sord, String[] propertyNames) {
+	public ResultJson getResultJson(Integer page, Integer rows, String sidx, String sord, String[] propertyNames, Filter[] filters) {
 		Criteria criteria = (Criteria) this.getSession().createCriteria(clazz);
+		if (filters != null) {
+            setQueryCriteria(criteria, Arrays.asList(filters));
+        }
 		long records = (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
 		if ("asc".equals(sord.toLowerCase())) 
 			criteria.addOrder(Order.desc(sidx));
@@ -139,5 +180,71 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 		resultJson.setRows(rows);
 	}
 	
+	/** 
+	 * @Title: setQueryCriteria 
+	 * @Description: TODO 设置过滤器
+	 * @param @param criteria
+	 * @param @param filters 
+	 * @return void
+	 * @throws 
+	 */
+	@SuppressWarnings("rawtypes")
+	private void setQueryCriteria(Criteria criteria, List<Filter> filters) {
+		if ((criteria == null) || (filters == null) || (filters.isEmpty()))
+            return;
+        for (Filter filter : filters) {
+            if ((filter != null) && (!StringUtils.isEmpty(filter.getProperty()))) {
+                if ((filter.getOperator() == Filter.Operator.eq) && (filter.getValue() != null)) {
+                	criteria.add(Restrictions.eq(filter.getProperty(), filter.getValue()));
+                } else if ((filter.getOperator() == Filter.Operator.ne) && (filter.getValue() != null)) {
+                	criteria.add(Restrictions.ne(filter.getProperty(), filter.getValue()));
+                } else if ((filter.getOperator() == Filter.Operator.gt) && (filter.getValue() != null)) {
+                	criteria.add(Restrictions.gt(filter.getProperty(), filter.getValue()));
+                } else if ((filter.getOperator() == Filter.Operator.lt) && (filter.getValue() != null)) {
+                	criteria.add(Restrictions.lt(filter.getProperty(), filter.getValue()));
+                } else if ((filter.getOperator() == Filter.Operator.ge) && (filter.getValue() != null)) {
+                	criteria.add(Restrictions.ge(filter.getProperty(), filter.getValue()));
+                } else if ((filter.getOperator() == Filter.Operator.le) && (filter.getValue() != null)) {
+                	criteria.add(Restrictions.le(filter.getProperty(), filter.getValue()));
+                } else if ((filter.getOperator() == Filter.Operator.like) && (filter.getValue() != null) && ((filter.getValue() instanceof String))) {
+                	criteria.add(Restrictions.like(filter.getProperty(), filter.getValue()));
+                } else if ((filter.getOperator() == Filter.Operator.in) && (filter.getValue() != null)) {
+                    Object value = filter.getValue();
+                    if (value instanceof Collection) {
+                    	criteria.add(Restrictions.in(filter.getProperty(), (Collection)filter.getValue()));
+                    } else {
+                    	criteria.add(Restrictions.in(filter.getProperty(), (Object[])filter.getValue()));
+                    }
+                } else if (filter.getOperator() == Filter.Operator.isNull) {
+                	criteria.add(Restrictions.isNull(filter.getProperty()));
+                } else if (filter.getOperator() == Filter.Operator.isNotNull) {
+                	criteria.add(Restrictions.isNotNull(filter.getProperty()));
+                } else if (filter.getOperator() == Filter.Operator.between) {
+                	criteria.add(Restrictions.between(filter.getProperty(), filter.getStart(), filter.getEnd()));
+                }
+            }
+        }
+	}
+	
+	/** 
+	 * @Title: setQueryOrders 
+	 * @Description: TODO 设置排序
+	 * @param @param criteria
+	 * @param @param orders 
+	 * @return void
+	 * @throws 
+	 */
+	private void setQueryOrders(Criteria criteria, List<cn.live.util.Order> orders) {
+		 if ((criteria == null) || (orders == null) || (orders.isEmpty())) {
+	            return;
+	        }
+	        for (cn.live.util.Order order : orders) {
+	            if (order.getDirection() == cn.live.util.Order.Direction.asc) {
+	            	criteria.addOrder(Order.asc(order.getProperty()));
+	            } else if (order.getDirection() == cn.live.util.Order.Direction.desc) {
+	            	criteria.addOrder(Order.desc(order.getProperty()));
+	            }
+	        }
+	}
 	
 }

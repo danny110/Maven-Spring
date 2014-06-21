@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import cn.live.bean.User;
 import cn.live.manager.UserManager;
 import cn.live.util.BaseUtils;
+import enums.OperateCode;
 
 /**
  * @ClassName: UserTest
@@ -76,7 +77,7 @@ public class UserTest {
 	public void test3() {
 		User user = userManager.findById("bb821af0-1272-4bab-bb8e-2db46e766bc9");
 		user.setIsDeleted(true);
-		userManager.update(user);
+		userManager.merge(user);
 		
 		user = new User();
 		user.setId(UUID.randomUUID().toString());
@@ -86,11 +87,13 @@ public class UserTest {
 		user.setEnabled(true);
 		user.setIsDeleted(false);
 		user.setModifyDate(simpleDateFormat.format(new Date()));
-		userManager.update(user);
+		userManager.merge(user);
 	}
 	
 	public static void main(String[] args) {
 		System.out.println(simpleDateFormat.format(new Date()));
+		System.out.println(OperateCode.SUCCESS);
+		System.out.println(OperateCode.SUCCESS.toString());
 	}
 
 }
