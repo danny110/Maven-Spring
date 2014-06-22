@@ -1,4 +1,4 @@
-package cn.live.controller.system;
+package cn.live.controller.base;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,7 +37,7 @@ public class ClientController {
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	/**
-	 * @Fields rawMaterialManager : 用户
+	 * @Fields clientManager : 客户
 	 */
 	@Resource(name = "clientManager")
 	private ClientManager clientManager;
@@ -51,9 +51,10 @@ public class ClientController {
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list() {
-		return "system/client/list";
+		return "base/client/list";
 	}
 	
+
 	/** 
 	 * @Title: data 
 	 * @Description: TODO 返回所有的客户列表
@@ -62,7 +63,7 @@ public class ClientController {
 	 * @param @param sidx 排序字段
 	 * @param @param sord 排序类型
 	 * @param @return 
-	 * @return ResultJson<RawMaterial>
+	 * @return ResultJson
 	 * @throws 
 	 */
 	@ResponseBody
@@ -113,7 +114,7 @@ public class ClientController {
 	 * @param @param ids
 	 * @param @param enabled
 	 * @param @return 
-	 * @return OperateResult<Boolean>
+	 * @return OperateResult<String>
 	 * @throws 
 	 */
 	@ResponseBody
@@ -146,15 +147,16 @@ public class ClientController {
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String New(Model model) {
-		return "system/client/new";
+		return "base/client/new";
 	}
 	
+
 	/** 
 	 * @Title: add 
 	 * @Description: TODO 新增一条客户记录
-	 * @param @param rawMaterial
+	 * @param @param client
 	 * @param @return 
-	 * @return OperateResult<Boolean>
+	 * @return OperateResult<String>
 	 * @throws 
 	 */
 	@ResponseBody

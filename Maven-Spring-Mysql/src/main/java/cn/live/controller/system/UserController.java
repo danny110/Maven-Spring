@@ -2,7 +2,6 @@ package cn.live.controller.system;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -14,27 +13,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.live.bean.RawMaterial;
-import cn.live.bean.Specification;
+import cn.live.bean.User;
 import cn.live.enums.OperateCode;
-import cn.live.manager.RawMaterialManager;
-import cn.live.manager.SpecificationManager;
-import cn.live.manager.SpecificationViewManager;
+import cn.live.manager.UserManager;
 import cn.live.util.Filter;
 import cn.live.util.OperateResult;
 import cn.live.util.ResultJson;
 
 /**
- * @ClassName: SpecificationController
- * @Description: TODO 规格管理
+ * @ClassName: UserController
+ * @Description: TODO 用户管理
  * @author FOAMVALUE FOAMVALUE@LIVE.CN
- * @date 2014年6月18日 下午10:57:38
+ * @date 2014年6月18日 下午5:34:07
  *
  */
-
 @Controller
-@RequestMapping("/admin/specification")
-public class SpecificationController {
+@RequestMapping("/admin/user")
+public class UserController {
 	
 	/**
 	 * @Fields simpleDateFormat : 日期格式
@@ -42,44 +37,33 @@ public class SpecificationController {
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	/**
-	 * @Fields rawMaterialManager : 原料
+	 * @Fields userManager : 用户
 	 */
-	@Resource(name = "rawMaterialManager")
-	private RawMaterialManager rawMaterialManager;
-	
-	/**
-	 * @Fields specificationManager : 规格
-	 */
-	@Resource(name = "specificationManager")
-	private SpecificationManager specificationManager;
-	
-	/**
-	 * @Fields specificationManager : 规格视图
-	 */
-	@Resource(name = "specificationViewManager")
-	private SpecificationViewManager specificationViewManager;
+	@Resource(name = "userManager")
+	private UserManager userManager;
 	
 	/** 
 	 * @Title: list 
-	 * @Description: TODO 规格管理列表
+	 * @Description: TODO 用户管理列表
 	 * @param @return 
 	 * @return String
 	 * @throws 
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list() {
-		return "system/specification/list";
+		return "system/user/list";
 	}
 	
+
 	/** 
 	 * @Title: data 
-	 * @Description: TODO 返回所有的规格列表
+	 * @Description: TODO 返回所有的用户列表
 	 * @param @param page 当前页码
 	 * @param @param rows 每页记录条数
 	 * @param @param sidx 排序字段
 	 * @param @param sord 排序类型
 	 * @param @return 
-	 * @return ResultJson<RawMaterial>
+	 * @return ResultJson
 	 * @throws 
 	 */
 	@ResponseBody
@@ -89,7 +73,7 @@ public class SpecificationController {
 		try {
 			new Filter();
 			Filter filter = Filter.eq("isDeleted", false);
-			resultJson = specificationViewManager.getResultJson(page, rows, sidx, sord, new String[]{"id", "rawMaterialName","specificatioName","mark","enabled","createDate"}, new Filter[]{filter});
+			resultJson = userManager.getResultJson(page, rows, sidx, sord, new String[]{"id", "sex", "name","phone","companyName","telephone","mark","enabled","createDate"}, new Filter[]{filter});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -98,7 +82,7 @@ public class SpecificationController {
 	
 	/** 
 	 * @Title: del 
-	 * @Description: TODO 删除规格
+	 * @Description: TODO 删除用户
 	 * @param @param id 
 	 * @return void
 	 * @throws 
@@ -109,10 +93,10 @@ public class SpecificationController {
 		OperateResult<String> operateResult = new OperateResult<String>();
 		try {
 			if (StringUtils.isNotBlank(ids)) {
-				Specification specification = specificationManager.findById(ids);
-				specification.setIsDeleted(true);
-				specification.setModifyDate(simpleDateFormat.format(new Date()));
-				specificationManager.merge(specification);
+				User user = userManager.findById(ids);
+				user.setIsDeleted(true);
+				user.setModifyDate(simpleDateFormat.format(new Date()));
+				userManager.merge(user);
 				operateResult.isSuccess = true;
 				operateResult.returnValue = OperateCode.SUCCESS.toString();
 			}
@@ -130,7 +114,7 @@ public class SpecificationController {
 	 * @param @param ids
 	 * @param @param enabled
 	 * @param @return 
-	 * @return OperateResult<Boolean>
+	 * @return OperateResult<String>
 	 * @throws 
 	 */
 	@ResponseBody
@@ -139,10 +123,10 @@ public class SpecificationController {
 		OperateResult<String> operateResult = new OperateResult<String>();
 		try {
 			if (enabled != null) {
-				Specification specification = specificationManager.findById(ids);
-				specification.setEnabled(enabled);
-				specification.setModifyDate(simpleDateFormat.format(new Date()));
-				specificationManager.merge(specification);
+				User user = userManager.findById(ids);
+				user.setEnabled(enabled);
+				user.setModifyDate(simpleDateFormat.format(new Date()));
+				userManager.merge(user);
 				operateResult.isSuccess = true;
 				operateResult.returnValue = OperateCode.SUCCESS.toString();
 			}
@@ -163,34 +147,28 @@ public class SpecificationController {
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String New(Model model) {
-		try {
-			Filter filter = Filter.eq("isDeleted", false);
-			List<RawMaterial> rawMaterials = rawMaterialManager.getList(new Filter[] {filter});
-			model.addAttribute("RawMaterial", rawMaterials);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "system/specification/new";
+		return "system/user/new";
 	}
 	
+
 	/** 
 	 * @Title: add 
-	 * @Description: TODO 新增一条规格记录
-	 * @param @param rawMaterial
+	 * @Description: TODO 新增一条用户记录
+	 * @param @param client
 	 * @param @return 
-	 * @return OperateResult<Boolean>
+	 * @return OperateResult<String>
 	 * @throws 
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public OperateResult<String> add(Specification specification) {
+	public OperateResult<String> add(User user) {
 		OperateResult<String> operateResult = new OperateResult<String>();
 		try {
-			specification.setId(UUID.randomUUID().toString());
-			specification.setIsDeleted(false);
-			specification.setCreateDate(simpleDateFormat.format(new Date()));
-			specification.setModifyDate(simpleDateFormat.format(new Date()));
-			specificationManager.create(specification);
+			user.setId(UUID.randomUUID().toString());
+			user.setIsDeleted(false);
+			user.setCreateDate(simpleDateFormat.format(new Date()));
+			user.setModifyDate(simpleDateFormat.format(new Date()));
+			userManager.create(user);
 			operateResult.isSuccess = true;
 			operateResult.returnValue = OperateCode.SUCCESS.toString();
 		} catch (Exception e) {
@@ -200,4 +178,5 @@ public class SpecificationController {
 		}
 		return operateResult;
 	}
+
 }

@@ -13,12 +13,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
-
-	<!-- 用于加载上下文的监听器 加载spring容器 -->
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-
+	
 	<!-- 过滤器元素将一个名字与一个实现 java.servlet.Filter 接口的类相关连 -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
@@ -49,7 +44,22 @@
 		<filter-name>openSessionInViewFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
+	
+	<!--  登陆验证 -->
+	<filter>
+        <filter-name>SecurityAuthorizationFilter</filter-name>
+        <filter-class>cn.live.filter.AuthenticationFilter</filter-class>
+    </filter>
+	<filter-mapping>
+        <filter-name>SecurityAuthorizationFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+    
+	<!-- 用于加载上下文的监听器 加载spring容器 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+    
 	<!-- servlet 配置 -->
 	<servlet>
 		<servlet-name>manage</servlet-name>
@@ -66,7 +76,32 @@
 		<servlet-name>manage</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
+	
+	<servlet-mapping>
+	    <servlet-name>default</servlet-name>
+	    <url-pattern>*.css</url-pattern>
+	</servlet-mapping>
+ 
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.gif</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.jpg</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.png</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.js</url-pattern>
+	</servlet-mapping>
+	
 	<!-- 会话超时配置 -->
 	<session-config>
 		<session-timeout>120</session-timeout>
@@ -74,7 +109,7 @@
 
 	<!-- 指定欢迎页面 -->
 	<welcome-file-list>
-		<welcome-file>login.jsp</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
 </web-app>

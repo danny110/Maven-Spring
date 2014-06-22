@@ -5,11 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<link type="text/css" href="<c:url value='/resources/css/lhgdialog.css'/>" rel="stylesheet" />
-<link type="text/css" href="<c:url value='/resources/css/loginPage.css'/>" rel="stylesheet" />
-<link type="text/css" href="<c:url value='/resources/css/ico.css'/>" rel="stylesheet" />
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/lhgdialog.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/loginPage.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/ico.css'/>"/>
 
-<script type="text/javascript" src="<c:url value='/resources/js/jquery.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/jqGrid/js/jquery-1.9.0.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.lhgdialog.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.validity.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/Common.js'/>"></script>
@@ -44,14 +44,14 @@ EvPNG.fix(".png");
 <body>
 <div id="MianTable">
 <!--顶部开始-->
-	<%@include file="framework/header.jsp"%>
+	<%@include file="../framework/header.jsp"%>
 <!--顶部结束-->
 
 <!--中间工作区域开始-->
 <div class="WorkMian" id="MianWork">
 <!--左边导航开始-->
 <div class="menuTd" id="MenuTd">
-	<%@include file="framework/left.jsp"%>
+	<%@include file="../framework/left.jsp"%>
 </div>
 <!--左边导航结束-->
 
@@ -72,7 +72,7 @@ EvPNG.fix(".png");
 <!--中间工作区域结束-->
 
 <!--底部版权区域区域开始-->
-	<%@include file="framework/footer.jsp"%>
+	<%@include file="../framework/footer.jsp"%>
 <!--底部版权区域区域结束-->
 </div>
 <script type="text/javascript">

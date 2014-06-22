@@ -1,4 +1,4 @@
-package cn.live.controller.system;
+package cn.live.controller.base;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -50,7 +50,7 @@ public class RawMaterialController {
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list() {
-		return "system/rawMaterial/list";
+		return "base/rawMaterial/list";
 	}
 	
 	/** 
@@ -145,7 +145,7 @@ public class RawMaterialController {
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String New() {
-		return "system/rawMaterial/new";
+		return "base/rawMaterial/new";
 	}
 	
 	/** 

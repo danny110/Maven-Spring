@@ -12,7 +12,7 @@
 	    	<li class="textLi userpng png"><a href="javascript:void(0);">Administrator，您好</a></li>
 	    	<li class="splitLi2px"></li>
 	   		<li class="textLi helppng png"><a href="javascript:void(0);">帮助</a></li>
-	   		<li class="splitLi2px"></li> <li class="textLi quitpng png"><a href="javascript:void(0);">退出</a></li>
+	   		<li class="splitLi2px"></li> <li class="textLi quitpng png"><a href="<c:url value='/admin/logout'/>">退出</a></li>
 	    </ul>
 	</div>
 <div class="midTd" id="MianMid"><img src="<c:url value='/resources/images/height5px.gif'/>" width="8" height="5" /></div>

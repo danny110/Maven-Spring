@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/jquery.ui.css"/>"/>
-<link type="text/css" rel="stylesheet" href="<c:url value='/resources/jqGrid/css/ui.jqgrid.css'/>"/> 
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/jqGrid/css/ui.jqgrid.css'/>"/>
 <link type="text/css" href="<c:url value='/resources/css/lhgdialog.css'/>" rel="stylesheet" />
 <link type="text/css" href="<c:url value='/resources/css/loginPage.css'/>" rel="stylesheet" />
 <link type="text/css" href="<c:url value='/resources/css/ico.css'/>" rel="stylesheet" />
@@ -53,6 +53,7 @@ EvPNG.fix(".png");
 </head>
 <body>
 <div id="MianTable">
+
 <!--顶部开始-->
 	<%@include file="../../framework/header.jsp"%>
 <!--顶部结束-->
@@ -62,8 +63,9 @@ EvPNG.fix(".png");
 <!--左边导航开始-->
 <div class="menuTd" id="MenuTd">
 	<%@include file="../../framework/left.jsp"%>	
-<!--左边导航结束-->
 </div>
+<!--左边导航结束-->
+
 <!--切换左边导航开始-->
 <div id="CenterTd" class="splitTd" onClick="DisPlayMenu()"></div>
 <!--切换左边导航结束-->
@@ -72,7 +74,7 @@ EvPNG.fix(".png");
 <div id="RightTd">
 	<!-- 路径开始 -->
 	<div style="height: 30px;line-height: 30px;font-size: 12pt;background-color: #fff">
-		<span>当前路径：系统管理 - 规格管理</span>
+		<span>当前路径：系统管理 - 入库信息</span>
 	</div>
 	<!-- 路径结束 -->
 	<!-- 操作按钮开始 -->
@@ -94,83 +96,86 @@ EvPNG.fix(".png");
 <!--底部版权区域区域结束-->
 </div>
 <script type="text/javascript">
-/*左侧菜单开始*/
-var ShowMenu=getCookie("ShowMenu");
-function DisPlayMenu(){
-	if(ShowMenu=="1"||ShowMenu==""){
-		$("#CenterTd").addClass('splitTdOn');
-		$("#MenuTd").toggle();
-		ShowMenu="0";
-	}else{
-		$("#CenterTd").removeClass('splitTdOn');
-		$("#MenuTd").toggle();
-		ShowMenu="1";
+	/*左侧菜单开始*/
+	var ShowMenu=getCookie("ShowMenu");
+	function DisPlayMenu(){
+		if(ShowMenu=="1"||ShowMenu==""){
+			$("#CenterTd").addClass('splitTdOn');
+			$("#MenuTd").toggle();
+			ShowMenu="0";
+		}else{
+			$("#CenterTd").removeClass('splitTdOn');
+			$("#MenuTd").toggle();
+			ShowMenu="1";
+		}
+		setCookie("ShowMenu",ShowMenu);
+	    SetBodySize();
 	}
-	setCookie("ShowMenu",ShowMenu);
-    SetBodySize();
-}
-if(ShowMenu=="0"){
-	$("#CenterTd").addClass('splitTdOn');
-	$("#MenuTd").hide();
-} 
-/*左侧菜单结束*/
-
-/*jqGrid 开始*/
-$(function () {
-	$("#list").jqGrid({
-		url: "<c:url value = '/admin/specification/data'/>",
-		colNames: ["id", "原料名称", "规格名称", "规格备注", "是否启用", "创建时间", "操作"],
-		colModel: [
-			{name: "id", index: "id", hidden: true, key: true},
-			{name: "rawMaterialName", width: 100},
-			{name: "specificatioName", width: 100},
-			{name: "mark", width: 100,sortable:false},
-			{name: "enabled", width: 100},
-			{name: "createDate", width: 100},
-			{name: "id", width: 100, sortable:false, formatter:operateFormatter},
-		],
-	    sortname: 'createDate',
-	    datatype: 'json',
-        mtype: 'GET',
-        hidegrid: false,
-        rownumbers: true,
-        autowidth: true,
-        rowNum: 10,
-        rowList: [10, 15, 20],
-        sortorder: 'desc',
-        viewrecords: true,
-        pager: '#pager',
-        height: 'auto'
-	}).jqGrid('navGrid', '#pager', {edit: false, add: false, del: false, search: false});
-	
-	/*新增原料*/
-    $("#btn_new").click(function() {
-        var diag = new Dialog();
-        diag.Width = 450;
-        diag.Height = 200;
-        diag.URL = '<c:url value="/admin/specification/new"/>';
-        diag.Title = "新增";
-        diag.CancelEvent = function () {
-            diag.close();
-            $("#list").trigger("reloadGrid");
-        };
-        diag.show();
-    });
-});
+	if(ShowMenu=="0"){
+		$("#CenterTd").addClass('splitTdOn');
+		$("#MenuTd").hide();
+	} 
+ 	/*左侧菜单结束*/
+ 	
+ 	/*jqGrid 开始*/
+	$(function () {
+		$("#list").jqGrid({
+			url: "<c:url value = '/admin/client/data'/>",
+			colNames: ["id", "姓名", "性别", "手机号码", "公司名称", "座机号码", "备注", "是否启用", "创建时间", "操作"],
+			colModel: [
+				{name: "id", index: "id", hidden: true, key: true},
+				{name: "name", width: 100},
+				{name: "sex", width: 100},
+				{name: "phone", width: 100},
+				{name: "companyName", width: 100},
+				{name: "telephone", width: 100},
+				{name: "mark", width: 100,sortable:false},
+				{name: "enabled", width: 100},
+				{name: "createDate", width: 100},
+				{name: "id", width: 100, sortable:false, formatter:operateFormatter},
+			],
+		    sortname: 'createDate',
+		    datatype: 'json',
+	        mtype: 'GET',
+	        hidegrid: false,
+	        rownumbers: true,
+	        autowidth: true,
+	        rowNum: 10,
+	        rowList: [10, 15, 20],
+	        sortorder: 'desc',
+	        viewrecords: true,
+	        pager: '#pager',
+	        height: 'auto'
+		}).jqGrid('navGrid', '#pager', {edit: false, add: false, del: false, search: false});
+		
+		/*新增原料*/
+	    $("#btn_new").click(function() {
+	        var diag = new Dialog();
+	        diag.Width = 650;
+	        diag.Height = 300;
+	        diag.URL = '<c:url value="/admin/client/new"/>';
+	        diag.Title = "新增";
+	        diag.CancelEvent = function () {
+	            diag.close();
+	            $("#list").trigger("reloadGrid");
+	        };
+	        diag.show();
+	    });
+	});
  
-function operateFormatter(cellvalue, options, rowObject){
-    var retVal="";
-    retVal+="<span><a optype='delete' opurl='<c:url value='/admin/specification/del'/>' ids='" + cellvalue + "' callback='$(\"#list\").trigger(\"reloadGrid\")'>删除</a></span>";
-    retVal+="&nbsp&nbsp&nbsp&nbsp";
-    if (rowObject["enabled"] == true) {
-    	retVal+="<span><a optype='enabled' opurl='<c:url value='/admin/specification/enabled'/>' ids='" + cellvalue + "' enabled='false' callback='$(\"#list\").trigger(\"reloadGrid\")'>禁用</a></span>";
-    } else {
-    	retVal+="<span><a optype='enabled' opurl='<c:url value='/admin/specification/enabled'/>' ids='" + cellvalue + "' enabled='true' callback='$(\"#list\").trigger(\"reloadGrid\")'>启用</a></span>";
-    }
-    return retVal;
-};
-/*jqGrid 结束*/
-
+	function operateFormatter(cellvalue, options, rowObject){
+	    var retVal="";
+	    retVal+="<span><a optype='delete' opurl='<c:url value='/admin/client/del'/>' ids='" + cellvalue + "' callback='$(\"#list\").trigger(\"reloadGrid\")'>删除</a></span>";
+	    retVal+="&nbsp&nbsp&nbsp&nbsp";
+	    if (rowObject["enabled"] == true) {
+	    	retVal+="<span><a optype='enabled' opurl='<c:url value='/admin/client/enabled'/>' ids='" + cellvalue + "' enabled='false' callback='$(\"#list\").trigger(\"reloadGrid\")'>禁用</a></span>";
+	    } else {
+	    	retVal+="<span><a optype='enabled' opurl='<c:url value='/admin/client/enabled'/>' ids='" + cellvalue + "' enabled='true' callback='$(\"#list\").trigger(\"reloadGrid\")'>启用</a></span>";
+	    }
+	    return retVal;
+	};
+	/*jqGrid 结束*/
+ 
 </script>
 </body>
 </html>
