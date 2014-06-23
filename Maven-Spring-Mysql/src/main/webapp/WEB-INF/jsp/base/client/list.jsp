@@ -74,7 +74,7 @@ EvPNG.fix(".png");
 <div id="RightTd">
 	<!-- 路径开始 -->
 	<div style="height: 30px;line-height: 30px;font-size: 12pt;background-color: #fff">
-		<span>当前路径：系统管理 - 客户信息</span>
+		<span>当前路径：基础信息 - 客户信息</span>
 	</div>
 	<!-- 路径结束 -->
 	<!-- 操作按钮开始 -->

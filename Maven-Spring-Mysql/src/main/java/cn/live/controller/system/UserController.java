@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.live.bean.User;
 import cn.live.enums.OperateCode;
 import cn.live.manager.UserManager;
+import cn.live.util.BaseUtils;
 import cn.live.util.Filter;
 import cn.live.util.OperateResult;
 import cn.live.util.ResultJson;
@@ -73,7 +74,7 @@ public class UserController {
 		try {
 			new Filter();
 			Filter filter = Filter.eq("isDeleted", false);
-			resultJson = userManager.getResultJson(page, rows, sidx, sord, new String[]{"id", "sex", "name","phone","companyName","telephone","mark","enabled","createDate"}, new Filter[]{filter});
+			resultJson = userManager.getResultJson(page, rows, sidx, sord, new String[]{"id", "loginCode", "mark","enabled","createDate"}, new Filter[]{filter});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -165,6 +166,7 @@ public class UserController {
 		OperateResult<String> operateResult = new OperateResult<String>();
 		try {
 			user.setId(UUID.randomUUID().toString());
+			user.setPassword(BaseUtils.getMD5(user.getPassword().getBytes()));
 			user.setIsDeleted(false);
 			user.setCreateDate(simpleDateFormat.format(new Date()));
 			user.setModifyDate(simpleDateFormat.format(new Date()));

@@ -25,21 +25,16 @@ var  webRoot='${pageContext.request.contextPath}';
 <!-- 表单开始 -->
 <form id="vform" method="post">
 	<div>
-		<label for="rawMaterialName" class="label">原料名称：</label>
+		<label for="loginCode" class="label">帐号：</label>
 	</div>
 	<div>
-		<select id="rawMaterialName" name="rawMateriald">
-			<option value=""></option>
-			<c:forEach var="rawMaterial" items="${RawMaterial }">
-				<option value="${rawMaterial.id }">${rawMaterial.name }</option>
-			</c:forEach>
-		</select>
+		<input type="text" id="loginCode" name="loginCode"/>
 	</div>
 	<div>
-		<label for="name" class="label">规格名称：</label>
+		<label for="password" class="label">密码：</label>
 	</div>
 	<div>
-		<input id="name" name="name" type="text" class="input"/>
+		<input id="password" name="password" type="text" class="input"/>
 	</div>
 	<div>
 		<label for="mark" class="label">备注：</label>
@@ -81,7 +76,7 @@ $(function() {
 	$("#btn_add").click(function() {
 		vform.config({
             ajaxpost: {
-                url: '<c:url value="/admin/specification/add"/>',
+                url: '<c:url value="/admin/user/add"/>',
                 success: function (data) {
                     if( data.isSuccess ) {
                         Dialog.getInstance('0').cancelButton.onclick.apply(Dialog.getInstance('0').cancelButton,[]);

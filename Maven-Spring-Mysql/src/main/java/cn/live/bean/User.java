@@ -26,6 +26,7 @@ public class User implements Serializable {
 	private String id; // id
 	private String loginCode; // 帐号
 	private String password; // 密码
+	private String mark; // 备注
 	private String createDate; // 创建时间
 	private Boolean enabled; // 标记，启用/禁用
 	private Boolean isDeleted; // 是否删除，默认为false
@@ -53,6 +54,14 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getMark() {
+		return mark;
+	}
+
+	public void setMark(String mark) {
+		this.mark = mark;
 	}
 
 	public String getCreateDate() {

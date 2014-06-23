@@ -72,7 +72,7 @@ EvPNG.fix(".png");
 <div id="RightTd">
 	<!-- 路径开始 -->
 	<div style="height: 30px;line-height: 30px;font-size: 12pt;background-color: #fff">
-		<span>当前路径：系统管理 - 原料规格</span>
+		<span>当前路径：系统管理 - 用户管理</span>
 	</div>
 	<!-- 路径结束 -->
 	<!-- 操作按钮开始 -->
@@ -118,12 +118,11 @@ if(ShowMenu=="0"){
 /*jqGrid 开始*/
 $(function () {
 	$("#list").jqGrid({
-		url: "<c:url value = '/admin/specification/data'/>",
-		colNames: ["id", "原料名称", "规格名称", "规格备注", "是否启用", "创建时间", "操作"],
+		url: "<c:url value = '/admin/user/data'/>",
+		colNames: ["id", "帐号", "用户备注", "是否启用", "创建时间", "操作"],
 		colModel: [
 			{name: "id", index: "id", hidden: true, key: true},
-			{name: "rawMaterialName", width: 100},
-			{name: "specificatioName", width: 100},
+			{name: "loginCode", width: 100},
 			{name: "mark", width: 100,sortable:false},
 			{name: "enabled", width: 100},
 			{name: "createDate", width: 100},
@@ -148,7 +147,7 @@ $(function () {
         var diag = new Dialog();
         diag.Width = 450;
         diag.Height = 200;
-        diag.URL = '<c:url value="/admin/specification/new"/>';
+        diag.URL = '<c:url value="/admin/user/new"/>';
         diag.Title = "新增";
         diag.CancelEvent = function () {
             diag.close();
@@ -160,12 +159,12 @@ $(function () {
  
 function operateFormatter(cellvalue, options, rowObject){
     var retVal="";
-    retVal+="<span><a optype='delete' opurl='<c:url value='/admin/specification/del'/>' ids='" + cellvalue + "' callback='$(\"#list\").trigger(\"reloadGrid\")'>删除</a></span>";
+    retVal+="<span><a optype='delete' opurl='<c:url value='/admin/user/del'/>' ids='" + cellvalue + "' callback='$(\"#list\").trigger(\"reloadGrid\")'>删除</a></span>";
     retVal+="&nbsp&nbsp&nbsp&nbsp";
     if (rowObject["enabled"] == true) {
-    	retVal+="<span><a optype='enabled' opurl='<c:url value='/admin/specification/enabled'/>' ids='" + cellvalue + "' enabled='false' callback='$(\"#list\").trigger(\"reloadGrid\")'>禁用</a></span>";
+    	retVal+="<span><a optype='enabled' opurl='<c:url value='/admin/user/enabled'/>' ids='" + cellvalue + "' enabled='false' callback='$(\"#list\").trigger(\"reloadGrid\")'>禁用</a></span>";
     } else {
-    	retVal+="<span><a optype='enabled' opurl='<c:url value='/admin/specification/enabled'/>' ids='" + cellvalue + "' enabled='true' callback='$(\"#list\").trigger(\"reloadGrid\")'>启用</a></span>";
+    	retVal+="<span><a optype='enabled' opurl='<c:url value='/admin/user/enabled'/>' ids='" + cellvalue + "' enabled='true' callback='$(\"#list\").trigger(\"reloadGrid\")'>启用</a></span>";
     }
     return retVal;
 };
