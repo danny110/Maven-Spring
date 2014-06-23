@@ -44,12 +44,6 @@ $(document).ready(function () {
     });
 });
 </script>
-<!--[if IE 6]>
-<script type="text/javascript" src="Js/Png.js"></script>
-<script type="text/javascript">
-EvPNG.fix(".png");
-</script>
-<![endif]-->
 </head>
 <body>
 <div id="MianTable">
@@ -96,27 +90,6 @@ EvPNG.fix(".png");
 <!--底部版权区域区域结束-->
 </div>
 <script type="text/javascript">
-	/*左侧菜单开始*/
-	var ShowMenu=getCookie("ShowMenu");
-	function DisPlayMenu(){
-		if(ShowMenu=="1"||ShowMenu==""){
-			$("#CenterTd").addClass('splitTdOn');
-			$("#MenuTd").toggle();
-			ShowMenu="0";
-		}else{
-			$("#CenterTd").removeClass('splitTdOn');
-			$("#MenuTd").toggle();
-			ShowMenu="1";
-		}
-		setCookie("ShowMenu",ShowMenu);
-	    SetBodySize();
-	}
-	if(ShowMenu=="0"){
-		$("#CenterTd").addClass('splitTdOn');
-		$("#MenuTd").hide();
-	} 
- 	/*左侧菜单结束*/
- 	
  	/*jqGrid 开始*/
 	$(function () {
 		$("#list").jqGrid({
@@ -148,19 +121,6 @@ EvPNG.fix(".png");
 	        height: 'auto'
 		}).jqGrid('navGrid', '#pager', {edit: false, add: false, del: false, search: false});
 		
-		/*新增原料*/
-	    $("#btn_new").click(function() {
-	        var diag = new Dialog();
-	        diag.Width = 650;
-	        diag.Height = 300;
-	        diag.URL = '<c:url value="/admin/client/new"/>';
-	        diag.Title = "新增";
-	        diag.CancelEvent = function () {
-	            diag.close();
-	            $("#list").trigger("reloadGrid");
-	        };
-	        diag.show();
-	    });
 	});
  
 	function operateFormatter(cellvalue, options, rowObject){
@@ -175,7 +135,20 @@ EvPNG.fix(".png");
 	    return retVal;
 	};
 	/*jqGrid 结束*/
- 
+	
+ 	/*新增入库*/
+    $("#btn_new").click(function() {
+        var diag = new Dialog();
+        diag.Width = 650;
+        diag.Height = 300;
+        diag.URL = '<c:url value="/admin/repertory/in/new"/>';
+        diag.Title = "新增";
+        diag.CancelEvent = function () {
+            diag.close();
+            $("#list").trigger("reloadGrid");
+        };
+        diag.show();
+    });
 </script>
 </body>
 </html>

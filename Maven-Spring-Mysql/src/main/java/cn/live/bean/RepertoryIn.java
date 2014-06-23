@@ -25,14 +25,14 @@ public class RepertoryIn implements Serializable {
 	@Id
 	private String id;
 	private String rawMaterialId; // 原料 ID
-	private String specificationId; // 原料规则 ID
+	private String specificationId; // 原料规格 ID
 	private String clientId; // 客户 ID
 	private Float num; // 数量
 	private Float unitPrice; // 单价
 	private Float sum; // 总价
 	private String mark; // 备注
+	private String userId; // 创建用户
 	private String createDate; // 创建时间
-	private Boolean enabled; // 标记，启用/禁用
 	private Boolean isDeleted; // 是否删除，默认为false
 	private String modifyDate; // 最近一次修改时间
 
@@ -100,20 +100,20 @@ public class RepertoryIn implements Serializable {
 		this.mark = mark;
 	}
 
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 	public String getCreateDate() {
 		return createDate;
 	}
 
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
-	}
-
-	public Boolean getEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
 	}
 
 	public Boolean getIsDeleted() {

@@ -44,12 +44,6 @@ $(document).ready(function () {
     });
 });
 </script>
-<!--[if IE 6]>
-<script type="text/javascript" src="Js/Png.js"></script>
-<script type="text/javascript">
-EvPNG.fix(".png");
-</script>
-<![endif]-->
 </head>
 <body>
 <div id="MianTable">
@@ -96,27 +90,6 @@ EvPNG.fix(".png");
 <!--底部版权区域区域结束-->
 </div>
 <script type="text/javascript">
-/*左侧菜单开始*/
-var ShowMenu=getCookie("ShowMenu");
-function DisPlayMenu(){
-	if(ShowMenu=="1"||ShowMenu==""){
-		$("#CenterTd").addClass('splitTdOn');
-		$("#MenuTd").toggle();
-		ShowMenu="0";
-	}else{
-		$("#CenterTd").removeClass('splitTdOn');
-		$("#MenuTd").toggle();
-		ShowMenu="1";
-	}
-	setCookie("ShowMenu",ShowMenu);
-    SetBodySize();
-}
-if(ShowMenu=="0"){
-	$("#CenterTd").addClass('splitTdOn');
-	$("#MenuTd").hide();
-} 
-/*左侧菜单结束*/
-
 /*jqGrid 开始*/
 $(function () {
 	$("#list").jqGrid({

@@ -21,6 +21,13 @@ $(document).ready(function () {
 	    $("#LoginDiv").css("padding-top",((($(document.body).height()>=$("#LoginDiv").height()?$(document.body).height():$("#LoginDiv").height())-$("#LoginDiv").height())/2)+"px");
     });
 });
+
+$(document).keydown(function(e){ 
+	var curKey = e.which; 
+	if(curKey == 13){ 
+		$("#login").click();
+	} 
+}); 
 </script>
 </head>
 <body>

@@ -32,5 +32,27 @@
 	</li>
 </ul>
 </div>
+<script type="text/javascript">
+/*左侧菜单开始*/
+var ShowMenu=getCookie("ShowMenu");
+function DisPlayMenu(){
+	if(ShowMenu=="1"||ShowMenu==""){
+		$("#CenterTd").addClass('splitTdOn');
+		$("#MenuTd").toggle();
+		ShowMenu="0";
+	}else{
+		$("#CenterTd").removeClass('splitTdOn');
+		$("#MenuTd").toggle();
+		ShowMenu="1";
+	}
+	setCookie("ShowMenu",ShowMenu);
+    SetBodySize();
+}
+if(ShowMenu=="0"){
+	$("#CenterTd").addClass('splitTdOn');
+	$("#MenuTd").hide();
+} 
+	/*左侧菜单结束*/
+</script>
 </body>
 </html>

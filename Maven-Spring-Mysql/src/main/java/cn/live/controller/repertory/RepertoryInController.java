@@ -97,7 +97,6 @@ public class RepertoryInController {
 		try {
 			if (enabled != null) {
 				RepertoryIn repertoryIn = repertoryInManager.findById(ids);
-				repertoryIn.setEnabled(enabled);
 				repertoryIn.setModifyDate(simpleDateFormat.format(new Date()));
 				repertoryInManager.merge(repertoryIn);
 				operateResult.isSuccess = true;

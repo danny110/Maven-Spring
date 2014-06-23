@@ -29,13 +29,13 @@ var  webRoot='${pageContext.request.contextPath}';
 <form id="vform" method="post">
 	<div class="divTR">
 		<div class="margin_50">
-			<label for="name" class="label"><span style="color: red;">*</span>姓名：</label>
+			<label for="name" class="label"><span style="color: red;">*</span>原料：</label>
 		</div>
 		<div>
 			<input id="name" name="name" class="input">
 		</div>
 		<div class="margin_50">
-		<label for="sex" class="label">性别：</label>
+		<label for="sex" class="label"><span style="color: red;">*</span>规格：</label>
 		</div>
 		<div>
 			<input id="MAN" name="sex" value="MAN" type="radio" checked="checked"/><label for="MAN">男</label>
@@ -44,21 +44,13 @@ var  webRoot='${pageContext.request.contextPath}';
 	</div>
 	<div class="divTR">
 		<div class="margin_50">
-			<label for="companyName" class="label">公司名称：</label>
-		</div>
-		<div>
-		<input id="companyName" name="companyName" class="input" style="width: 455px;">
-	</div>
-	</div>
-	<div class="divTR">
-		<div class="margin_50">
-			<label for="phone" class="label">手机号码：</label>
+			<label for="phone" class="label"><span style="color: red;">*</span>单价：</label>
 		</div>
 		<div>
 			<input id="phone" name="phone" class="input">
 		</div>
 		<div class="margin_50">
-			<label for="telephone" class="label">座机号码：</label>
+			<label for="telephone" class="label"><span style="color: red;">*</span>数量：</label>
 		</div>
 		<div>
 			<input id="telephone" name="telephone" class="input">
@@ -66,19 +58,24 @@ var  webRoot='${pageContext.request.contextPath}';
 	</div>
 	<div class="divTR">
 		<div class="margin_50">
-			<label for="mark" class="label">客户备注：</label>
+			<label for="phone" class="label"><span style="color: red;">*</span>客户：</label>
+		</div>
+		<div>
+			<input id="phone" name="phone" class="input">
+		</div>
+		<div class="margin_50">
+			<label for="telephone" class="label">&nbsp;&nbsp;合计：</label>
+		</div>
+		<div>
+			<input id="telephone" name="telephone" class="input">
+		</div>
+	</div>
+	<div class="divTR">
+		<div class="margin_50">
+			<label for="mark" class="label">&nbsp;&nbsp;备注：</label>
 		</div>
 		<div>
 			<textarea id="mark" name="mark" rows="" cols="" class="input">暂无备注</textarea>
-		</div>
-		<div class="margin_50">
-			<label class="label">是否启用：</label>
-		</div>
-		<div>
-			<input id="enabled0" name="enabled" type="radio" value="true" checked="checked" />
-			<label for="enabled0">启用</label>
-			<input id="enabled1" name="enabled" type="radio" value="false" />
-			<label for="enabled1">禁用</label>
 		</div>
 	</div>
 	<div class="divTR">
