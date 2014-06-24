@@ -68,6 +68,19 @@ public enum OperateCode {
 			// TODO Auto-generated method stub
 			return "用户信息存在异常，请联系管理员！";
 		}
+	},
+	UNLOGIN {
+		/* (non-Javadoc)
+		 * <p>Title: toString</p> 
+		 * <p>Description: </p> 
+		 * @return 
+		 * @see java.lang.Enum#toString() 
+		 */
+		@Override
+		public String toString() {
+			// TODO Auto-generated method stub
+			return "用户登陆失效，请刷新浏览器！";
+		}
 	};
 	
 }

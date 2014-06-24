@@ -25,7 +25,6 @@ public class RepertoryIn implements Serializable {
 	@Id
 	private String id;
 	private String rawMaterialId; // 原料 ID
-	private String specificationId; // 原料规格 ID
 	private String clientId; // 客户 ID
 	private Float num; // 数量
 	private Float unitPrice; // 单价
@@ -50,14 +49,6 @@ public class RepertoryIn implements Serializable {
 
 	public void setRawMaterialId(String rawMaterialId) {
 		this.rawMaterialId = rawMaterialId;
-	}
-
-	public String getSpecificationId() {
-		return specificationId;
-	}
-
-	public void setSpecificationId(String specificationId) {
-		this.specificationId = specificationId;
 	}
 
 	public String getClientId() {

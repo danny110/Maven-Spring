@@ -20,7 +20,6 @@
 		<a href="javascript:void(0)" class="DownA">基础信息</a>
 		<ul>
 			<li><a href="<c:url value='/admin/rawMaterial/list'/>">原料信息</a></li>
-			<li><a href="<c:url value='/admin/specification/list'/>">原料规格</a></li>
 			<li><a href="<c:url value='/admin/client/list'/>">客户信息</a></li>
       	</ul>
 	</li>

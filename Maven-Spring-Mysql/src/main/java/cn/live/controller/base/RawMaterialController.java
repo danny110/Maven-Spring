@@ -71,7 +71,7 @@ public class RawMaterialController {
 		try {
 			new Filter();
 			Filter filter = Filter.eq("isDeleted", false);
-			resultJson = rawMaterialManager.getResultJson(page, rows, sidx, sord, new String[]{"id","name","units","mark","enabled","createDate"}, new Filter[]{filter});
+			resultJson = rawMaterialManager.getResultJson(page, rows, sidx, sord, new String[]{"id","name","specification","units","mark","enabled","createDate"}, new Filter[]{filter});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

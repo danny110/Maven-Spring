@@ -31,6 +31,12 @@ var  webRoot='${pageContext.request.contextPath}';
 		<input id="name" name="name" type="text" class="input"/>
 	</div>
 	<div>
+		<label for="specification" class="label">原料规格：</label>
+	</div>
+	<div>
+		<input id="specification" name="specification" type="text" class="input"/>
+	</div>
+	<div>
 		<label for="units" class="label">单位：</label>
 	</div>
 	<div>
@@ -76,6 +82,10 @@ $(function() {
         {
             ele: "#name",
             datatype: "*"
+        },
+        {
+        	ele: "#specification",
+        	datatype: "*"
         }
     ]);
     

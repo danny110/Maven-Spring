@@ -8,7 +8,6 @@ import javax.persistence.Table;
 
 import cn.live.enums.Units;
 
-
 /**
  * @ClassName: RawMaterial
  * @Description: TODO 原料表
@@ -28,6 +27,7 @@ public class RawMaterial implements Serializable {
 	@Id
 	private String id; // id
 	private String name; // 名称
+	private String specification; // 规格
 	private Units units; // 单位
 	private String mark; // 备注
 	private String createDate; // 创建时间
@@ -49,6 +49,14 @@ public class RawMaterial implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getSpecification() {
+		return specification;
+	}
+
+	public void setSpecification(String specification) {
+		this.specification = specification;
 	}
 
 	public Units getUnits() {

@@ -2,9 +2,11 @@ package cn.live.controller.repertory;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -13,10 +15,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.live.bean.Client;
+import cn.live.bean.RawMaterial;
 import cn.live.bean.RepertoryIn;
+import cn.live.bean.User;
 import cn.live.enums.OperateCode;
+import cn.live.manager.ClientManager;
+import cn.live.manager.RawMaterialManager;
 import cn.live.manager.RepertoryInManager;
+import cn.live.manager.RepertoryInViewManager;
+import cn.live.manager.UserManager;
+import cn.live.util.Filter;
 import cn.live.util.OperateResult;
+import cn.live.util.Order;
+import cn.live.util.ResultJson;
 
 /**
  * @ClassName: RepertoryInCollection
@@ -40,6 +52,31 @@ public class RepertoryInController {
 	@Resource(name = "repertoryInManager")
 	private RepertoryInManager repertoryInManager;
 	
+	
+	/**
+	 * @Fields rawMaterialManager : 原料
+	 */
+	@Resource(name = "rawMaterialManager")
+	private RawMaterialManager rawMaterialManager;
+	
+	/**
+	 * @Fields clientManager : 客户
+	 */
+	@Resource(name = "clientManager")
+	private ClientManager clientManager;
+	
+	/**
+	 * @Fields userManager : 用户
+	 */
+	@Resource(name = "userManager")
+	private UserManager userManager;
+	
+	/**
+	 * @Fields repertoryInViewManager : 入库视图
+	 */
+	@Resource(name = "repertoryInViewManager")
+	private RepertoryInViewManager repertoryInViewManager;
+	
 	/** 
 	 * @Title: list 
 	 * @Description: TODO 入库管理列表
@@ -52,6 +89,28 @@ public class RepertoryInController {
 		return "repertory/in/list";
 	}
 	
+	/** 
+	 * @Title: data 
+	 * @Description: TODO 返回所有的入库信息列表
+	 * @param @param page
+	 * @param @param rows
+	 * @param @param sidx
+	 * @param @param sord
+	 * @param @return 
+	 * @return ResultJson
+	 * @throws 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/data", method = RequestMethod.GET)
+	public ResultJson data(Integer page, Integer rows, String sidx, String sord) {
+		ResultJson resultJson = new ResultJson();
+		try {
+			resultJson = repertoryInViewManager.getResultJson(page, rows, sidx, sord, new String[]{"id", "rawMaterialName", "specification","clientName","num","unitPrice","sum","mark","loginCode","createDate"}, new Filter[]{});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resultJson;
+	}
 	
 	/** 
 	 * @Title: del 
@@ -119,6 +178,18 @@ public class RepertoryInController {
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String New(Model model) {
+		Filter[] filters = new Filter[]{
+			Filter.eq("enabled", true),
+			Filter.eq("isDeleted", false)
+		};
+		Order[] orders = new Order[] {
+				Order.asc("name"),
+				Order.asc("specification")
+		};
+		List<RawMaterial> rawMaterials = rawMaterialManager.getList(filters, orders);
+		List<Client> clients = clientManager.getList(filters);
+		model.addAttribute("rawrawMaterial", rawMaterials);
+		model.addAttribute("client", clients);
 		return "repertory/in/new";
 	}
 	
@@ -132,16 +203,36 @@ public class RepertoryInController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public OperateResult<String> add(RepertoryIn repertoryIn) {
+	public OperateResult<String> add(HttpServletRequest request, RepertoryIn repertoryIn) {
 		OperateResult<String> operateResult = new OperateResult<String>();
 		try {
-			repertoryIn.setId(UUID.randomUUID().toString());
-			repertoryIn.setIsDeleted(false);
-			repertoryIn.setCreateDate(simpleDateFormat.format(new Date()));
-			repertoryIn.setModifyDate(simpleDateFormat.format(new Date()));
-			repertoryInManager.create(repertoryIn);
-			operateResult.isSuccess = true;
-			operateResult.returnValue = OperateCode.SUCCESS.toString();
+			String loginCode = request.getSession().getAttribute("_LOGINCODE").toString();
+			if (StringUtils.isNotBlank(loginCode)) {
+				Filter[] filters = new Filter[]{
+						Filter.eq("loginCode", loginCode),
+						Filter.eq("enabled", true),
+						Filter.eq("isDeleted", false)
+					};
+				List<User> users = userManager.getList(filters);
+				if (users.size() > 0) {
+					repertoryIn.setUserId(users.get(0).getId());
+					repertoryIn.setId(UUID.randomUUID().toString());
+					repertoryIn.setIsDeleted(false);
+					repertoryIn.setCreateDate(simpleDateFormat.format(new Date()));
+					repertoryIn.setModifyDate(simpleDateFormat.format(new Date()));
+					repertoryInManager.create(repertoryIn);
+					operateResult.isSuccess = true;
+					operateResult.returnValue = OperateCode.SUCCESS.toString();
+				} else {
+					operateResult.isSuccess = false;
+					operateResult.errorReason = OperateCode.UNLOGIN.toString();
+				}
+				
+			} else {
+				operateResult.isSuccess = false;
+				operateResult.errorReason = OperateCode.UNLOGIN.toString();
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			operateResult.isSuccess = false;

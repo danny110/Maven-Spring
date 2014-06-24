@@ -29,45 +29,54 @@ var  webRoot='${pageContext.request.contextPath}';
 <form id="vform" method="post">
 	<div class="divTR">
 		<div class="margin_50">
-			<label for="name" class="label"><span style="color: red;">*</span>原料：</label>
+			<label for="rawMaterialId" class="label"><span style="color: red;">*</span>原料：</label>
 		</div>
 		<div>
-			<input id="name" name="name" class="input">
+			<select id="rawMaterialId" name="rawMaterialId">
+				<option value=""></option>
+				<c:forEach var="raw" items="${rawrawMaterial }">				
+					<option value="${raw.id }" svalue="${raw.specification }">${raw.name }</option>
+				</c:forEach>
+			</select>
 		</div>
 		<div class="margin_50">
-		<label for="sex" class="label"><span style="color: red;">*</span>规格：</label>
+		<label for="specification" class="label"><span style="color: red;">*</span>规格：</label>
 		</div>
 		<div>
-			<input id="MAN" name="sex" value="MAN" type="radio" checked="checked"/><label for="MAN">男</label>
-			<input id="WOMEN" name="sex" value="WOMEN" type="radio"/><label for="WOMEN">女</label>
+			<input id="specification" type="text" value=""/>
 		</div>
 	</div>
 	<div class="divTR">
 		<div class="margin_50">
-			<label for="phone" class="label"><span style="color: red;">*</span>单价：</label>
+			<label for="unitPrice" class="label"><span style="color: red;">*</span>单价：</label>
 		</div>
 		<div>
-			<input id="phone" name="phone" class="input">
+			<input id="unitPrice" name="unitPrice" class="input">
 		</div>
 		<div class="margin_50">
-			<label for="telephone" class="label"><span style="color: red;">*</span>数量：</label>
+			<label for="num" class="label"><span style="color: red;">*</span>数量：</label>
 		</div>
 		<div>
-			<input id="telephone" name="telephone" class="input">
+			<input id="num" name="num" class="input">
 		</div>
 	</div>
 	<div class="divTR">
 		<div class="margin_50">
-			<label for="phone" class="label"><span style="color: red;">*</span>客户：</label>
+			<label for="clientId" class="label"><span style="color: red;">*</span>客户：</label>
 		</div>
 		<div>
-			<input id="phone" name="phone" class="input">
+			<select id="clientId" name="clientId">
+				<option value=""></option>
+				<c:forEach var="raw" items="${client }">				
+					<option value="${raw.id }">${raw.name }</option>
+				</c:forEach>
+			</select>
 		</div>
 		<div class="margin_50">
-			<label for="telephone" class="label">&nbsp;&nbsp;合计：</label>
+			<label for="sum" class="label">&nbsp;&nbsp;合计：</label>
 		</div>
 		<div>
-			<input id="telephone" name="telephone" class="input">
+			<input id="sum" name="sum" class="input">
 		</div>
 	</div>
 	<div class="divTR">
@@ -91,21 +100,20 @@ var  webRoot='${pageContext.request.contextPath}';
 <script type="text/javascript">
 $(function() {
 	
+	$("#rawMaterialId").change(function() {
+		$("#specification").val($(this).find("option:selected").attr("svalue"));
+	});
+	
 	/*表单提交*/
 	var vform;
     vform = $("#vform").Validform({ tiptype: 4, showAllError: true});
-    vform.addRule([
-        {
-            ele: "#name",
-            datatype: "*"
-        }
-    ]);
+    vform.addRule([]);
     
 	/*提交*/
 	$("#btn_add").click(function() {
 		vform.config({
             ajaxpost: {
-                url: '<c:url value="/admin/client/add"/>',
+                url: '<c:url value="/admin/repertory/in/add"/>',
                 success: function (data) {
                     if( data.isSuccess ) {
                         Dialog.getInstance('0').cancelButton.onclick.apply(Dialog.getInstance('0').cancelButton,[]);

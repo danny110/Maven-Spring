@@ -93,17 +93,18 @@ $(document).ready(function () {
  	/*jqGrid 开始*/
 	$(function () {
 		$("#list").jqGrid({
-			url: "<c:url value = '/admin/client/data'/>",
-			colNames: ["id", "姓名", "性别", "手机号码", "公司名称", "座机号码", "备注", "是否启用", "创建时间", "操作"],
+			url: "<c:url value = '/admin/repertory/in/data'/>",
+			colNames: ["id", "原料", "规格", "客户", "数量", "单价", "合计", "备注", "创建用户", "创建时间", "操作"],
 			colModel: [
 				{name: "id", index: "id", hidden: true, key: true},
-				{name: "name", width: 100},
-				{name: "sex", width: 100},
-				{name: "phone", width: 100},
-				{name: "companyName", width: 100},
-				{name: "telephone", width: 100},
+				{name: "rawMaterialName", width: 100},
+				{name: "specification", width: 100},
+				{name: "clientName", width: 100},
+				{name: "num", width: 100},
+				{name: "unitPrice", width: 100},
+				{name: "sum", width: 100},
 				{name: "mark", width: 100,sortable:false},
-				{name: "enabled", width: 100},
+				{name: "loginCode", width: 100},
 				{name: "createDate", width: 100},
 				{name: "id", width: 100, sortable:false, formatter:operateFormatter},
 			],

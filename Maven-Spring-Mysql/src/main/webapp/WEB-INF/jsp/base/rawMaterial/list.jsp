@@ -94,10 +94,11 @@ $(document).ready(function () {
 $(function () {
 	$("#list").jqGrid({
 		url: "<c:url value = '/admin/rawMaterial/data'/>",
-		colNames: ["id", "原料名称", "原料单位", "原料备注", "是否启用", "创建时间", "操作"],
+		colNames: ["id", "原料名称", "原料规格", "原料单位", "原料备注", "是否启用", "创建时间", "操作"],
 		colModel: [
 			{name: "id", index: "id", hidden: true, key: true},
 			{name: "name", width: 100},
+			{name: "specification", width: 100},
 			{name: "units", width: 100},
 			{name: "mark", width: 100,sortable:false},
 			{name: "enabled", width: 100},
@@ -122,7 +123,7 @@ $(function () {
     $("#btn_new").click(function() {
         var diag = new Dialog();
         diag.Width = 450;
-        diag.Height = 200;
+        diag.Height = 300;
         diag.URL = '<c:url value="/admin/rawMaterial/new"/>';
         diag.Title = "新增";
         diag.CancelEvent = function () {
