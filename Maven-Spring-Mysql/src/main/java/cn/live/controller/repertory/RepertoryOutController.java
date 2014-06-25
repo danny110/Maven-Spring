@@ -15,15 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.live.bean.Client;
 import cn.live.bean.RawMaterial;
 import cn.live.bean.RepertoryOut;
 import cn.live.bean.User;
 import cn.live.enums.OperateCode;
-import cn.live.manager.ClientManager;
 import cn.live.manager.RawMaterialManager;
-import cn.live.manager.RepertoryInViewManager;
 import cn.live.manager.RepertoryOutManager;
+import cn.live.manager.RepertoryOutViewManager;
 import cn.live.manager.UserManager;
 import cn.live.util.Filter;
 import cn.live.util.OperateResult;
@@ -38,7 +36,7 @@ import cn.live.util.ResultJson;
  *
  */
 @Controller
-@RequestMapping("/admin/repertory/in/")
+@RequestMapping("/admin/repertory/out/")
 public class RepertoryOutController {
 	
 	/**
@@ -52,7 +50,6 @@ public class RepertoryOutController {
 	@Resource(name = "repertoryOutManager")
 	private RepertoryOutManager repertoryOutManager;
 	
-	
 	/**
 	 * @Fields rawMaterialManager : 原料
 	 */
@@ -60,10 +57,10 @@ public class RepertoryOutController {
 	private RawMaterialManager rawMaterialManager;
 	
 	/**
-	 * @Fields clientManager : 客户
+	 * @Fields repertoryOutViewManager : 出库视图
 	 */
-	@Resource(name = "clientManager")
-	private ClientManager clientManager;
+	@Resource(name = "repertoryOutViewManager")
+	public RepertoryOutViewManager repertoryOutViewManager;
 	
 	/**
 	 * @Fields userManager : 用户
@@ -71,27 +68,23 @@ public class RepertoryOutController {
 	@Resource(name = "userManager")
 	private UserManager userManager;
 	
-	/**
-	 * @Fields repertoryInViewManager : 入库视图
-	 */
-	@Resource(name = "repertoryInViewManager")
-	private RepertoryInViewManager repertoryInViewManager;
+	
 	
 	/** 
 	 * @Title: list 
-	 * @Description: TODO 入库管理列表
+	 * @Description: TODO 出库管理列表
 	 * @param @return 
 	 * @return String
 	 * @throws 
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list() {
-		return "repertory/in/list";
+		return "repertory/out/list";
 	}
 	
 	/** 
 	 * @Title: data 
-	 * @Description: TODO 返回所有的入库信息列表
+	 * @Description: TODO 返回所有的出库信息列表
 	 * @param @param page
 	 * @param @param rows
 	 * @param @param sidx
@@ -105,7 +98,7 @@ public class RepertoryOutController {
 	public ResultJson data(Integer page, Integer rows, String sidx, String sord) {
 		ResultJson resultJson = new ResultJson();
 		try {
-			resultJson = repertoryOutManager.getResultJson(page, rows, sidx, sord, new String[]{"id", "rawMaterialName", "specification","clientName","num","unitPrice","sum","mark","loginCode","createDate"}, new Filter[]{});
+			resultJson = repertoryOutViewManager.getResultJson(page, rows, sidx, sord, new String[]{"id", "rawMaterialName", "specification","num","mark","loginCode","createDate"}, new Filter[]{});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -114,7 +107,7 @@ public class RepertoryOutController {
 	
 	/** 
 	 * @Title: del 
-	 * @Description: TODO 删除入库
+	 * @Description: TODO 删除出库
 	 * @param @param id 
 	 * @return void
 	 * @throws 
@@ -187,10 +180,8 @@ public class RepertoryOutController {
 				Order.asc("specification")
 		};
 		List<RawMaterial> rawMaterials = rawMaterialManager.getList(filters, orders);
-		List<Client> clients = clientManager.getList(filters);
 		model.addAttribute("rawrawMaterial", rawMaterials);
-		model.addAttribute("client", clients);
-		return "repertory/in/new";
+		return "repertory/out/new";
 	}
 	
 	/** 

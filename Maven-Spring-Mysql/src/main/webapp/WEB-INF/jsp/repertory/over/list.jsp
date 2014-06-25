@@ -68,14 +68,9 @@ $(document).ready(function () {
 <div id="RightTd">
 	<!-- 路径开始 -->
 	<div style="height: 30px;line-height: 30px;font-size: 12pt;background-color: #fff">
-		<span>当前路径：系统管理 - 入库信息</span>
+		<span>当前路径：系统管理 - 库存统计</span>
 	</div>
 	<!-- 路径结束 -->
-	<!-- 操作按钮开始 -->
-	<div>
-		<input id="btn_new" name="btn_new" type="button" value="新增"/>
-	</div>
-	<!-- 操作按钮结束 -->
 	<!-- jqGrid 开始 -->
 	<table id="list"></table>
     <div id="pager"></div>
@@ -93,22 +88,19 @@ $(document).ready(function () {
  	/*jqGrid 开始*/
 	$(function () {
 		$("#list").jqGrid({
-			url: "<c:url value = '/admin/repertory/in/data'/>",
-			colNames: ["id", "原料", "规格", "客户", "数量", "单价", "合计", "备注", "创建用户", "创建时间", "操作"],
+			url: "<c:url value = '/admin/repertory/over/data'/>",
+			colNames: ["id", "原料", "规格", "单位", "入库", "出库", "库存", "操作"],
 			colModel: [
-				{name: "id", index: "id", hidden: true, key: true},
+				{name: "rawMaterialId", index: "id", hidden: true, key: true},
 				{name: "rawMaterialName", width: 100},
 				{name: "specification", width: 100},
-				{name: "clientName", width: 100},
-				{name: "num", width: 100},
-				{name: "unitPrice", width: 100},
-				{name: "sum", width: 100},
-				{name: "mark", width: 100,sortable:false},
-				{name: "loginCode", width: 100},
-				{name: "createDate", width: 100},
+				{name: "units", width: 100},
+				{name: "inNum", width: 100},
+				{name: "outNum", width: 100},
+				{name: "overNum", width: 100},
 				{name: "id", width: 100, sortable:false, formatter:operateFormatter},
 			],
-		    sortname: 'createDate',
+		    sortname: 'rawMaterialId',
 		    datatype: 'json',
 	        mtype: 'GET',
 	        hidegrid: false,
@@ -125,25 +117,10 @@ $(document).ready(function () {
 	});
  
 	function operateFormatter(cellvalue, options, rowObject){
-	    var retVal="";
-	    retVal+="<span><a optype='delete' opurl='<c:url value='/admin/repertory/in/del'/>' ids='" + cellvalue + "' callback='$(\"#list\").trigger(\"reloadGrid\")'>删除</a></span>";
-	    return retVal;
+	    return "";
 	};
 	/*jqGrid 结束*/
 	
- 	/*新增入库*/
-    $("#btn_new").click(function() {
-        var diag = new Dialog();
-        diag.Width = 650;
-        diag.Height = 300;
-        diag.URL = '<c:url value="/admin/repertory/in/new"/>';
-        diag.Title = "新增";
-        diag.CancelEvent = function () {
-            diag.close();
-            $("#list").trigger("reloadGrid");
-        };
-        diag.show();
-    });
 </script>
 </body>
 </html>

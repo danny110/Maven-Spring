@@ -48,35 +48,10 @@ var  webRoot='${pageContext.request.contextPath}';
 	</div>
 	<div class="divTR">
 		<div class="margin_50">
-			<label for="unitPrice" class="label"><span style="color: red;">*</span>单价：</label>
-		</div>
-		<div>
-			<input id="unitPrice" name="unitPrice" class="input">
-		</div>
-		<div class="margin_50">
 			<label for="num" class="label"><span style="color: red;">*</span>数量：</label>
 		</div>
 		<div>
 			<input id="num" name="num" class="input">
-		</div>
-	</div>
-	<div class="divTR">
-		<div class="margin_50">
-			<label for="clientId" class="label"><span style="color: red;">*</span>客户：</label>
-		</div>
-		<div>
-			<select id="clientId" name="clientId">
-				<option value=""></option>
-				<c:forEach var="raw" items="${client }">				
-					<option value="${raw.id }">${raw.name }</option>
-				</c:forEach>
-			</select>
-		</div>
-		<div class="margin_50">
-			<label for="sum" class="label">&nbsp;&nbsp;合计：</label>
-		</div>
-		<div>
-			<input id="sum" name="sum" class="input">
 		</div>
 	</div>
 	<div class="divTR">
@@ -113,7 +88,7 @@ $(function() {
 	$("#btn_add").click(function() {
 		vform.config({
             ajaxpost: {
-                url: '<c:url value="/admin/repertory/in/add"/>',
+                url: '<c:url value="/admin/repertory/out/add"/>',
                 success: function (data) {
                     if( data.isSuccess ) {
                         Dialog.getInstance('0').cancelButton.onclick.apply(Dialog.getInstance('0').cancelButton,[]);

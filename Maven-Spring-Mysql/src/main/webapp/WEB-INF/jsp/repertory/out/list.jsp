@@ -68,7 +68,7 @@ $(document).ready(function () {
 <div id="RightTd">
 	<!-- 路径开始 -->
 	<div style="height: 30px;line-height: 30px;font-size: 12pt;background-color: #fff">
-		<span>当前路径：系统管理 - 入库信息</span>
+		<span>当前路径：系统管理 - 出库信息</span>
 	</div>
 	<!-- 路径结束 -->
 	<!-- 操作按钮开始 -->
@@ -93,16 +93,13 @@ $(document).ready(function () {
  	/*jqGrid 开始*/
 	$(function () {
 		$("#list").jqGrid({
-			url: "<c:url value = '/admin/repertory/in/data'/>",
-			colNames: ["id", "原料", "规格", "客户", "数量", "单价", "合计", "备注", "创建用户", "创建时间", "操作"],
+			url: "<c:url value = '/admin/repertory/out/data'/>",
+			colNames: ["id", "原料", "规格", "数量", "备注", "创建用户", "创建时间", "操作"],
 			colModel: [
 				{name: "id", index: "id", hidden: true, key: true},
 				{name: "rawMaterialName", width: 100},
 				{name: "specification", width: 100},
-				{name: "clientName", width: 100},
 				{name: "num", width: 100},
-				{name: "unitPrice", width: 100},
-				{name: "sum", width: 100},
 				{name: "mark", width: 100,sortable:false},
 				{name: "loginCode", width: 100},
 				{name: "createDate", width: 100},
@@ -136,7 +133,7 @@ $(document).ready(function () {
         var diag = new Dialog();
         diag.Width = 650;
         diag.Height = 300;
-        diag.URL = '<c:url value="/admin/repertory/in/new"/>';
+        diag.URL = '<c:url value="/admin/repertory/out/new"/>';
         diag.Title = "新增";
         diag.CancelEvent = function () {
             diag.close();

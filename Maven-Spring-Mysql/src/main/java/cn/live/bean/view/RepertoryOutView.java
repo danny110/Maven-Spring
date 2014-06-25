@@ -7,15 +7,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @ClassName: RepertoryInView
+ * @ClassName: RepertoryOutView
  * @Description: TODO
  * @author FOAMVALUE FOAMVALUE@LIVE.CN
  * @date 2014年6月24日 下午11:30:46
  * 
  */
 @Entity
-@Table(name = "repertoryIn_view")
-public class RepertoryInView implements Serializable {
+@Table(name = "repertoryOut_view")
+public class RepertoryOutView implements Serializable {
 
 	/**
 	 * @Fields serialVersionUID : 序列化 ID
@@ -26,10 +26,7 @@ public class RepertoryInView implements Serializable {
 	private String id; // 入库表ID
 	private String rawMaterialName; // 原料名称
 	private String specification; // 规格
-	private String clientName; // 客户名称
 	private Float num; // 数量
-	private Float unitPrice; // 单价
-	private Float sum; // 合计
 	private String mark; // 备注
 	private String loginCode; // 创建帐号
 	private String createDate; // 创建时间
@@ -58,36 +55,12 @@ public class RepertoryInView implements Serializable {
 		this.specification = specification;
 	}
 
-	public String getClientName() {
-		return clientName;
-	}
-
-	public void setClientName(String clientName) {
-		this.clientName = clientName;
-	}
-
 	public Float getNum() {
 		return num;
 	}
 
 	public void setNum(Float num) {
 		this.num = num;
-	}
-
-	public Float getUnitPrice() {
-		return unitPrice;
-	}
-
-	public void setUnitPrice(Float unitPrice) {
-		this.unitPrice = unitPrice;
-	}
-
-	public Float getSum() {
-		return sum;
-	}
-
-	public void setSum(Float sum) {
-		this.sum = sum;
 	}
 
 	public String getMark() {

@@ -12,8 +12,8 @@
 		<a href="javascript:void(0)" class="DownA">库存管理</a>
 		<ul>
 			<li><a href="<c:url value='/admin/repertory/in/list'/>">入库信息</a></li>
-			<li><a href="javascript:void(0)">出库信息</a></li>
-			<li><a href="javascript:void(0)">库存统计</a></li>
+			<li><a href="<c:url value='/admin/repertory/out/list'/>">出库信息</a></li>
+			<li><a href="<c:url value='/admin/repertory/over/list'/>">库存统计</a></li>
       	</ul>
 	</li>
 	<li class="DownLi">
