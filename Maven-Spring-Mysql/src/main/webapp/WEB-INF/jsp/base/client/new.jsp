@@ -16,7 +16,7 @@ label{width: 100px;}
 .margin_50{margin: 0 0 0 50px;}
 </style>
 <script type="text/javascript">
-var  webRoot='${pageContext.request.contextPath}';
+var webRootPath='${pageContext.request.contextPath}';
 </script>
 
 <script type="text/javascript" src="<c:url value='/resources/jqGrid/js/jquery-1.9.0.min.js'/>"></script>

@@ -5,22 +5,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/jquery.ui.css"/>"/>
-<link type="text/css" rel="stylesheet" href="<c:url value='/resources/jqGrid/css/ui.jqgrid.css'/>"/> 
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/lhgdialog.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/loginPage.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/jquery.validity.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/lhgcalendar.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/Pager.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/managePage.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/ico.css'/>"/>
 
-<script type="text/javascript" src="<c:url value='/resources/jqGrid/js/jquery-1.9.0.min.js'/>"></script>
-<script type="text/javascript" src="<c:url value='/resources/jqGrid/js/jquery.jqGrid.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.lhgdialog.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.validity.js'/>"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/jquery.ui.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/resources/jqGrid/js/i18n/grid.locale-cn.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/jquery.inspager.js"/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/Common.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/ManageAction.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/baseJS.js'/>"></script>
 <script type="text/javascript">
-var webRoot='${pageContext.request.contextPath}';
+var webRootPath='${pageContext.request.contextPath}';
 </script>
 <script type="text/javascript" src="<c:url value="/resources/js/zDialog.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/zDrag.js"/>"></script>
@@ -64,20 +65,78 @@ $(document).ready(function () {
 
 <!--工作区域开始-->
 <div id="RightTd">
-	<!-- 路径开始 -->
-	<div style="height: 30px;line-height: 30px;font-size: 12pt;background-color: #fff">
-		<span>当前路径：系统管理 - 用户管理</span>
-	</div>
-	<!-- 路径结束 -->
-	<!-- 操作按钮开始 -->
-	<div>
-		<input id="btn_new" name="btn_new" type="button" value="新增"/>
-	</div>
-	<!-- 操作按钮结束 -->
-	<!-- jqGrid 开始 -->
-	<table id="list"></table>
-    <div id="pager"></div>
-	<!-- jqGrid 结束 -->
+	<!-- 表单开始 -->
+	<form id="vform" method="POST" action="">
+		<div id="Head">用户信息</div>
+		<div id="ButtonDiv">
+			<table border="0" cellspacing="0" cellpadding="0" id="SearchTable">
+				<tr>
+					<td>
+						<input type="text" name="loginCode" id="loginCode" value="${loginCode }" class="inputtext" title="请输入帐号" />
+					</td>
+					<td>
+						<select name="enabled" class="selectclass">
+							<option value="" <c:if test="${enabled == '' }">selected="selected"</c:if>>-请选择类型-</option>
+							<option value="true" <c:if test="${enabled == 'true' }">selected="selected"</c:if>>启用</option>
+							<option value="false" <c:if test="${enabled == 'false' }">selected="selected"</c:if>>禁用</option>
+						</select>
+					</td>
+					<td>
+						<input name="" type="image" src="<c:url value='/resources/images/image_07.gif'/>"/>
+					</td>
+  				</tr>
+			</table>
+			<div class="buttonTop"><img src="<c:url value='/resources/images/height5px.gif'/>" width="8" height="5" /></div>
+			<table border="0" cellspacing="0" cellpadding="0" class="bottonlist">
+				<tr>
+					<td>
+						<img src="<c:url value='/resources/images/mian/menu_left.png'/>" width="3" height="33" />
+					</td>
+					<td class="ButtonTd">
+						<a id="new" href="javascript:void(0);" class="ButtonAll bottonAdd png">增加</a>
+					</td>
+					<td class="ButtonTd">
+						<a id="batchFalse" href="javascript:void(0)" class="ButtonAll bottonCheck png">批量禁用</a>
+					</td>
+					<td class="ButtonTd">
+						<a id="batchTrue" href="javascript:void(0)" class="ButtonAll bottonLock png">批量启用</a>
+					</td>
+					<td class="ButtonTd TdLast">
+						<a id="batchDel" href="javascript:void(0)" class="ButtonAll bottonDel png">批量删除</a>
+					</td>
+    				<td>
+    					<img src="<c:url value='/resources/images/mian/menu_right.png'/>" width="3" height="33" />
+    				</td>
+				</tr>
+			</table>
+		</div>
+		<div class="ListTable">
+			<table width="100%" border="0" cellspacing="1" cellpadding="0" id="ListTable">
+				<tr class="title">
+					<td style="width:32px;"><input name="SelectCK" type="checkbox" onclick="SelectAll(this)"/></td>
+					<td style="width:80px;">帐号</td>
+					<td>备注</td>
+					<td style="width:80px;">是否启用</td>
+					<td style="width:150px;">创建时间</td>
+				</tr>
+				<c:forEach var="row" items="${ResultJson.rows }">
+				<tr onmouseover="$(this).addClass('MouseOn')" onmouseout="$(this).removeClass('MouseOn')" ondblclick="checkedInfo(this)">
+					<td><input name="SelectID" type="checkbox" value="${row.id }"/></td>
+					<td>${row.loginCode }</td>
+					<td class="tdleft">${row.mark }</td>
+					<td>${row.enabled == true ? "启用" : "禁用" }</td>
+					<td>${row.createDate }</td>
+				</tr>
+				</c:forEach>
+				<tr onmouseover="$(this).addClass('MouseOn')" onmouseout="$(this).removeClass('MouseOn')">
+					<td colspan="5" id="InsPageDiv">&nbsp;</td>
+				</tr>
+			</table>
+		</div>
+		<input type="hidden" id="page" name="page" value="${ResultJson.page }"/>
+		<input type="hidden" id="size" name="size" value="${ResultJson.size }"/>
+	</form>
+	<!-- 表单结束 -->
 </div>
 <!--工作区域结束-->
 </div>
@@ -88,61 +147,133 @@ $(document).ready(function () {
 <!--底部版权区域区域结束-->
 </div>
 <script type="text/javascript">
-/*jqGrid 开始*/
-$(function () {
-	$("#list").jqGrid({
-		url: "<c:url value = '/admin/user/data'/>",
-		colNames: ["id", "帐号", "用户备注", "是否启用", "创建时间", "操作"],
-		colModel: [
-			{name: "id", index: "id", hidden: true, key: true},
-			{name: "loginCode", width: 100},
-			{name: "mark", width: 100,sortable:false},
-			{name: "enabled", width: 100},
-			{name: "createDate", width: 100},
-			{name: "id", width: 100, sortable:false, formatter:operateFormatter},
-		],
-	    sortname: 'createDate',
-	    datatype: 'json',
-        mtype: 'GET',
-        hidegrid: false,
-        rownumbers: true,
-        autowidth: true,
-        rowNum: 10,
-        rowList: [10, 15, 20],
-        sortorder: 'desc',
-        viewrecords: true,
-        pager: '#pager',
-        height: 'auto'
-	}).jqGrid('navGrid', '#pager', {edit: false, add: false, del: false, search: false});
+	var pagenum=${ResultJson.size }; //一页多少条
+	var pageindex=${ResultJson.page }; //当前页
+	var pagecount=${ResultJson.total }; //总页数
+	var numcount=${ResultJson.records }; //总个数
+	$("#ListTable tr:even").addClass("Single");
 	
-	/*新增原料*/
-    $("#btn_new").click(function() {
-        var diag = new Dialog();
-        diag.Width = 450;
-        diag.Height = 200;
-        diag.URL = '<c:url value="/admin/user/new"/>';
-        diag.Title = "新增";
-        diag.CancelEvent = function () {
-            diag.close();
-            $("#list").trigger("reloadGrid");
-        };
-        diag.show();
-    });
-});
- 
-function operateFormatter(cellvalue, options, rowObject){
-    var retVal="";
-    retVal+="<span><a optype='delete' opurl='<c:url value='/admin/user/del'/>' ids='" + cellvalue + "' callback='$(\"#list\").trigger(\"reloadGrid\")'>删除</a></span>";
-    retVal+="&nbsp&nbsp&nbsp&nbsp";
-    if (rowObject["enabled"] == true) {
-    	retVal+="<span><a optype='enabled' opurl='<c:url value='/admin/user/enabled'/>' ids='" + cellvalue + "' enabled='false' callback='$(\"#list\").trigger(\"reloadGrid\")'>禁用</a></span>";
-    } else {
-    	retVal+="<span><a optype='enabled' opurl='<c:url value='/admin/user/enabled'/>' ids='" + cellvalue + "' enabled='true' callback='$(\"#list\").trigger(\"reloadGrid\")'>启用</a></span>";
-    }
-    return retVal;
-};
-/*jqGrid 结束*/
+	var PageClick = function (pageclickednumber) {
+		// 赋值
+		$("#page").val(pageclickednumber);
+		$("#size").val(pagenum);
+		document.getElementById("vform").action="<c:url value='/admin/user/list'/>";
+		document.getElementById("vform").submit();
+	};
+	$("#InsPageDiv").pager({ pagenumber: pageindex, pagecount: pagecount, numcount: numcount, buttonClickCallback: PageClick });
 
+$(function () {
+	/*新增原料*/
+	$("#new").click(function() {
+		var diag = new Dialog();
+		diag.Width = 450;
+		diag.Height = 200;
+		diag.URL = '<c:url value="/admin/user/new"/>';
+		diag.Title = "新增";
+		diag.CancelEvent = function () {
+			diag.close();
+			location.reload();
+		};
+		diag.show();
+	});
+	
+	// 批量禁用
+	$("#batchFalse").click(function() {
+		if (confirm("确定要禁用吗？")) {
+			$.ajax({
+				url: "<c:url value='/admin/user/enabled'/>",
+	    		data: {
+	    			ids : getSelectIds(),
+	    			enabled : false
+	    		},
+	    		type: "POST",
+	    		dataType: "json",
+	    		success: function(data) {
+	    			if( data.isSuccess ){
+	    				location.reload();
+	    			}else {
+	    				alert(data.errorReason);
+						return false;
+	    			}
+	    	 	 },error : function() {
+			    	alert("操作失败，请联系管理员！");
+					return false;
+				}
+			});
+		};
+	});
+	
+	// 批量启用
+	$("#batchTrue").click(function() {
+		if (confirm("确定要启用吗？")) {
+			$.ajax({
+				url: "<c:url value='/admin/user/enabled'/>",
+	    		data: {
+	    			ids : getSelectIds(),
+	    			enabled : true
+	    		},
+	    		type: "POST",
+	    		dataType: "json",
+	    		success: function(data) {
+	    			if( data.isSuccess ){
+	    				location.reload();
+	    			}else {
+	    				alert(data.errorReason);
+						return false;
+	    			}
+	    	 	 },error : function() {
+			    	alert("操作失败，请联系管理员！");
+					return false;
+				}
+			});
+		};
+	});
+	
+	// 批量删除
+	$("#batchDel").click(function() {
+		if (confirm("确定要删除吗？")) {
+			$.ajax({
+				url: "<c:url value='/admin/user/del'/>",
+	    		data: {
+	    			ids : getSelectIds()
+	    		},
+	    		type: "POST",
+	    		dataType: "json",
+	    		success: function(data) {
+	    			if( data.isSuccess ){
+	    				location.reload();
+	    			}else {
+	    				alert(data.errorReason);
+						return false;
+	    			}
+	    	 	 },error : function() {
+			    	alert("操作失败，请联系管理员！");
+					return false;
+				}
+			});
+		};
+	});
+});
+
+// 获取被选中 ID
+function getSelectIds() {
+	var ids = "";
+	$("input[name=SelectID]:checked").each(function() {
+		if (ids != "") ids += ",";
+		ids += $(this).val();	
+	});
+	return ids;
+};
+
+//选中
+function checkedInfo(node) {
+	var $input = $(node).find("input[name=SelectID]");
+	if ($input.attr("checked") == "checked") {
+		$input.removeAttr("checked");
+	} else {
+		$input.attr("checked", "checked");
+	};
+};
 </script>
 </body>
 </html>

@@ -159,7 +159,39 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 		criteria.setFirstResult((page - 1) * rows);
 		criteria.setMaxResults(rows);
 		List<T> temp = criteria.list();
-		ResultJson resultJson = new ResultJson(page, records, records % rows == 0 ? records / rows : records / rows + 1);
+		ResultJson resultJson = new ResultJson(page, rows, records, records % rows == 0 ? records / rows : records / rows + 1);
+		fillJQueryGridData(resultJson, temp, (String[]) propertyNames);
+        return resultJson;
+	}
+	
+	
+	/* (non-Javadoc)
+	 * <p>Title: getResultJson</p>
+	 * <p>Description: </p>
+	 * @param page
+	 * @param rows
+	 * @param propertyNames
+	 * @param filters
+	 * @param orders
+	 * @return
+	 * @see cn.live.dao.BaseDao#getResultJson(java.lang.Integer, java.lang.Integer, java.lang.String[], java.util.List, java.util.List)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public ResultJson getResultJson(Integer page, Integer rows, String[] propertyNames, List<Filter> filters, List<cn.live.util.Order> orders) {
+		Criteria criteria = (Criteria) this.getSession().createCriteria(clazz);
+		if (filters != null) {
+            setQueryCriteria(criteria, filters);
+        }
+		if (orders != null) {
+			setQueryOrders(criteria, orders);
+		}
+		long records = (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+		criteria.setProjection(null);
+		criteria.setFirstResult((page - 1) * rows);
+		criteria.setMaxResults(rows);
+		List<T> temp = criteria.list();
+		ResultJson resultJson = new ResultJson(page, rows, records, records % rows == 0 ? records / rows : records / rows + 1);
 		fillJQueryGridData(resultJson, temp, (String[]) propertyNames);
         return resultJson;
 	}

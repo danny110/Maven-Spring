@@ -13,28 +13,27 @@ span{float: left;}
 .input{width: 150px;}
 </style>
 <script type="text/javascript">
-var  webRoot='${pageContext.request.contextPath}';
+var webRootPath='${pageContext.request.contextPath}';
 </script>
 
 <script type="text/javascript" src="<c:url value='/resources/jqGrid/js/jquery-1.9.0.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/zDialog.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/zDrag.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/Validform_v5.3.2.js"/>"></script>
 </head>
 <body>
 <!-- 表单开始 -->
 <form id="vform" method="post">
 	<div>
-		<label for="loginCode" class="label">帐号：</label>
+		<label for="loginCode" class="label"><span style="color: red;">*</span>帐号：</label>
 	</div>
 	<div>
 		<input type="text" id="loginCode" name="loginCode"/>
 	</div>
 	<div>
-		<label for="password" class="label">密码：</label>
+		<label for="password" class="label"><span style="color: red;">*</span>密码：</label>
 	</div>
 	<div>
-		<input id="password" name="password" type="text" class="input"/>
+		<input id="password" name="password" type="password" class="input"/>
 	</div>
 	<div>
 		<label for="mark" class="label">备注：</label>
@@ -61,38 +60,45 @@ var  webRoot='${pageContext.request.contextPath}';
 <!-- 表单结束 -->
 <script type="text/javascript">
 $(function() {
-	
-	/*表单提交*/
-	var vform;
-    vform = $("#vform").Validform({ tiptype: 4, showAllError: true});
-    vform.addRule([
-        {
-            ele: "#name",
-            datatype: "*"
-        }
-    ]);
+    var $loginCode = $("#loginCode");
+    var $password = $("#password");
+    var $mark = $("#mark");
+    var $enabled = $("input[name=enabled]");
     
 	/*提交*/
 	$("#btn_add").click(function() {
-		vform.config({
-            ajaxpost: {
-                url: '<c:url value="/admin/user/add"/>',
-                success: function (data) {
-                    if( data.isSuccess ) {
-                        Dialog.getInstance('0').cancelButton.onclick.apply(Dialog.getInstance('0').cancelButton,[]);
-                    } else {
-                        alert(data.errorReason);
-                    }
-                },
-                error: function () {
-                    createTips("操作出现异常，请联系管理员处理！");
-                }
-            }
-        });
-
-        if (vform.check()) {
-            vform.ajaxPost();
-        }
+		if ($loginCode.val() == "") {
+			alert("帐号不能为空！");
+			return;
+		}
+		if ($password.val() == "") {
+			alert("密码不能为空！");
+			return;
+		}
+		
+		$.ajax({
+			url: "<c:url value='/admin/user/add'/>",
+    		data: {
+    			loginCode : $loginCode.val(),
+    			password : $password.val(),
+    			mark : $mark.val(),
+    			enabled : $enabled.val()
+    		},
+    		type: "POST",
+    		dataType: "json",
+    		success: function(data) {
+    			if( data.isSuccess ){
+    				 Dialog.getInstance('0').cancelButton.onclick.apply(Dialog.getInstance('0').cancelButton,[]);
+    			}else {
+    				alert(data.errorReason);
+					return false;
+    			}
+    	 	 },error : function() {
+		    	alert("操作失败，请联系管理员！");
+				return false;
+			}
+		});
+		
     });
 	
 	/*取消*/

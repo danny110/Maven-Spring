@@ -1,7 +1,9 @@
 package cn.live.controller.base;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -18,6 +20,7 @@ import cn.live.enums.OperateCode;
 import cn.live.manager.ClientManager;
 import cn.live.util.Filter;
 import cn.live.util.OperateResult;
+import cn.live.util.Order;
 import cn.live.util.ResultJson;
 
 /**
@@ -37,6 +40,16 @@ public class ClientController {
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	/**
+	 * @Fields PAGE : 初始化当前页码
+	 */
+	private static Integer PAGE = 0;
+	
+	/**
+	 * @Fields SIZE : 初始化每页行数
+	 */
+	private static Integer SIZE = 10;
+	
+	/**
 	 * @Fields clientManager : 客户
 	 */
 	@Resource(name = "clientManager")
@@ -49,35 +62,28 @@ public class ClientController {
 	 * @return String
 	 * @throws 
 	 */
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list() {
-		return "base/client/list";
-	}
-	
-
-	/** 
-	 * @Title: data 
-	 * @Description: TODO 返回所有的客户列表
-	 * @param @param page 当前页码
-	 * @param @param rows 每页记录条数
-	 * @param @param sidx 排序字段
-	 * @param @param sord 排序类型
-	 * @param @return 
-	 * @return ResultJson
-	 * @throws 
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/data", method = RequestMethod.GET)
-	public ResultJson data(Integer page, Integer rows, String sidx, String sord) {
-		ResultJson resultJson = new ResultJson();
-		try {
-			new Filter();
-			Filter filter = Filter.eq("isDeleted", false);
-			resultJson = clientManager.getResultJson(page, rows, sidx, sord, new String[]{"id", "sex", "name","phone","companyName","telephone","mark","enabled","createDate"}, new Filter[]{filter});
-		} catch (Exception e) {
-			e.printStackTrace();
+	@RequestMapping(value = "/list")
+	public String list(String name, Boolean enabled, Integer page, Integer size, Model model) {
+		List<Filter> filters = new ArrayList<Filter>();
+		if (StringUtils.isNotBlank(name)) {
+			filters.add(Filter.like("name", "%" + name + "%"));
 		}
-		return resultJson;
+		if (enabled != null) {
+			filters.add(Filter.eq("enabled", enabled));
+		}
+		filters.add(Filter.eq("isDeleted", false));
+		
+		List<Order> orders = new ArrayList<Order>();
+		orders.add(Order.desc("modifyDate"));
+		
+		page = page == null ? PAGE : page;
+		size = size == null ? SIZE : size;
+		
+		ResultJson resultJson = clientManager.getResultJson(page, size, new String[]{"id", "sex", "name","phone","companyName","telephone","mark","enabled","createDate"}, filters, orders);
+		model.addAttribute("name", name);
+		model.addAttribute("enabled", enabled);
+		model.addAttribute("ResultJson", resultJson);
+		return "base/client/list";
 	}
 	
 	/** 
@@ -93,10 +99,12 @@ public class ClientController {
 		OperateResult<String> operateResult = new OperateResult<String>();
 		try {
 			if (StringUtils.isNotBlank(ids)) {
-				Client client = clientManager.findById(ids);
-				client.setIsDeleted(true);
-				client.setModifyDate(simpleDateFormat.format(new Date()));
-				clientManager.merge(client);
+				for (String id : ids.split(",")) {
+					Client client = clientManager.findById(id);
+					client.setIsDeleted(true);
+					client.setModifyDate(simpleDateFormat.format(new Date()));
+					clientManager.merge(client);
+				}
 				operateResult.isSuccess = true;
 				operateResult.returnValue = OperateCode.SUCCESS.toString();
 			}
@@ -122,11 +130,13 @@ public class ClientController {
 	public OperateResult<String> enabled(String ids, Boolean enabled) {
 		OperateResult<String> operateResult = new OperateResult<String>();
 		try {
-			if (enabled != null) {
-				Client client = clientManager.findById(ids);
-				client.setEnabled(enabled);
-				client.setModifyDate(simpleDateFormat.format(new Date()));
-				clientManager.merge(client);
+			if (StringUtils.isNotBlank(ids) && enabled != null) {
+				for (String id : ids.split(",")) {
+					Client client = clientManager.findById(id);
+					client.setEnabled(enabled);
+					client.setModifyDate(simpleDateFormat.format(new Date()));
+					clientManager.merge(client);
+				}
 				operateResult.isSuccess = true;
 				operateResult.returnValue = OperateCode.SUCCESS.toString();
 			}

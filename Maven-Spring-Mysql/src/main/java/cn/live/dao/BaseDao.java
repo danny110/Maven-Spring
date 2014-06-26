@@ -73,10 +73,24 @@ public interface BaseDao<T, ID extends Serializable> {
 	 * @param @param sidx 排序字段
 	 * @param @param sord 排序类型
 	 * @param @param propertyNames 属性名称
-	 * @param @param filters g过滤器
+	 * @param @param filters 过滤器
 	 * @param @return 
 	 * @return ResultJson
 	 * @throws 
 	 */
 	ResultJson getResultJson(Integer page, Integer rows, String sidx, String sord, String[] propertyNames, Filter[] filters);
+	
+	/**
+	 * @Title: getResultJson
+	 * @Description: TODO
+	 * @param @param page
+	 * @param @param rows
+	 * @param @param propertyNames
+	 * @param @param filters
+	 * @param @param orders
+	 * @param @return
+	 * @return ResultJson
+	 * @throws
+	 */
+	ResultJson getResultJson(Integer page, Integer rows, String[] propertyNames, List<Filter> filters, List<Order> orders);
 }

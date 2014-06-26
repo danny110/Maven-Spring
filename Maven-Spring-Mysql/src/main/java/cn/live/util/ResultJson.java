@@ -17,9 +17,10 @@ public final class ResultJson implements Serializable {
 	 * @Fields serialVersionUID : 序列化 ID
 	 */
 	private static final long serialVersionUID = -1565420438894013217L;
-	private int page; // 当前页码
-	private long records; // 总数据
-	private long total; // 总页码
+	private Integer page; // 当前页码
+	private Integer size; // 每页行数
+	private Long records; // 总数据
+	private Long total; // 总页码
 	private List<Map<String, Object>> rows; // 数据集
 	
 	/** 
@@ -36,34 +37,42 @@ public final class ResultJson implements Serializable {
 	 * @param totlal
 	 * @param rows 
 	 */
-	public ResultJson(int page, long records, long totlal){
+	public ResultJson(Integer page, Integer size, Long records, Long totlal){
 		this.page = page;
+		this.size = size;
 		this.records = records;
 		this.total = totlal;
-	};
-	
+	}
 
-	public int getPage() {
+	public Integer getPage() {
 		return page;
 	}
 
-	public void setPage(int page) {
+	public void setPage(Integer page) {
 		this.page = page;
 	}
 
-	public long getRecords() {
+	public Integer getSize() {
+		return size;
+	}
+
+	public void setSize(Integer size) {
+		this.size = size;
+	}
+
+	public Long getRecords() {
 		return records;
 	}
 
-	public void setRecords(long records) {
+	public void setRecords(Long records) {
 		this.records = records;
 	}
 
-	public long getTotal() {
+	public Long getTotal() {
 		return total;
 	}
 
-	public void setTotal(long total) {
+	public void setTotal(Long total) {
 		this.total = total;
 	}
 
@@ -77,6 +86,6 @@ public final class ResultJson implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
+	};
 
 }
