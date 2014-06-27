@@ -179,11 +179,16 @@ $(function () {
 	
 	// 批量禁用
 	$("#batchFalse").click(function() {
+		var ids = getSelectIds();
+		if (ids == "") {
+			alert("请选择需要禁用的数据行！");
+			return;
+		}
 		if (confirm("确定要禁用吗？")) {
 			$.ajax({
 				url: "<c:url value='/admin/user/enabled'/>",
 	    		data: {
-	    			ids : getSelectIds(),
+	    			ids : ids,
 	    			enabled : false
 	    		},
 	    		type: "POST",
@@ -205,11 +210,16 @@ $(function () {
 	
 	// 批量启用
 	$("#batchTrue").click(function() {
+		var ids = getSelectIds();
+		if (ids == "") {
+			alert("请选择需要启用的数据行！");
+			return;
+		}
 		if (confirm("确定要启用吗？")) {
 			$.ajax({
 				url: "<c:url value='/admin/user/enabled'/>",
 	    		data: {
-	    			ids : getSelectIds(),
+	    			ids : ids,
 	    			enabled : true
 	    		},
 	    		type: "POST",
@@ -231,11 +241,16 @@ $(function () {
 	
 	// 批量删除
 	$("#batchDel").click(function() {
+		var ids = getSelectIds();
+		if (ids == "") {
+			alert("请选择需要删除的数据行！");
+			return;
+		}
 		if (confirm("确定要删除吗？")) {
 			$.ajax({
 				url: "<c:url value='/admin/user/del'/>",
 	    		data: {
-	    			ids : getSelectIds()
+	    			ids : ids
 	    		},
 	    		type: "POST",
 	    		dataType: "json",
