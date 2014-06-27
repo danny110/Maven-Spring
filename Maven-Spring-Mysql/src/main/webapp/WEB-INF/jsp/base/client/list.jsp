@@ -137,7 +137,10 @@ $(document).ready(function () {
 					<td class="tdleft">${row.mark }</td>
 					<td>${row.enabled == true ? "启用" : "禁用" }</td>
 					<td>${row.createDate }</td>
-					<td><a id="view" href="javascript:void(0);">查看</a>&nbsp;<a id="edit" href="javascript:void(0);">编辑</a></td>
+					<td>
+						<a href="javascript:void(0);" onclick="view('${row.id }');">查看</a>&nbsp;
+						<a href="javascript:void(0);" onclick="edit('${row.id }');">编辑</a>
+					</td>
 				</tr>
 				</c:forEach>
 				<tr onmouseover="$(this).addClass('MouseOn')" onmouseout="$(this).removeClass('MouseOn')">
@@ -175,11 +178,11 @@ var PageClick = function (pageclickednumber) {
 $("#InsPageDiv").pager({ pagenumber: pageindex, pagecount: pagecount, numcount: numcount, buttonClickCallback: PageClick });
 
 $(function () {
-/*新增原料*/
+// 新增客户
 $("#new").click(function() {
 	var diag = new Dialog();
-	diag.Width = 680;
-	diag.Height = 400;
+	diag.Width = 700;
+	diag.Height = 200;
 	diag.URL = '<c:url value="/admin/client/new"/>';
 	diag.Title = "新增";
 	diag.CancelEvent = function () {
@@ -191,11 +194,16 @@ $("#new").click(function() {
 
 // 批量禁用
 $("#batchFalse").click(function() {
+	var ids = getSelectIds();
+	if (ids == "") {
+		alert("请选择需要禁用的数据行！");
+		return;
+	}
 	if (confirm("确定要禁用吗？")) {
 		$.ajax({
 			url: "<c:url value='/admin/client/enabled'/>",
     		data: {
-    			ids : getSelectIds(),
+    			ids : ids,
     			enabled : false
     		},
     		type: "POST",
@@ -217,11 +225,16 @@ $("#batchFalse").click(function() {
 
 // 批量启用
 $("#batchTrue").click(function() {
+	var ids = getSelectIds();
+	if (ids == "") {
+		alert("请选择需要启用的数据行！");
+		return;
+	}
 	if (confirm("确定要启用吗？")) {
 		$.ajax({
 			url: "<c:url value='/admin/client/enabled'/>",
     		data: {
-    			ids : getSelectIds(),
+    			ids : ids,
     			enabled : true
     		},
     		type: "POST",
@@ -243,11 +256,16 @@ $("#batchTrue").click(function() {
 
 // 批量删除
 $("#batchDel").click(function() {
+	var ids = getSelectIds();
+	if (ids == "") {
+		alert("请选择需要删除的数据行！");
+		return;
+	}
 	if (confirm("确定要删除吗？")) {
 		$.ajax({
 			url: "<c:url value='/admin/client/del'/>",
     		data: {
-    			ids : getSelectIds()
+    			ids : ids
     		},
     		type: "POST",
     		dataType: "json",
@@ -279,12 +297,39 @@ return ids;
 
 //选中
 function checkedInfo(node) {
-var $input = $(node).find("input[name=SelectID]");
-if ($input.attr("checked") == "checked") {
-	$input.removeAttr("checked");
-} else {
-	$input.attr("checked", "checked");
+	var $input = $(node).find("input[name=SelectID]");
+	if ($input.attr("checked") == "checked") {
+		$input.removeAttr("checked");
+	} else {
+		$input.attr("checked", "checked");
+	};
 };
+
+//浏览客户
+function view(id) {
+	var diag = new Dialog();
+	diag.Width = 700;
+	diag.Height = 200;
+	diag.URL = '<c:url value="/admin/client/view-' + id + '"/>';
+	diag.Title = "浏览";
+	diag.CancelEvent = function () {
+		diag.close();
+	};
+	diag.show();
+};
+
+//编辑客户
+function edit(id) {
+	var diag = new Dialog();
+	diag.Width = 700;
+	diag.Height = 200;
+	diag.URL = '<c:url value="/admin/client/edit-' + id + '"/>';
+	diag.Title = "编辑";
+	diag.CancelEvent = function () {
+		diag.close();
+		location.reload();
+	};
+	diag.show();
 };
 </script>
 </body>

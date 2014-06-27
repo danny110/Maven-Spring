@@ -11,11 +11,13 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.live.bean.Client;
+import cn.live.enums.Gender;
 import cn.live.enums.OperateCode;
 import cn.live.manager.ClientManager;
 import cn.live.util.Filter;
@@ -181,6 +183,94 @@ public class ClientController {
 			clientManager.create(client);
 			operateResult.isSuccess = true;
 			operateResult.returnValue = OperateCode.SUCCESS.toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			operateResult.isSuccess = false;
+			operateResult.errorReason = OperateCode.ERROR.toString();
+		}
+		return operateResult;
+	}
+	
+	
+	/**
+	 * @Title: view
+	 * @Description: TODO 浏览页面
+	 * @param @param id
+	 * @param @return
+	 * @return String
+	 * @throws
+	 */
+	@RequestMapping(value = "/view-{id}", method = RequestMethod.GET)
+	public String view(@PathVariable String id, Model model) {
+		try {
+			if (StringUtils.isNotBlank(id)) {
+				Client client = clientManager.findById(id);
+				model.addAttribute("Client", client);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "base/client/view";
+	}
+	
+	/**
+	 * @Title: edit
+	 * @Description: TODO 编辑页面
+	 * @param @param id
+	 * @param @param model
+	 * @param @return
+	 * @return String
+	 * @throws
+	 */
+	@RequestMapping(value = "/edit-{id}", method = RequestMethod.GET)
+	public String edit(@PathVariable String id, Model model) {
+		try {
+			if (StringUtils.isNotBlank(id)) {
+				Client client = clientManager.findById(id);
+				model.addAttribute("Client", client);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "base/client/edit";
+	}
+	
+	/**
+	 * @Title: update
+	 * @Description: TODO 更新
+	 * @param @param client
+	 * @param @return
+	 * @return OperateResult<String>
+	 * @throws
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public OperateResult<String> update(String id, String name, String sex, String companyName,
+			String phone, String telephone, String mark, String enabled) {
+		OperateResult<String> operateResult = new OperateResult<String>();
+		try {
+			if (StringUtils.isNotBlank(id)) {
+				List<Client> clients = clientManager.getList(new Filter[]{Filter.eq("id", id)});
+				if (clients != null && clients.size() == 1) {
+					Client client = clients.get(0);
+					client.setName(name);
+					client.setSex(Gender.valueOf(sex));
+					client.setCompanyName(companyName);
+					client.setPhone(phone);
+					client.setTelephone(telephone);
+					client.setMark(mark);
+					client.setEnabled(Boolean.valueOf(enabled));
+					client.setModifyDate(simpleDateFormat.format(new Date()));
+					clientManager.merge(client);
+					operateResult.isSuccess = true;
+					operateResult.returnValue = OperateCode.SUCCESS.toString();
+				}
+			} else {
+				operateResult.isSuccess = false;
+				operateResult.errorReason = OperateCode.NOPARAMS.toString();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			operateResult.isSuccess = false;

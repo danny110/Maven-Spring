@@ -27,34 +27,35 @@ var webRootPath='${pageContext.request.contextPath}';
 <body>
 <!-- 表单开始 -->
 <form id="vform" method="post">
+	<input id="id" name="id" type="hidden" value="${Client.id }"/>
 	<table>
 		<tr>
 			<td class="td"><span style="color: red;">*</span>姓名：</td>
-			<td><input id="name" name="name" class="input"></td>
+			<td><input id="name" name="name" class="input" value="${Client.name }"></td>
 			<td class="td">性别：</td>
 			<td>
-				<input id="MAN" name="sex" value="MAN" type="radio" checked="checked"/><label for="MAN">男</label>
-				<input id="WOMEN" name="sex" value="WOMEN" type="radio"/><label for="WOMEN">女</label>
+				<input id="MAN" name="sex" value="MAN" type="radio" checked="checked" <c:if test="${Client.sex == 'MAN' }">checked="checked"</c:if>/><label for="MAN">男</label>
+				<input id="WOMEN" name="sex" value="WOMEN" type="radio" <c:if test="${Client.sex == 'WOMEN' }">checked="checked"</c:if>/><label for="WOMEN">女</label>
 			</td>
 		</tr>
 		<tr>
 			<td class="td">公司名称：</td>
-			<td colspan="3"><input id="companyName" name="companyName" class="input" style="width: 413px;"></td>
+			<td colspan="3"><input id="companyName" name="companyName" class="input" style="width: 413px;" value="${Client.companyName }"/></td>
 		</tr>
 		<tr>
 			<td class="td">手机号码：</td>
-			<td><input id="phone" name="phone" class="input"></td>
+			<td><input id="phone" name="phone" class="input" value="${Client.phone }"/></td>
 			<td class="td">座机号码：</td>
-			<td><input id="telephone" name="telephone" class="input"></td>
+			<td><input id="telephone" name="telephone" class="input" value="${Client.telephone }"/></td>
 		</tr>
 		<tr>
 			<td class="td">客户备注：</td>
-			<td><textarea id="mark" name="mark" rows="" cols="" class="input">暂无备注</textarea></td>
+			<td><textarea id="mark" name="mark" rows="" cols="" class="input">${Client.mark }</textarea></td>
 			<td class="td">是否启用：</td>
 			<td>
-				<input id="enabled0" name="enabled" type="radio" value="true" checked="checked" />
+				<input id="enabled0" name="enabled" type="radio" value="true" <c:if test="${Client.enabled == 'true' }">checked="checked"</c:if>/>
 				<label for="enabled0">启用</label>
-				<input id="enabled1" name="enabled" type="radio" value="false" />
+				<input id="enabled1" name="enabled" type="radio" value="false" <c:if test="${Client.enabled == 'false' }">checked="checked"</c:if>/>
 				<label for="enabled1">禁用</label>
 			</td>
 		</tr>
@@ -71,6 +72,7 @@ var webRootPath='${pageContext.request.contextPath}';
 <!-- 表单结束 -->
 <script type="text/javascript">
 $(function() {
+	var $id = $("#id");
     var $name = $("#name");
     var $companyName = $("#companyName");
     var $phone = $("#phone");
@@ -85,8 +87,9 @@ $(function() {
 		}
 		
 		$.ajax({
-			url: "<c:url value='/admin/client/add'/>",
+			url: "<c:url value='/admin/client/update'/>",
     		data: {
+    			id : $id.val(),
     			name : $name.val(),
     			sex : $("input[name=sex]:checked").val(),
     			companyName : $companyName.val(),
