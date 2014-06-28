@@ -1,14 +1,18 @@
 package cn.live.controller.repertory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.live.manager.RepertoryOverViewManager;
 import cn.live.util.Filter;
+import cn.live.util.Order;
 import cn.live.util.ResultJson;
 
 /**
@@ -28,40 +32,46 @@ public class RepertoryOverController {
 	@Resource(name = "repertoryOverViewManager")
 	public RepertoryOverViewManager repertoryOverViewManager;
 	
+	/**
+	 * @Fields PAGE : 初始化当前页码
+	 */
+	private static Integer PAGE = 0;
 	
-	/** 
-	 * @Title: list 
+	/**
+	 * @Fields SIZE : 初始化每页行数
+	 */
+	private static Integer SIZE = 10;
+	
+	/**
+	 * @Title: list
 	 * @Description: TODO 库存管理列表
-	 * @param @return 
-	 * @return String
-	 * @throws 
-	 */
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list() {
-		return "repertory/over/list";
-	}
-	
-	/** 
-	 * @Title: data 
-	 * @Description: TODO 返回所有的库存信息列表
+	 * @param @param rawMaterialName
 	 * @param @param page
-	 * @param @param rows
-	 * @param @param sidx
-	 * @param @param sord
-	 * @param @return 
-	 * @return ResultJson
-	 * @throws 
+	 * @param @param size
+	 * @param @param model
+	 * @param @return
+	 * @return String
+	 * @throws
 	 */
-	@ResponseBody
-	@RequestMapping(value = "/data", method = RequestMethod.GET)
-	public ResultJson data(Integer page, Integer rows, String sidx, String sord) {
-		ResultJson resultJson = new ResultJson();
+	@RequestMapping(value = "/list")
+	public String list(String rawMaterialName, Integer page, Integer size, Model model) {
 		try {
-			resultJson = repertoryOverViewManager.getResultJson(page, rows, sidx, sord, new String[]{"rawMaterialId", "rawMaterialName", "specification","units","inNum","outNum","overNum"}, new Filter[]{});
+			List<Filter> filters = new ArrayList<Filter>();
+			if (StringUtils.isNotBlank(rawMaterialName)) filters.add(Filter.like("rawMaterialName", "%" + rawMaterialName + "%"));
+			
+			List<Order> orders = new ArrayList<Order>();
+			orders.add(Order.desc("overNum"));
+			
+			page = page == null ? PAGE : page;
+			size = size == null ? SIZE : size;
+			
+			ResultJson resultJson = repertoryOverViewManager.getResultJson(page, size, new String[]{"rawMaterialId", "rawMaterialName", "specification","units","inNum","outNum","overNum"}, filters, orders);
+			model.addAttribute("rawMaterialName", rawMaterialName);
+			model.addAttribute("ResultJson", resultJson);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return resultJson;
+		return "repertory/over/list";
 	}
 	
 }

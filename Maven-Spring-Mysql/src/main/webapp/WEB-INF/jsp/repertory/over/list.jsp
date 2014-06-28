@@ -5,22 +5,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/jquery.ui.css"/>"/>
-<link type="text/css" rel="stylesheet" href="<c:url value='/resources/jqGrid/css/ui.jqgrid.css'/>"/>
-<link type="text/css" href="<c:url value='/resources/css/lhgdialog.css'/>" rel="stylesheet" />
-<link type="text/css" href="<c:url value='/resources/css/loginPage.css'/>" rel="stylesheet" />
-<link type="text/css" href="<c:url value='/resources/css/ico.css'/>" rel="stylesheet" />
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/lhgdialog.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/loginPage.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/jquery.validity.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/lhgcalendar.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/Pager.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/managePage.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/ico.css'/>"/>
 
-<script type="text/javascript" src="<c:url value='/resources/jqGrid/js/jquery-1.9.0.min.js'/>"></script>
-<script type="text/javascript" src="<c:url value='/resources/jqGrid/js/jquery.jqGrid.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.lhgdialog.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.validity.js'/>"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/jquery.ui.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/resources/jqGrid/js/i18n/grid.locale-cn.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/jquery.inspager.js"/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/Common.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/ManageAction.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/baseJS.js'/>"></script>
 <script type="text/javascript">
-var webRoot='${pageContext.request.contextPath}';
+var webRootPath='${pageContext.request.contextPath}';
 </script>
 <script type="text/javascript" src="<c:url value="/resources/js/zDialog.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/zDrag.js"/>"></script>
@@ -66,15 +67,59 @@ $(document).ready(function () {
 
 <!--工作区域开始-->
 <div id="RightTd">
-	<!-- 路径开始 -->
-	<div style="height: 30px;line-height: 30px;font-size: 12pt;background-color: #fff">
-		<span>当前路径：系统管理 - 库存统计</span>
-	</div>
-	<!-- 路径结束 -->
-	<!-- jqGrid 开始 -->
-	<table id="list"></table>
-    <div id="pager"></div>
-	<!-- jqGrid 结束 -->
+	<!-- 表单开始 -->
+	<form id="vform" method="POST" action="">
+		<div id="Head">入库信息</div>
+		<div id="ButtonDiv">
+			<table border="0" cellspacing="0" cellpadding="0" id="SearchTable">
+				<tr>
+					<td>
+						<label for="rawMaterialName">请输入原料名称：</label>
+						<input type="text" name="rawMaterialName" id="rawMaterialName" value="${rawMaterialName }" class="inputtext" title="请输入原料名称" />
+					</td>
+					<td>
+						<input name="" type="image" src="<c:url value='/resources/images/image_07.gif'/>"/>
+					</td>
+  				</tr>
+			</table>
+			<div class="buttonTop"><img src="<c:url value='/resources/images/height5px.gif'/>" width="8" height="5" /></div>
+		</div>
+		<div class="ListTable">
+			<table width="100%" border="0" cellspacing="1" cellpadding="0" id="ListTable">
+				<tr class="title">
+					<td style="width:32px;"><input name="SelectCK" type="checkbox" onclick="SelectAll(this)"/></td>
+					<td style="width:80px;">原料</td>
+					<td style="width:80px;">规格</td>
+					<td style="width:80px;">出库数量</td>
+					<td style="width:80px;">入库数量</td>
+					<td style="width:80px;">库存数量</td>
+					<td style="width:50px;">单位</td>
+					<td style="width:80px;">操作</td>
+				</tr>
+				<c:forEach var="row" items="${ResultJson.rows }">
+				<tr onmouseover="$(this).addClass('MouseOn')" onmouseout="$(this).removeClass('MouseOn')" ondblclick="checkedInfo(this)">
+					<td><input name="SelectID" type="checkbox" value="${row.rawMaterialId }"/></td>
+					<td>${row.rawMaterialName }</td>
+					<td>${row.specification }</td>
+					<td>${row.inNum }</td>
+					<td>${row.outNum }</td>
+					<td>${row.overNum }</td>
+					<td>${row.units }</td>
+					<td>
+						<a href="javascript:void(0);" onclick="view('${row.id }');">入库明细</a>&nbsp;
+						<a href="javascript:void(0);" onclick="batchDel('${row.id }');">出库明细</a>
+					</td>
+				</tr>
+				</c:forEach>
+				<tr onmouseover="$(this).addClass('MouseOn')" onmouseout="$(this).removeClass('MouseOn')">
+					<td colspan="9" id="InsPageDiv">&nbsp;</td>
+				</tr>
+			</table>
+		</div>
+		<input type="hidden" id="page" name="page" value="${ResultJson.page }"/>
+		<input type="hidden" id="size" name="size" value="${ResultJson.size }"/>
+	</form>
+	<!-- 表单结束 -->
 </div>
 <!--工作区域结束-->
 </div>
@@ -85,42 +130,31 @@ $(document).ready(function () {
 <!--底部版权区域区域结束-->
 </div>
 <script type="text/javascript">
- 	/*jqGrid 开始*/
-	$(function () {
-		$("#list").jqGrid({
-			url: "<c:url value = '/admin/repertory/over/data'/>",
-			colNames: ["id", "原料", "规格", "单位", "入库", "出库", "库存", "操作"],
-			colModel: [
-				{name: "rawMaterialId", index: "id", hidden: true, key: true},
-				{name: "rawMaterialName", width: 100},
-				{name: "specification", width: 100},
-				{name: "units", width: 100},
-				{name: "inNum", width: 100},
-				{name: "outNum", width: 100},
-				{name: "overNum", width: 100},
-				{name: "id", width: 100, sortable:false, formatter:operateFormatter},
-			],
-		    sortname: 'rawMaterialId',
-		    datatype: 'json',
-	        mtype: 'GET',
-	        hidegrid: false,
-	        rownumbers: true,
-	        autowidth: true,
-	        rowNum: 10,
-	        rowList: [10, 15, 20],
-	        sortorder: 'desc',
-	        viewrecords: true,
-	        pager: '#pager',
-	        height: 'auto'
-		}).jqGrid('navGrid', '#pager', {edit: false, add: false, del: false, search: false});
-		
-	});
- 
-	function operateFormatter(cellvalue, options, rowObject){
-	    return "";
+var pagenum=${ResultJson.size }; //一页多少条
+var pageindex=${ResultJson.page }; //当前页
+var pagecount=${ResultJson.total }; //总页数
+var numcount=${ResultJson.records }; //总个数
+$("#ListTable tr:even").addClass("Single");
+
+var PageClick = function (pageclickednumber) {
+	// 赋值
+	$("#page").val(pageclickednumber);
+	$("#size").val(pagenum);
+	document.getElementById("vform").action="<c:url value='/admin/repertory/over/list'/>";
+	document.getElementById("vform").submit();
+};
+$("#InsPageDiv").pager({ pagenumber: pageindex, pagecount: pagecount, numcount: numcount, buttonClickCallback: PageClick }); 
+
+
+//选中
+function checkedInfo(node) {
+	var $input = $(node).find("input[name=SelectID]");
+	if ($input.attr("checked") == "checked") {
+		$input.removeAttr("checked");
+	} else {
+		$input.attr("checked", "checked");
 	};
-	/*jqGrid 结束*/
-	
+};
 </script>
 </body>
 </html>
