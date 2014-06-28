@@ -57,12 +57,17 @@ public class ClientController {
 	@Resource(name = "clientManager")
 	private ClientManager clientManager;
 	
-	/** 
-	 * @Title: list 
-	 * @Description: TODO 客户管理列表
-	 * @param @return 
+	/**
+	 * @Title: list 客户管理列表
+	 * @Description: TODO
+	 * @param @param name
+	 * @param @param enabled
+	 * @param @param page
+	 * @param @param size
+	 * @param @param model
+	 * @param @return
 	 * @return String
-	 * @throws 
+	 * @throws
 	 */
 	@RequestMapping(value = "/list")
 	public String list(String name, Boolean enabled, Integer page, Integer size, Model model) {
@@ -240,7 +245,14 @@ public class ClientController {
 	/**
 	 * @Title: update
 	 * @Description: TODO 更新
-	 * @param @param client
+	 * @param @param id
+	 * @param @param name
+	 * @param @param sex
+	 * @param @param companyName
+	 * @param @param phone
+	 * @param @param telephone
+	 * @param @param mark
+	 * @param @param enabled
 	 * @param @return
 	 * @return OperateResult<String>
 	 * @throws
