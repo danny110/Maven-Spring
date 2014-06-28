@@ -55,11 +55,6 @@ $(document).ready(function () {
 
 <!--工作区域开始-->
 <div id="RightTd">
-	<!-- 路径开始 -->
-	<div style="height: 30px;line-height: 30px;font-size: 12pt;background-color: #fff">
-		<span>当前路径：首页</span>
-	</div>
-	<!-- 路径结束 -->
 </div>
 <!--工作区域结束-->
 </div>

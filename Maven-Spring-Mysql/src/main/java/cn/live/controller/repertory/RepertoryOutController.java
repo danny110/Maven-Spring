@@ -1,6 +1,7 @@
 package cn.live.controller.repertory;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,6 +47,16 @@ public class RepertoryOutController {
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	/**
+	 * @Fields PAGE : 初始化当前页码
+	 */
+	private static Integer PAGE = 0;
+	
+	/**
+	 * @Fields SIZE : 初始化每页行数
+	 */
+	private static Integer SIZE = 10;
+	
+	/**
 	 * @Fields repertoryOutManager : 出库
 	 */
 	@Resource(name = "repertoryOutManager")
@@ -68,41 +80,42 @@ public class RepertoryOutController {
 	@Resource(name = "userManager")
 	private UserManager userManager;
 	
-	
-	
-	/** 
-	 * @Title: list 
+	/**
+	 * @Title: list
 	 * @Description: TODO 出库管理列表
-	 * @param @return 
-	 * @return String
-	 * @throws 
-	 */
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list() {
-		return "repertory/out/list";
-	}
-	
-	/** 
-	 * @Title: data 
-	 * @Description: TODO 返回所有的出库信息列表
+	 * @param @param rawMaterialName
+	 * @param @param beginTime
+	 * @param @param endTime
 	 * @param @param page
-	 * @param @param rows
-	 * @param @param sidx
-	 * @param @param sord
-	 * @param @return 
-	 * @return ResultJson
-	 * @throws 
+	 * @param @param size
+	 * @param @param model
+	 * @param @return
+	 * @return String
+	 * @throws
 	 */
-	@ResponseBody
-	@RequestMapping(value = "/data", method = RequestMethod.GET)
-	public ResultJson data(Integer page, Integer rows, String sidx, String sord) {
-		ResultJson resultJson = new ResultJson();
+	@RequestMapping(value = "/list")
+	public String list(String rawMaterialName, String beginTime, String endTime, Integer page, Integer size, Model model) {
 		try {
-			resultJson = repertoryOutViewManager.getResultJson(page, rows, sidx, sord, new String[]{"id", "rawMaterialName", "specification","num","mark","loginCode","createDate"}, new Filter[]{});
+			List<Filter> filters = new ArrayList<Filter>();
+			if (StringUtils.isNotBlank(rawMaterialName)) filters.add(Filter.like("rawMaterialName", "%" + rawMaterialName + "%"));
+			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("createDate", beginTime));
+			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("createDate", endTime));
+			
+			List<Order> orders = new ArrayList<Order>();
+			orders.add(Order.desc("createDate"));
+			
+			page = page == null ? PAGE : page;
+			size = size == null ? SIZE : size;
+			
+			ResultJson resultJson = repertoryOutViewManager.getResultJson(page, size, new String[]{"id", "rawMaterialName", "specification","num","mark","loginCode","createDate"}, filters, orders);
+			model.addAttribute("rawMaterialName", rawMaterialName);
+			model.addAttribute("beginTime", beginTime);
+			model.addAttribute("endTime", endTime);
+			model.addAttribute("ResultJson", resultJson);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return resultJson;
+		return "repertory/out/list";
 	}
 	
 	/** 
@@ -118,10 +131,12 @@ public class RepertoryOutController {
 		OperateResult<String> operateResult = new OperateResult<String>();
 		try {
 			if (StringUtils.isNotBlank(ids)) {
-				RepertoryOut repertoryOut = repertoryOutManager.findById(ids);
-				repertoryOut.setIsDeleted(true);
-				repertoryOut.setModifyDate(simpleDateFormat.format(new Date()));
-				repertoryOutManager.merge(repertoryOut);
+				for (String id : ids.split(",")) {
+					RepertoryOut repertoryOut = repertoryOutManager.findById(id);
+					repertoryOut.setIsDeleted(true);
+					repertoryOut.setModifyDate(simpleDateFormat.format(new Date()));
+					repertoryOutManager.merge(repertoryOut);
+				}
 				operateResult.isSuccess = true;
 				operateResult.returnValue = OperateCode.SUCCESS.toString();
 			}
@@ -142,25 +157,25 @@ public class RepertoryOutController {
 	 * @return OperateResult<String>
 	 * @throws 
 	 */
-	@ResponseBody
-	@RequestMapping(value = "/enabled", method = RequestMethod.POST)
-	public OperateResult<String> enabled(String ids, Boolean enabled) {
-		OperateResult<String> operateResult = new OperateResult<String>();
-		try {
-			if (enabled != null) {
-				RepertoryOut repertoryOut = repertoryOutManager.findById(ids);
-				repertoryOut.setModifyDate(simpleDateFormat.format(new Date()));
-				repertoryOutManager.merge(repertoryOut);
-				operateResult.isSuccess = true;
-				operateResult.returnValue = OperateCode.SUCCESS.toString();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			operateResult.isSuccess = false;
-			operateResult.errorReason = OperateCode.ERROR.toString();
-		}
-		return operateResult;
-	}
+//	@ResponseBody
+//	@RequestMapping(value = "/enabled", method = RequestMethod.POST)
+//	public OperateResult<String> enabled(String ids, Boolean enabled) {
+//		OperateResult<String> operateResult = new OperateResult<String>();
+//		try {
+//			if (enabled != null) {
+//				RepertoryOut repertoryOut = repertoryOutManager.findById(ids);
+//				repertoryOut.setModifyDate(simpleDateFormat.format(new Date()));
+//				repertoryOutManager.merge(repertoryOut);
+//				operateResult.isSuccess = true;
+//				operateResult.returnValue = OperateCode.SUCCESS.toString();
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			operateResult.isSuccess = false;
+//			operateResult.errorReason = OperateCode.ERROR.toString();
+//		}
+//		return operateResult;
+//	}
 	
 	/** 
 	 * @Title: New 
@@ -186,7 +201,7 @@ public class RepertoryOutController {
 	
 	/** 
 	 * @Title: add 
-	 * @Description: TODO 新增一条客户记录
+	 * @Description: TODO 新增一条出库记录
 	 * @param @param rawMaterial
 	 * @param @return 
 	 * @return OperateResult<String>
@@ -230,5 +245,46 @@ public class RepertoryOutController {
 			operateResult.errorReason = OperateCode.ERROR.toString();
 		}
 		return operateResult;
+	}
+	
+	/**
+	 * @Title: view
+	 * @Description: TODO 浏览页面
+	 * @param @param id
+	 * @param @return
+	 * @return String
+	 * @throws
+	 */
+	@RequestMapping(value = "/view-{id}", method = RequestMethod.GET)
+	public String view(@PathVariable String id, Model model) {
+		try {
+			if (StringUtils.isNotBlank(id)) {
+				RepertoryOut repertoryOut = repertoryOutManager.findById(id);
+				
+				Filter[] filters = new Filter[]{
+					Filter.eq("enabled", true),
+					Filter.eq("isDeleted", false)
+				};
+				Order[] orders = new Order[] {
+					Order.asc("name"),
+					Order.asc("specification")
+				};
+				List<RawMaterial> rawMaterials = rawMaterialManager.getList(filters, orders);
+				RawMaterial rawMaterial = new RawMaterial();
+				for (RawMaterial material : rawMaterials) {
+					if (material.getId().equals(repertoryOut.getRawMaterialId())) {
+						rawMaterial = material;
+						break;
+					}
+				}
+				
+				model.addAttribute("RepertoryOut", repertoryOut);
+				model.addAttribute("RawrawMaterial", rawMaterial);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "repertory/out/view";
 	}
 }

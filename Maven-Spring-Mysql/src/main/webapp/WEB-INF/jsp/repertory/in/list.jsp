@@ -164,7 +164,7 @@ $(document).ready(function () {
 		// 赋值
 		$("#page").val(pageclickednumber);
 		$("#size").val(pagenum);
-		document.getElementById("vform").action="<c:url value='/admin/repertory/in/data'/>";
+		document.getElementById("vform").action="<c:url value='/admin/repertory/in/list'/>";
 		document.getElementById("vform").submit();
 	};
 	$("#InsPageDiv").pager({ pagenumber: pageindex, pagecount: pagecount, numcount: numcount, buttonClickCallback: PageClick });
@@ -227,7 +227,7 @@ $(document).ready(function () {
         diag.show();
     });
  	
-	//浏览客户
+	//浏览入库
     function view(id) {
     	var diag = new Dialog();
     	diag.Width = 700;

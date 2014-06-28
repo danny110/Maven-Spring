@@ -214,7 +214,7 @@ public class RepertoryInController {
 	
 	/** 
 	 * @Title: add 
-	 * @Description: TODO 新增一条客户记录
+	 * @Description: TODO 新增一条入库记录
 	 * @param @param rawMaterial
 	 * @param @return 
 	 * @return OperateResult<String>

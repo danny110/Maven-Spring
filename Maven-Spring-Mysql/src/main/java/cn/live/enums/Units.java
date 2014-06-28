@@ -8,78 +8,22 @@ package cn.live.enums;
  *
  */
 public enum Units {
-	KG {
-		/* (non-Javadoc)
-		 * <p>Title: toString</p> 
-		 * <p>Description: </p> 
-		 * @return 
-		 * @see java.lang.Enum#toString() 
-		 */
-		@Override
-		public String toString() {
-			return "Kg";
-		}
-	},
-	TAO {
-		/* (non-Javadoc)
-		 * <p>Title: toString</p> 
-		 * <p>Description: </p> 
-		 * @return 
-		 * @see java.lang.Enum#toString() 
-		 */
-		@Override
-		public String toString() {
-			return "套";
-		}
-	},
-	ZHI {
-		/* (non-Javadoc)
-		 * <p>Title: toString</p> 
-		 * <p>Description: </p> 
-		 * @return 
-		 * @see java.lang.Enum#toString() 
-		 */
-		@Override
-		public String toString() {
-			return "只";
-		}
-	},
-	GE {
-		/* (non-Javadoc)
-		 * <p>Title: toString</p> 
-		 * <p>Description: </p> 
-		 * @return 
-		 * @see java.lang.Enum#toString() 
-		 */
-		@Override
-		public String toString() {
-			return "个";
-		}
-	},
-	JIAN {
-		/* (non-Javadoc)
-		 * <p>Title: toString</p> 
-		 * <p>Description: </p> 
-		 * @return 
-		 * @see java.lang.Enum#toString() 
-		 */
-		@Override
-		public String toString() {
-			return "件";
-		}
-	},
-	UNKNOWN {
-		/* (non-Javadoc)
-		 * <p>Title: toString</p> 
-		 * <p>Description: </p> 
-		 * @return 
-		 * @see java.lang.Enum#toString() 
-		 */
-		@Override
-		public String toString() {
-			return "缺省";
-		}
-	};
+	
+	KG("Kg"),TAO("套"),ZHI("只"),GE("个"),JIAN("件"),UNKNOWN("缺省");
+	
+	/**
+	 * @Fields code : 字符串
+	 */
+	private String code;
+	
+	/**
+	 * <p>Title: </p>
+	 * <p>Description: </p>
+	 * @param code
+	 */
+	private Units(String code) {
+		this.code = code;
+	}
 	
 	/* (non-Javadoc)
 	 * <p>Title: toString</p>
@@ -89,7 +33,6 @@ public enum Units {
 	 */
 	@Override
 	public String toString() {
-		return toString();
+		return this.code;
 	}
-	
 }

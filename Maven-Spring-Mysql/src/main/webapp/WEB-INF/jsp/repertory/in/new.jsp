@@ -133,8 +133,7 @@ $(function() {
     			num : $num.val(),
     			clientId : $clientId.val(),
     			sum : $sum.val(),
-    			mark : $mark.val(),
-    			enabled : $("input[name=enabled]:checked").val()
+    			mark : $mark.val()
     		},
     		type: "POST",
     		dataType: "json",
