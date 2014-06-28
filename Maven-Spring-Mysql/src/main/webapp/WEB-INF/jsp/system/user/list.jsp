@@ -167,7 +167,7 @@ $(function () {
 	$("#new").click(function() {
 		var diag = new Dialog();
 		diag.Width = 450;
-		diag.Height = 200;
+		diag.Height = 250;
 		diag.URL = '<c:url value="/admin/user/new"/>';
 		diag.Title = "新增";
 		diag.CancelEvent = function () {

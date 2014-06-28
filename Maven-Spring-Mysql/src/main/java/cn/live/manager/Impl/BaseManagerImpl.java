@@ -125,4 +125,19 @@ public class BaseManagerImpl<T, ID extends Serializable> implements BaseManager<
 	public ResultJson getResultJson(Integer page, Integer rows, String[] propertyNames, List<Filter> filters, List<Order> orders) {
 		return dao.getResultJson(page, rows, propertyNames, filters, orders);
 	}
+	
+	/* (non-Javadoc)
+	 * <p>Title: getResultJson</p>
+	 * <p>Description: </p>
+	 * @param page
+	 * @param rows
+	 * @param propertyNames
+	 * @param orders
+	 * @return
+	 * @see cn.live.manager.BaseManager#getResultJson(java.lang.Integer, java.lang.Integer, java.lang.String[], java.util.List)
+	 */
+	@Override
+	public ResultJson getResultJson(Integer page, Integer rows, String[] propertyNames, List<Order> orders) {
+		return dao.getResultJson(page, rows, propertyNames, null, orders);
+	}
 }

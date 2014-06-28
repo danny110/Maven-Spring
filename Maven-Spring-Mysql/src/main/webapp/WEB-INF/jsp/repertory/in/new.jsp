@@ -7,129 +7,149 @@
 <title></title>
 <style type="text/css">
 body{font-size: 13pt; margin: 15px auto; padding: 0;}
-div{float: left;margin: 0 0 8px 0;}
-span{float: left;}
-label{width: 100px;}
-.divTR{width: 100%;}
-.label{float: right;}
+table{margin: 0 auto;}
+td{line-height: 30px;}
+.td{float: right;}
 .input{width: 150px;}
-.margin_50{margin: 0 0 0 50px;}
 </style>
 <script type="text/javascript">
-var  webRoot='${pageContext.request.contextPath}';
+var webRootPath='${pageContext.request.contextPath}';
 </script>
 
 <script type="text/javascript" src="<c:url value='/resources/jqGrid/js/jquery-1.9.0.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/zDialog.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/zDrag.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/Validform_v5.3.2.js"/>"></script>
 </head>
 <body>
 <!-- 表单开始 -->
 <form id="vform" method="post">
-	<div class="divTR">
-		<div class="margin_50">
-			<label for="rawMaterialId" class="label"><span style="color: red;">*</span>原料：</label>
-		</div>
-		<div>
-			<select id="rawMaterialId" name="rawMaterialId">
+	<table>
+		<tr>
+			<td class="td"><span style="color: red;">*</span>原料：</td>
+			<td>
+				<select id="rawMaterialId" name="rawMaterialId" class="input">
 				<option value=""></option>
-				<c:forEach var="raw" items="${rawrawMaterial }">				
-					<option value="${raw.id }" svalue="${raw.specification }">${raw.name }(${raw.specification })</option>
+				<c:forEach var="raw" items="${rawrawMaterial }">
+					<option value="${raw.id }" svalue="${raw.specification }" sunits="${raw.units }">${raw.name }(${raw.specification })</option>
 				</c:forEach>
 			</select>
-		</div>
-		<div class="margin_50">
-		<label for="specification" class="label"><span style="color: red;">*</span>规格：</label>
-		</div>
-		<div>
-			<input id="specification" type="text" value=""/>
-		</div>
-	</div>
-	<div class="divTR">
-		<div class="margin_50">
-			<label for="unitPrice" class="label"><span style="color: red;">*</span>单价：</label>
-		</div>
-		<div>
-			<input id="unitPrice" name="unitPrice" class="input">
-		</div>
-		<div class="margin_50">
-			<label for="num" class="label"><span style="color: red;">*</span>数量：</label>
-		</div>
-		<div>
-			<input id="num" name="num" class="input">
-		</div>
-	</div>
-	<div class="divTR">
-		<div class="margin_50">
-			<label for="clientId" class="label"><span style="color: red;">*</span>客户：</label>
-		</div>
-		<div>
-			<select id="clientId" name="clientId">
+			</td>
+			<td class="td"><span style="color: red;">*</span>规格：</td>
+			<td><input id="specification" type="text" class="input" value="" disabled="disabled"/></td>
+		</tr>
+		<tr>
+			<td class="td"><span style="color: red;">*</span>单价(元)：</td>
+			<td><input id="unitPrice" name="unitPrice" class="input"></td>
+			<td class="td">单位：</td>
+			<td><input id="units" name="units" class="input" disabled="disabled"></td>
+		</tr>
+		<tr>
+			<td class="td"><span style="color: red;">*</span>数量：</td>
+			<td><input id="num" name="num" class="input"></td>
+			<td class="td">合计：</td>
+			<td><input id="sum" name="sum" class="input" disabled="disabled"/></td>
+		</tr>
+		<tr>
+			<td class="td"><span style="color: red;">*</span>客户：</td>
+			<td>
+				<select id="clientId" name="clientId" class="input">
 				<option value=""></option>
 				<c:forEach var="raw" items="${client }">				
 					<option value="${raw.id }">${raw.name }</option>
 				</c:forEach>
 			</select>
-		</div>
-		<div class="margin_50">
-			<label for="sum" class="label">&nbsp;&nbsp;合计：</label>
-		</div>
-		<div>
-			<input id="sum" name="sum" class="input">
-		</div>
-	</div>
-	<div class="divTR">
-		<div class="margin_50">
-			<label for="mark" class="label">&nbsp;&nbsp;备注：</label>
-		</div>
-		<div>
-			<textarea id="mark" name="mark" rows="" cols="" class="input">暂无备注</textarea>
-		</div>
-	</div>
-	<div class="divTR">
-		<div style="width: 50%;">
-			<input id="btn_add" name="btn_add" type="button" value="提交" style="float: right;"/>
-		</div>
-		<div class="margin_50">
-			<input id="btn_cancel" name="btn_cancel" type="button" value="取消" />
-		</div>
-	</div>
+			</td>
+			<td class="td">备注：</td>
+			<td><textarea id="mark" name="mark" rows="" cols="" class="input">暂无备注</textarea></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>
+				<input id="btn_add" name="btn_add" type="button" value="提交"/>
+				<input id="btn_cancel" name="btn_cancel" type="button" value="取消" />
+			</td>
+		</tr>
+	</table>
 </form>
 <!-- 表单结束 -->
 <script type="text/javascript">
+var $rawMaterialId = $("#rawMaterialId");
+var $specification = $("#specification");
+var $units = $("#units");
+var $unitPrice = $("#unitPrice");
+var $num = $("#num");
+var $clientId = $("#clientId");
+var $sum = $("#sum");
+var $mark = $("#mark");
+
 $(function() {
-	
-	$("#rawMaterialId").change(function() {
-		$("#specification").val($(this).find("option:selected").attr("svalue"));
+	$rawMaterialId.change(function() {
+		$specification.val($(this).find("option:selected").attr("svalue"));
+		$units.val($(this).find("option:selected").attr("sunits"));
 	});
 	
-	/*表单提交*/
-	var vform;
-    vform = $("#vform").Validform({ tiptype: 4, showAllError: true});
-    vform.addRule([]);
+	$unitPrice.change(function() {
+		if ($unitPrice.val() == "" || $num.val() == "") {
+			$sum.val(0);
+			return;
+		}
+		$sum.val($unitPrice.val()* $num.val());
+	});
+	
+	$num.change(function() {
+		if ($unitPrice.val() == "" || $num.val() == "") {
+			$sum.val(0);
+			return;
+		}
+		$sum.val($unitPrice.val() * $num.val());
+	});
     
 	/*提交*/
 	$("#btn_add").click(function() {
-		vform.config({
-            ajaxpost: {
-                url: '<c:url value="/admin/repertory/in/add"/>',
-                success: function (data) {
-                    if( data.isSuccess ) {
-                        Dialog.getInstance('0').cancelButton.onclick.apply(Dialog.getInstance('0').cancelButton,[]);
-                    } else {
-                        alert(data.errorReason);
-                    }
-                },
-                error: function () {
-                    createTips("操作出现异常，请联系管理员处理！");
-                }
-            }
-        });
-
-        if (vform.check()) {
-            vform.ajaxPost();
-        }
+		if ($rawMaterialId.val() == "") {
+			alert("原料不能为空！");
+			return;
+		}
+		if ($unitPrice.val() == "") {
+			alert("单价不能为空！");
+			return;
+		}
+		if ($num.val() == "") {
+			alert("数量不能为空！");
+			return;
+		}
+		if ($clientId.val() == "") {
+			alert("客户不能为空！");
+			return;
+		}
+		
+		$.ajax({
+			url: "<c:url value='/admin/repertory/in/add'/>",
+    		data: {
+    			rawMaterialId : $rawMaterialId.val(),
+    			unitPrice : $unitPrice.val(),
+    			num : $num.val(),
+    			clientId : $clientId.val(),
+    			sum : $sum.val(),
+    			mark : $mark.val(),
+    			enabled : $("input[name=enabled]:checked").val()
+    		},
+    		type: "POST",
+    		dataType: "json",
+    		success: function(data) {
+    			if( data.isSuccess ){
+    				 Dialog.getInstance('0').cancelButton.onclick.apply(Dialog.getInstance('0').cancelButton,[]);
+    			}else {
+    				alert(data.errorReason);
+					return false;
+    			}
+    	 	 },error : function() {
+		    	alert("操作失败，请联系管理员！");
+				return false;
+			}
+		});
     });
 	
 	/*取消*/

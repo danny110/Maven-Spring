@@ -1,6 +1,7 @@
 package cn.live.controller.repertory;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,6 +47,16 @@ public class RepertoryInController {
 	 * @Fields simpleDateFormat : 日期格式
 	 */
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+	/**
+	 * @Fields PAGE : 初始化当前页码
+	 */
+	private static Integer PAGE = 0;
+	
+	/**
+	 * @Fields SIZE : 初始化每页行数
+	 */
+	private static Integer SIZE = 10;
 	
 	/**
 	 * @Fields repertoryInManager : 入库
@@ -77,39 +89,42 @@ public class RepertoryInController {
 	@Resource(name = "repertoryInViewManager")
 	private RepertoryInViewManager repertoryInViewManager;
 	
-	/** 
-	 * @Title: list 
+	/**
+	 * @Title: list
 	 * @Description: TODO 入库管理列表
-	 * @param @return 
-	 * @return String
-	 * @throws 
-	 */
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list() {
-		return "repertory/in/list";
-	}
-	
-	/** 
-	 * @Title: data 
-	 * @Description: TODO 返回所有的入库信息列表
+	 * @param @param rawMaterialName
+	 * @param @param beginTime
+	 * @param @param endTime
 	 * @param @param page
-	 * @param @param rows
-	 * @param @param sidx
-	 * @param @param sord
-	 * @param @return 
-	 * @return ResultJson
-	 * @throws 
+	 * @param @param size
+	 * @param @param model
+	 * @param @return
+	 * @return String
+	 * @throws
 	 */
-	@ResponseBody
-	@RequestMapping(value = "/data", method = RequestMethod.GET)
-	public ResultJson data(Integer page, Integer rows, String sidx, String sord) {
-		ResultJson resultJson = new ResultJson();
+	@RequestMapping(value = "/list")
+	public String list(String rawMaterialName, String beginTime, String endTime, Integer page, Integer size, Model model) {
 		try {
-			resultJson = repertoryInViewManager.getResultJson(page, rows, sidx, sord, new String[]{"id", "rawMaterialName", "specification","clientName","num","unitPrice","sum","mark","loginCode","createDate"}, new Filter[]{});
+			List<Filter> filters = new ArrayList<Filter>();
+			if (StringUtils.isNotBlank(rawMaterialName)) filters.add(Filter.like("rawMaterialName", "%" + rawMaterialName + "%"));
+			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("createDate", beginTime));
+			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("createDate", endTime));
+			
+			List<Order> orders = new ArrayList<Order>();
+			orders.add(Order.desc("createDate"));
+			
+			page = page == null ? PAGE : page;
+			size = size == null ? SIZE : size;
+			
+			ResultJson resultJson = repertoryInViewManager.getResultJson(page, size, new String[]{"id", "rawMaterialName", "specification", "units","clientName","num","unitPrice","sum","mark","loginCode","createDate"}, filters, orders);
+			model.addAttribute("rawMaterialName", rawMaterialName);
+			model.addAttribute("beginTime", beginTime);
+			model.addAttribute("endTime", endTime);
+			model.addAttribute("ResultJson", resultJson);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return resultJson;
+		return "repertory/in/list";
 	}
 	
 	/** 
@@ -125,10 +140,12 @@ public class RepertoryInController {
 		OperateResult<String> operateResult = new OperateResult<String>();
 		try {
 			if (StringUtils.isNotBlank(ids)) {
-				RepertoryIn repertoryIn = repertoryInManager.findById(ids);
-				repertoryIn.setIsDeleted(true);
-				repertoryIn.setModifyDate(simpleDateFormat.format(new Date()));
-				repertoryInManager.merge(repertoryIn);
+				for (String id : ids.split(",")) {
+					RepertoryIn repertoryIn = repertoryInManager.findById(id);
+					repertoryIn.setIsDeleted(true);
+					repertoryIn.setModifyDate(simpleDateFormat.format(new Date()));
+					repertoryInManager.merge(repertoryIn);
+				}
 				operateResult.isSuccess = true;
 				operateResult.returnValue = OperateCode.SUCCESS.toString();
 			}
@@ -149,25 +166,27 @@ public class RepertoryInController {
 	 * @return OperateResult<String>
 	 * @throws 
 	 */
-	@ResponseBody
-	@RequestMapping(value = "/enabled", method = RequestMethod.POST)
-	public OperateResult<String> enabled(String ids, Boolean enabled) {
-		OperateResult<String> operateResult = new OperateResult<String>();
-		try {
-			if (enabled != null) {
-				RepertoryIn repertoryIn = repertoryInManager.findById(ids);
-				repertoryIn.setModifyDate(simpleDateFormat.format(new Date()));
-				repertoryInManager.merge(repertoryIn);
-				operateResult.isSuccess = true;
-				operateResult.returnValue = OperateCode.SUCCESS.toString();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			operateResult.isSuccess = false;
-			operateResult.errorReason = OperateCode.ERROR.toString();
-		}
-		return operateResult;
-	}
+//	@ResponseBody
+//	@RequestMapping(value = "/enabled", method = RequestMethod.POST)
+//	public OperateResult<String> enabled(String ids, Boolean enabled) {
+//		OperateResult<String> operateResult = new OperateResult<String>();
+//		try {
+//			if (StringUtils.isNotBlank(ids) && enabled != null) {
+//				for (String id : ids.split(",")) {
+//					RepertoryIn repertoryIn = repertoryInManager.findById(id);
+//					repertoryIn.setModifyDate(simpleDateFormat.format(new Date()));
+//					repertoryInManager.merge(repertoryIn);
+//				}
+//				operateResult.isSuccess = true;
+//				operateResult.returnValue = OperateCode.SUCCESS.toString();
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			operateResult.isSuccess = false;
+//			operateResult.errorReason = OperateCode.ERROR.toString();
+//		}
+//		return operateResult;
+//	}
 	
 	/** 
 	 * @Title: New 
@@ -240,4 +259,156 @@ public class RepertoryInController {
 		}
 		return operateResult;
 	}
+	
+	/**
+	 * @Title: view
+	 * @Description: TODO 浏览页面
+	 * @param @param id
+	 * @param @return
+	 * @return String
+	 * @throws
+	 */
+	@RequestMapping(value = "/view-{id}", method = RequestMethod.GET)
+	public String view(@PathVariable String id, Model model) {
+		try {
+			if (StringUtils.isNotBlank(id)) {
+				RepertoryIn repertoryIn = repertoryInManager.findById(id);
+				
+				Filter[] filters = new Filter[]{
+					Filter.eq("enabled", true),
+					Filter.eq("isDeleted", false)
+				};
+				Order[] orders = new Order[] {
+					Order.asc("name"),
+					Order.asc("specification")
+				};
+				List<RawMaterial> rawMaterials = rawMaterialManager.getList(filters, orders);
+				RawMaterial rawMaterial = new RawMaterial();
+				for (RawMaterial material : rawMaterials) {
+					if (material.getId().equals(repertoryIn.getRawMaterialId())) {
+						rawMaterial = material;
+						break;
+					}
+				}
+				List<Client> clients = clientManager.getList(filters);
+				Client client = new Client();
+				for (Client data : clients) {
+					if (data.getId().equals(repertoryIn.getClientId())) {
+						client = data;
+						break;
+					}
+				}
+				
+				model.addAttribute("RepertoryIn", repertoryIn);
+				model.addAttribute("RawrawMaterial", rawMaterial);
+				model.addAttribute("Client", client);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "repertory/in/view";
+	}
+	
+	/**
+	 * @Title: edit
+	 * @Description: TODO 编辑页面
+	 * @param @param id
+	 * @param @param model
+	 * @param @return
+	 * @return String
+	 * @throws
+	 */
+//	@RequestMapping(value = "/edit-{id}", method = RequestMethod.GET)
+//	public String edit(@PathVariable String id, Model model) {
+//		try {
+//			if (StringUtils.isNotBlank(id)) {
+//				RepertoryIn repertoryIn = repertoryInManager.findById(id);
+//				
+//				Filter[] filters = new Filter[]{
+//					Filter.eq("enabled", true),
+//					Filter.eq("isDeleted", false)
+//				};
+//				Order[] orders = new Order[] {
+//					Order.asc("name"),
+//					Order.asc("specification")
+//				};
+//				List<RawMaterial> rawMaterials = rawMaterialManager.getList(filters, orders);
+//				List<Client> clients = clientManager.getList(filters);
+//				
+//				model.addAttribute("RepertoryIn", repertoryIn);
+//				model.addAttribute("rawrawMaterial", rawMaterials);
+//				model.addAttribute("client", clients);
+//			}
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return "repertory/in/edit";
+//	}
+	
+	/**
+	 * @Title: update
+	 * @Description: TODO 更新
+	 * @param @param request
+	 * @param @param id
+	 * @param @param rawMaterialId
+	 * @param @param clientId
+	 * @param @param num
+	 * @param @param unitPrice
+	 * @param @param sum
+	 * @param @param mark
+	 * @param @return
+	 * @return OperateResult<String>
+	 * @throws
+	 */
+//	@ResponseBody
+//	@RequestMapping(value = "/update", method = RequestMethod.POST)
+//	public OperateResult<String> update(HttpServletRequest request, String id, String rawMaterialId, String clientId, Float num, Float unitPrice, 
+//			Float sum, String mark) {
+//		OperateResult<String> operateResult = new OperateResult<String>();
+//		try {
+//			String loginCode = request.getSession().getAttribute("_LOGINCODE").toString();
+//			if (StringUtils.isNotBlank(loginCode)) {
+//				Filter[] filters = new Filter[]{
+//						Filter.eq("loginCode", loginCode),
+//						Filter.eq("enabled", true),
+//						Filter.eq("isDeleted", false)
+//					};
+//				List<User> users = userManager.getList(filters);
+//				if (users.size() > 0) {
+//					if (StringUtils.isNotBlank(id)) {
+//						List<RepertoryIn> repertoryIns = repertoryInManager.getList(new Filter[]{Filter.eq("id", id)});
+//						if (repertoryIns != null && repertoryIns.size() == 1) {
+//							RepertoryIn repertoryIn = repertoryIns.get(0);
+//							repertoryIn.setRawMaterialId(rawMaterialId);
+//							repertoryIn.setClientId(users.get(0).getId());;
+//							repertoryIn.setNum(num);
+//							repertoryIn.setUnitPrice(unitPrice);
+//							repertoryIn.setSum(sum);
+//							repertoryIn.setMark(mark);
+//							repertoryIn.setModifyDate(simpleDateFormat.format(new Date()));
+//							repertoryInManager.merge(repertoryIn);
+//							operateResult.isSuccess = true;
+//							operateResult.returnValue = OperateCode.SUCCESS.toString();
+//						}
+//					} else {
+//						operateResult.isSuccess = false;
+//						operateResult.errorReason = OperateCode.NOPARAMS.toString();
+//					}
+//				} else {
+//					operateResult.isSuccess = false;
+//					operateResult.errorReason = OperateCode.UNLOGIN.toString();
+//				}
+//			} else {
+//				operateResult.isSuccess = false;
+//				operateResult.errorReason = OperateCode.UNLOGIN.toString();
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			operateResult.isSuccess = false;
+//			operateResult.errorReason = OperateCode.ERROR.toString();
+//		}
+//		return operateResult;
+//	}
 }

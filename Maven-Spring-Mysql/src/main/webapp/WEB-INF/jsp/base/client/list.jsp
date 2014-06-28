@@ -178,20 +178,6 @@ var PageClick = function (pageclickednumber) {
 $("#InsPageDiv").pager({ pagenumber: pageindex, pagecount: pagecount, numcount: numcount, buttonClickCallback: PageClick });
 
 $(function () {
-// 新增客户
-$("#new").click(function() {
-	var diag = new Dialog();
-	diag.Width = 700;
-	diag.Height = 200;
-	diag.URL = '<c:url value="/admin/client/new"/>';
-	diag.Title = "新增";
-	diag.CancelEvent = function () {
-		diag.close();
-		location.reload();
-	};
-	diag.show();
-});
-
 // 批量禁用
 $("#batchFalse").click(function() {
 	var ids = getSelectIds();
@@ -305,11 +291,25 @@ function checkedInfo(node) {
 	};
 };
 
+//新增客户
+$("#new").click(function() {
+	var diag = new Dialog();
+	diag.Width = 700;
+	diag.Height = 250;
+	diag.URL = '<c:url value="/admin/client/new"/>';
+	diag.Title = "新增";
+	diag.CancelEvent = function () {
+		diag.close();
+		location.reload();
+	};
+	diag.show();
+});
+
 //浏览客户
 function view(id) {
 	var diag = new Dialog();
 	diag.Width = 700;
-	diag.Height = 200;
+	diag.Height = 250;
 	diag.URL = '<c:url value="/admin/client/view-' + id + '"/>';
 	diag.Title = "浏览";
 	diag.CancelEvent = function () {
@@ -322,7 +322,7 @@ function view(id) {
 function edit(id) {
 	var diag = new Dialog();
 	diag.Width = 700;
-	diag.Height = 200;
+	diag.Height = 250;
 	diag.URL = '<c:url value="/admin/client/edit-' + id + '"/>';
 	diag.Title = "编辑";
 	diag.CancelEvent = function () {

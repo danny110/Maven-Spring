@@ -94,4 +94,17 @@ public interface BaseManager<T, ID extends Serializable> {
 	 * @throws
 	 */
 	ResultJson getResultJson(Integer page, Integer rows, String[] propertyNames, List<Filter> filters, List<Order> orders);
+	
+	/**
+	 * @Title: getResultJson
+	 * @Description: TODO
+	 * @param @param page
+	 * @param @param rows
+	 * @param @param propertyNames
+	 * @param @param orders
+	 * @param @return
+	 * @return ResultJson
+	 * @throws
+	 */
+	ResultJson getResultJson(Integer page, Integer rows, String[] propertyNames, List<Order> orders);
 }

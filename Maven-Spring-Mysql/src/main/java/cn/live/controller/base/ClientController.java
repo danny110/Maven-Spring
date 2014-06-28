@@ -81,7 +81,7 @@ public class ClientController {
 		filters.add(Filter.eq("isDeleted", false));
 		
 		List<Order> orders = new ArrayList<Order>();
-		orders.add(Order.desc("modifyDate"));
+		orders.add(Order.desc("createDate"));
 		
 		page = page == null ? PAGE : page;
 		size = size == null ? SIZE : size;

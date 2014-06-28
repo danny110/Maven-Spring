@@ -8,6 +8,7 @@
 <style type="text/css">
 body{font-size: 13pt; margin: 15px auto; padding: 0;}
 table{margin: 0 auto;}
+tr{line-height: 30px;}
 .td{width: 100px; text-align: right;}
 div{float: left;margin: 0 0 8px 0;}
 label{width: 100px;}

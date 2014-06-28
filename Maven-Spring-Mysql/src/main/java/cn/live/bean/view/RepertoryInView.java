@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import cn.live.enums.Units;
+
 /**
  * @ClassName: RepertoryInView
  * @Description: TODO
@@ -26,6 +28,7 @@ public class RepertoryInView implements Serializable {
 	private String id; // 入库表ID
 	private String rawMaterialName; // 原料名称
 	private String specification; // 规格
+	private Units units; // 单位
 	private String clientName; // 客户名称
 	private Float num; // 数量
 	private Float unitPrice; // 单价
@@ -56,6 +59,14 @@ public class RepertoryInView implements Serializable {
 
 	public void setSpecification(String specification) {
 		this.specification = specification;
+	}
+
+	public Units getUnits() {
+		return units;
+	}
+
+	public void setUnits(Units units) {
+		this.units = units;
 	}
 
 	public String getClientName() {

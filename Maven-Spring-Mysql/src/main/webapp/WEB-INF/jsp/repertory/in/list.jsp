@@ -5,22 +5,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/jquery.ui.css"/>"/>
-<link type="text/css" rel="stylesheet" href="<c:url value='/resources/jqGrid/css/ui.jqgrid.css'/>"/>
-<link type="text/css" href="<c:url value='/resources/css/lhgdialog.css'/>" rel="stylesheet" />
-<link type="text/css" href="<c:url value='/resources/css/loginPage.css'/>" rel="stylesheet" />
-<link type="text/css" href="<c:url value='/resources/css/ico.css'/>" rel="stylesheet" />
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/lhgdialog.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/loginPage.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/jquery.validity.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/lhgcalendar.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/Pager.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/managePage.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/ico.css'/>"/>
 
-<script type="text/javascript" src="<c:url value='/resources/jqGrid/js/jquery-1.9.0.min.js'/>"></script>
-<script type="text/javascript" src="<c:url value='/resources/jqGrid/js/jquery.jqGrid.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.lhgdialog.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.validity.js'/>"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/jquery.ui.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/resources/jqGrid/js/i18n/grid.locale-cn.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/jquery.inspager.js"/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/Common.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/ManageAction.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/baseJS.js'/>"></script>
 <script type="text/javascript">
-var webRoot='${pageContext.request.contextPath}';
+var webRootPath='${pageContext.request.contextPath}';
 </script>
 <script type="text/javascript" src="<c:url value="/resources/js/zDialog.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/zDrag.js"/>"></script>
@@ -66,20 +67,83 @@ $(document).ready(function () {
 
 <!--工作区域开始-->
 <div id="RightTd">
-	<!-- 路径开始 -->
-	<div style="height: 30px;line-height: 30px;font-size: 12pt;background-color: #fff">
-		<span>当前路径：系统管理 - 入库信息</span>
-	</div>
-	<!-- 路径结束 -->
-	<!-- 操作按钮开始 -->
-	<div>
-		<input id="btn_new" name="btn_new" type="button" value="新增"/>
-	</div>
-	<!-- 操作按钮结束 -->
-	<!-- jqGrid 开始 -->
-	<table id="list"></table>
-    <div id="pager"></div>
-	<!-- jqGrid 结束 -->
+<!-- 表单开始 -->
+	<form id="vform" method="POST" action="">
+		<div id="Head">入库信息</div>
+		<div id="ButtonDiv">
+			<table border="0" cellspacing="0" cellpadding="0" id="SearchTable">
+				<tr>
+					<td>
+						<label for="rawMaterialName">请输入原料名称：</label>
+						<input type="text" name="rawMaterialName" id="rawMaterialName" value="${rawMaterialName }" class="inputtext" title="请输入原料名称" />
+					</td>
+					<td>
+						<label for="beginTime">请输入开始时间：</label>
+						<input type="text" name="beginTime" id="beginTime" value="${beginTime }" class="inputtext" title="请输入开始时间" />
+					</td>
+					<td>
+						<label for="endTime">请输入结束时间：</label>
+						<input type="text" name="endTime" id="endTime" value="${endTime }" class="inputtext" title="请输入结束时间" />
+					</td>
+					<td>
+						<input name="" type="image" src="<c:url value='/resources/images/image_07.gif'/>"/>
+					</td>
+  				</tr>
+			</table>
+			<div class="buttonTop"><img src="<c:url value='/resources/images/height5px.gif'/>" width="8" height="5" /></div>
+			<table border="0" cellspacing="0" cellpadding="0" class="bottonlist">
+				<tr>
+					<td>
+						<img src="<c:url value='/resources/images/mian/menu_left.png'/>" width="3" height="33" />
+					</td>
+					<td class="ButtonTd">
+						<a id="new" href="javascript:void(0);" class="ButtonAll bottonAdd png">增加</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="ListTable">
+			<table width="100%" border="0" cellspacing="1" cellpadding="0" id="ListTable">
+				<tr class="title">
+					<td style="width:32px;"><input name="SelectCK" type="checkbox" onclick="SelectAll(this)"/></td>
+					<td style="width:80px;">原料</td>
+					<td style="width:80px;">规格</td>
+					<td style="width:80px;">单价</td>
+					<td style="width:80px;">数量</td>
+					<td style="width:50px;">单位</td>
+					<td style="width:80px;">合计</td>
+					<td>备注</td>
+					<td style="width:80px;">创建用户</td>
+					<td style="width:150px;">创建时间</td>
+					<td style="width:80px;">操作</td>
+				</tr>
+				<c:forEach var="row" items="${ResultJson.rows }">
+				<tr onmouseover="$(this).addClass('MouseOn')" onmouseout="$(this).removeClass('MouseOn')" ondblclick="checkedInfo(this)">
+					<td><input name="SelectID" type="checkbox" value="${row.id }"/></td>
+					<td>${row.rawMaterialName }</td>
+					<td>${row.specification }</td>
+					<td>${row.unitPrice }</td>
+					<td>${row.num }</td>
+					<td>${row.units }</td>
+					<td>${row.sum }</td>
+					<td class="tdleft">${row.mark }</td>
+					<td>${row.loginCode }</td>
+					<td>${row.createDate }</td>
+					<td>
+						<a href="javascript:void(0);" onclick="view('${row.id }');">查看</a>&nbsp;
+						<a href="javascript:void(0);" onclick="batchDel('${row.id }');">删除</a>
+					</td>
+				</tr>
+				</c:forEach>
+				<tr onmouseover="$(this).addClass('MouseOn')" onmouseout="$(this).removeClass('MouseOn')">
+					<td colspan="12" id="InsPageDiv">&nbsp;</td>
+				</tr>
+			</table>
+		</div>
+		<input type="hidden" id="page" name="page" value="${ResultJson.page }"/>
+		<input type="hidden" id="size" name="size" value="${ResultJson.size }"/>
+	</form>
+	<!-- 表单结束 -->
 </div>
 <!--工作区域结束-->
 </div>
@@ -90,49 +154,67 @@ $(document).ready(function () {
 <!--底部版权区域区域结束-->
 </div>
 <script type="text/javascript">
- 	/*jqGrid 开始*/
-	$(function () {
-		$("#list").jqGrid({
-			url: "<c:url value = '/admin/repertory/in/data'/>",
-			colNames: ["id", "原料", "规格", "客户", "数量", "单价", "合计", "备注", "创建用户", "创建时间", "操作"],
-			colModel: [
-				{name: "id", index: "id", hidden: true, key: true},
-				{name: "rawMaterialName", width: 100},
-				{name: "specification", width: 100},
-				{name: "clientName", width: 100},
-				{name: "num", width: 100},
-				{name: "unitPrice", width: 100},
-				{name: "sum", width: 100},
-				{name: "mark", width: 100,sortable:false},
-				{name: "loginCode", width: 100},
-				{name: "createDate", width: 100},
-				{name: "id", width: 100, sortable:false, formatter:operateFormatter},
-			],
-		    sortname: 'createDate',
-		    datatype: 'json',
-	        mtype: 'GET',
-	        hidegrid: false,
-	        rownumbers: true,
-	        autowidth: true,
-	        rowNum: 10,
-	        rowList: [10, 15, 20],
-	        sortorder: 'desc',
-	        viewrecords: true,
-	        pager: '#pager',
-	        height: 'auto'
-		}).jqGrid('navGrid', '#pager', {edit: false, add: false, del: false, search: false});
-		
-	});
- 
-	function operateFormatter(cellvalue, options, rowObject){
-	    var retVal="";
-	    retVal+="<span><a optype='delete' opurl='<c:url value='/admin/repertory/in/del'/>' ids='" + cellvalue + "' callback='$(\"#list\").trigger(\"reloadGrid\")'>删除</a></span>";
-	    return retVal;
-	};
-	/*jqGrid 结束*/
+	var pagenum=${ResultJson.size }; //一页多少条
+	var pageindex=${ResultJson.page }; //当前页
+	var pagecount=${ResultJson.total }; //总页数
+	var numcount=${ResultJson.records }; //总个数
+	$("#ListTable tr:even").addClass("Single");
 	
- 	/*新增入库*/
-    $("#btn_new").click(function() {
+	var PageClick = function (pageclickednumber) {
+		// 赋值
+		$("#page").val(pageclickednumber);
+		$("#size").val(pagenum);
+		document.getElementById("vform").action="<c:url value='/admin/repertory/in/data'/>";
+		document.getElementById("vform").submit();
+	};
+	$("#InsPageDiv").pager({ pagenumber: pageindex, pagecount: pagecount, numcount: numcount, buttonClickCallback: PageClick });
+
+	function batchDel(ids) {
+		if (confirm("确定要删除吗？")) {
+			$.ajax({
+				url: "<c:url value='/admin/repertory/in/del'/>",
+	    		data: {
+	    			ids : ids
+	    		},
+	    		type: "POST",
+	    		dataType: "json",
+	    		success: function(data) {
+	    			if( data.isSuccess ){
+	    				location.reload();
+	    			}else {
+	    				alert(data.errorReason);
+						return false;
+	    			}
+	    	 	 },error : function() {
+			    	alert("操作失败，请联系管理员！");
+					return false;
+				}
+			});
+		};
+	};
+	
+	//获取被选中 ID
+	function getSelectIds() {
+	var ids = "";
+	$("input[name=SelectID]:checked").each(function() {
+		if (ids != "") ids += ",";
+		ids += $(this).val();	
+	});
+	return ids;
+	};
+
+	//选中
+	function checkedInfo(node) {
+		var $input = $(node).find("input[name=SelectID]");
+		if ($input.attr("checked") == "checked") {
+			$input.removeAttr("checked");
+		} else {
+			$input.attr("checked", "checked");
+		};
+	};
+	
+ 	//新增入库
+    $("#new").click(function() {
         var diag = new Dialog();
         diag.Width = 650;
         diag.Height = 300;
@@ -140,10 +222,23 @@ $(document).ready(function () {
         diag.Title = "新增";
         diag.CancelEvent = function () {
             diag.close();
-            $("#list").trigger("reloadGrid");
+            location.reload();
         };
         diag.show();
     });
+ 	
+	//浏览客户
+    function view(id) {
+    	var diag = new Dialog();
+    	diag.Width = 700;
+    	diag.Height = 250;
+    	diag.URL = '<c:url value="/admin/repertory/in/view-' + id + '"/>';
+    	diag.Title = "浏览";
+    	diag.CancelEvent = function () {
+    		diag.close();
+    	};
+    	diag.show();
+    };
 </script>
 </body>
 </html>
