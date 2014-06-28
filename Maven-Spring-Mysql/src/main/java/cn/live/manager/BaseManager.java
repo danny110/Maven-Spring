@@ -53,7 +53,7 @@ public interface BaseManager<T, ID extends Serializable> {
 	 * @return List<T>
 	 * @throws 
 	 */
-	List<T> getList(Filter[] filters);
+	List<T> getList(List<Filter> filters);
 	
 	/** 
 	 * @Title: getList 
@@ -64,22 +64,7 @@ public interface BaseManager<T, ID extends Serializable> {
 	 * @return List<T>
 	 * @throws 
 	 */
-	List<T> getList(Filter[] filters, Order[] orders);
-	
-	/** 
-	 * @Title: getResultJson 
-	 * @Description: TODO 获取数据对象
-	 * @param @param page 当前页码
-	 * @param @param rows 每页记录条数
-	 * @param @param sidx 排序字段
-	 * @param @param sord 排序类型
-	 * @param @param propertyNames 属性名称
-	 * @param @param filters 过滤器
-	 * @param @return 
-	 * @return ResultJson
-	 * @throws 
-	 */
-	ResultJson getResultJson(Integer page, Integer rows, String sidx, String sord, String[] propertyNames, Filter[] filters);
+	List<T> getList(List<Filter> filters, List<Order> orders);
 	
 	/**
 	 * @Title: getResultJson
@@ -107,4 +92,27 @@ public interface BaseManager<T, ID extends Serializable> {
 	 * @throws
 	 */
 	ResultJson getResultJson(Integer page, Integer rows, String[] propertyNames, List<Order> orders);
+	
+	/**
+	 * @Title: getResultJson
+	 * @Description: TODO
+	 * @param @param propertyNames
+	 * @param @param filters
+	 * @param @param orders
+	 * @param @return
+	 * @return ResultJson
+	 * @throws
+	 */
+	ResultJson getResultJson(String[] propertyNames, List<Filter> filters, List<Order> orders);
+	
+	/**
+	 * @Title: getResultJson
+	 * @Description: TODO
+	 * @param @param propertyNames
+	 * @param @param filters
+	 * @param @return
+	 * @return ResultJson
+	 * @throws
+	 */
+	ResultJson getResultJson(String[] propertyNames, List<Filter> filters);
 }

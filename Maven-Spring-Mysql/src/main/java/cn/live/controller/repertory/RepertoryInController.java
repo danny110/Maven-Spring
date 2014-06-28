@@ -199,17 +199,17 @@ public class RepertoryInController {
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String New(Model model) {
-		Filter[] filters = new Filter[]{
-			Filter.eq("enabled", true),
-			Filter.eq("isDeleted", false)
-		};
-		Order[] orders = new Order[] {
-				Order.asc("name"),
-				Order.asc("specification")
-		};
-		List<RawMaterial> rawMaterials = rawMaterialManager.getList(filters, orders);
+		List<Filter> filters = new ArrayList<Filter>();
+		filters.add(Filter.eq("enabled", true));
+		filters.add(Filter.eq("isDeleted", false));
+		
+		List<Order> orders = new ArrayList<Order>();
+		orders.add(Order.asc("name"));
+		orders.add(Order.asc("specification"));
+		
+		ResultJson resultJson = rawMaterialManager.getResultJson(new String[]{"id", "name", "specification", "units"}, filters, orders);
 		List<Client> clients = clientManager.getList(filters);
-		model.addAttribute("rawrawMaterial", rawMaterials);
+		model.addAttribute("resultJson", resultJson);
 		model.addAttribute("client", clients);
 		return "repertory/in/new";
 	}
@@ -229,11 +229,10 @@ public class RepertoryInController {
 		try {
 			String loginCode = request.getSession().getAttribute("_LOGINCODE").toString();
 			if (StringUtils.isNotBlank(loginCode)) {
-				Filter[] filters = new Filter[]{
-						Filter.eq("loginCode", loginCode),
-						Filter.eq("enabled", true),
-						Filter.eq("isDeleted", false)
-					};
+				List<Filter> filters = new ArrayList<Filter>();
+				filters.add(Filter.eq("loginCode", loginCode));
+				filters.add(Filter.eq("enabled", true));
+				filters.add(Filter.eq("isDeleted", false));
 				List<User> users = userManager.getList(filters);
 				if (users.size() > 0) {
 					repertoryIn.setUserId(users.get(0).getId());
@@ -276,14 +275,13 @@ public class RepertoryInController {
 			if (StringUtils.isNotBlank(id)) {
 				RepertoryIn repertoryIn = repertoryInManager.findById(id);
 				
-				Filter[] filters = new Filter[]{
-					Filter.eq("enabled", true),
-					Filter.eq("isDeleted", false)
-				};
-				Order[] orders = new Order[] {
-					Order.asc("name"),
-					Order.asc("specification")
-				};
+				List<Filter> filters = new ArrayList<Filter>();
+				filters.add(Filter.eq("enabled", true));
+				filters.add(Filter.eq("isDeleted", false));
+				
+				List<Order> orders = new ArrayList<Order>();
+				orders.add(Order.asc("name"));
+				orders.add(Order.asc("specification"));
 				List<RawMaterial> rawMaterials = rawMaterialManager.getList(filters, orders);
 				RawMaterial rawMaterial = new RawMaterial();
 				for (RawMaterial material : rawMaterials) {

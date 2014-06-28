@@ -3,8 +3,6 @@ package cn.live.bean;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -61,7 +59,6 @@ public class RawMaterial implements Serializable {
 		this.specification = specification;
 	}
 
-	@Enumerated(EnumType.STRING)
 	public Units getUnits() {
 		return units;
 	}

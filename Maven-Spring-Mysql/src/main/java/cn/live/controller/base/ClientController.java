@@ -267,7 +267,9 @@ public class ClientController {
 		OperateResult<String> operateResult = new OperateResult<String>();
 		try {
 			if (StringUtils.isNotBlank(id)) {
-				List<Client> clients = clientManager.getList(new Filter[]{Filter.eq("id", id)});
+				List<Filter> filters = new ArrayList<Filter>();
+				filters.add(Filter.eq("id", id));
+				List<Client> clients = clientManager.getList(filters);
 				if (clients != null && clients.size() == 1) {
 					Client client = clients.get(0);
 					client.setName(name);

@@ -2,7 +2,6 @@ package cn.live.dao.Impl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -104,7 +103,7 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 	 * @see cn.live.dao.BaseDao#getList(java.util.List) 
 	 */
 	@Override
-	public List<T> getList(Filter[] filters) {
+	public List<T> getList(List<Filter> filters) {
 		return getList(filters, null);
 	}
 	
@@ -118,52 +117,17 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> getList(Filter[] filters, cn.live.util.Order[] orders) {
+	public List<T> getList(List<Filter> filters, List<cn.live.util.Order> orders) {
 		Criteria criteria = (Criteria) this.getSession().createCriteria(clazz);
 		if (filters != null) {
-            setQueryCriteria(criteria, Arrays.asList(filters));
+            setQueryCriteria(criteria, filters);
         }
 		if (orders != null) {
-			setQueryOrders(criteria, Arrays.asList(orders));
+			setQueryOrders(criteria, orders);
 		}
 		List<T> temp = criteria.list();
 		return temp;
 	}
-	
-	
-	/* (non-Javadoc)
-	 * <p>Title: getResultJson</p> 
-	 * <p>Description: </p> 
-	 * @param page
-	 * @param rows
-	 * @param sidx
-	 * @param sord
-	 * @param propertyNames
-	 * @param filters
-	 * @return 
-	 * @see cn.live.dao.BaseDao#getResultJson(java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String[], cn.live.util.Filter[]) 
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public ResultJson getResultJson(Integer page, Integer rows, String sidx, String sord, String[] propertyNames, Filter[] filters) {
-		Criteria criteria = (Criteria) this.getSession().createCriteria(clazz);
-		if (filters != null) {
-            setQueryCriteria(criteria, Arrays.asList(filters));
-        }
-		long records = (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
-		if ("asc".equals(sord.toLowerCase())) 
-			criteria.addOrder(Order.desc(sidx));
-		else if ("desc".equals(sord.toLowerCase())) 
-			criteria.addOrder(Order.desc(sidx));
-		criteria.setProjection(null);
-		criteria.setFirstResult((page - 1) * rows);
-		criteria.setMaxResults(rows);
-		List<T> temp = criteria.list();
-		ResultJson resultJson = new ResultJson(page, rows, records, records % rows == 0 ? records / rows : records / rows + 1);
-		fillJQueryGridData(resultJson, temp, (String[]) propertyNames);
-        return resultJson;
-	}
-	
 	
 	/* (non-Javadoc)
 	 * <p>Title: getResultJson</p>
@@ -192,6 +156,32 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 		criteria.setMaxResults(rows);
 		List<T> temp = criteria.list();
 		ResultJson resultJson = new ResultJson(page, rows, records, records % rows == 0 ? records / rows : records / rows + 1);
+		fillJQueryGridData(resultJson, temp, (String[]) propertyNames);
+        return resultJson;
+	}
+	
+	/* (non-Javadoc)
+	 * <p>Title: getResultJson</p>
+	 * <p>Description: </p>
+	 * @param propertyNames
+	 * @param filters
+	 * @param orders
+	 * @return
+	 * @see cn.live.dao.BaseDao#getResultJson(java.lang.String[], java.util.List, java.util.List)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public ResultJson getResultJson(String[] propertyNames, List<Filter> filters, List<cn.live.util.Order> orders) {
+		Criteria criteria = (Criteria) this.getSession().createCriteria(clazz);
+		if (filters != null) {
+            setQueryCriteria(criteria, filters);
+        }
+		if (orders != null) {
+			setQueryOrders(criteria, orders);
+		}
+		criteria.setProjection(null);
+		List<T> temp = criteria.list();
+		ResultJson resultJson = new ResultJson();
 		fillJQueryGridData(resultJson, temp, (String[]) propertyNames);
         return resultJson;
 	}

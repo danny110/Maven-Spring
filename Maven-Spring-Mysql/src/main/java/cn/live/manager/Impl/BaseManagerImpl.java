@@ -78,7 +78,7 @@ public class BaseManagerImpl<T, ID extends Serializable> implements BaseManager<
 	 * @see cn.live.manager.BaseManager#getList(java.util.List) 
 	 */
 	@Override
-	public List<T> getList(Filter[] filters) {
+	public List<T> getList(List<Filter> filters) {
 		return dao.getList(filters);
 	}
 	
@@ -91,23 +91,8 @@ public class BaseManagerImpl<T, ID extends Serializable> implements BaseManager<
 	 * @see cn.live.manager.BaseManager#getList(java.util.List, java.util.List) 
 	 */
 	@Override
-	public List<T> getList(Filter[] filters, Order[] orders) {
+	public List<T> getList(List<Filter> filters, List<Order> orders) {
 		return dao.getList(filters, orders);
-	}
-	
-	/* (non-Javadoc)
-	 * <p>Title: getResultJson</p> 
-	 * <p>Description: </p> 
-	 * @param page
-	 * @param rows
-	 * @param sidx
-	 * @param sord
-	 * @return 
-	 * @see cn.live.manager.BaseManager#getResultJson(java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String) 
-	 */
-	@Transactional(readOnly = true)
-	public ResultJson getResultJson(Integer page, Integer rows, String sidx, String sord, String[] propertyNames, Filter[] filters) {
-		return dao.getResultJson(page, rows, sidx, sord, propertyNames, filters);
 	}
 	
 	/* (non-Javadoc)
@@ -139,5 +124,32 @@ public class BaseManagerImpl<T, ID extends Serializable> implements BaseManager<
 	@Override
 	public ResultJson getResultJson(Integer page, Integer rows, String[] propertyNames, List<Order> orders) {
 		return dao.getResultJson(page, rows, propertyNames, null, orders);
+	}
+	
+	/* (non-Javadoc)
+	 * <p>Title: getResultJson</p>
+	 * <p>Description: </p>
+	 * @param propertyNames
+	 * @param filters
+	 * @param orders
+	 * @return
+	 * @see cn.live.manager.BaseManager#getResultJson(java.lang.String[], java.util.List, java.util.List)
+	 */
+	@Override
+	public ResultJson getResultJson(String[] propertyNames, List<Filter> filters, List<Order> orders) {
+		return dao.getResultJson(propertyNames, filters, orders);
+	}
+	
+	/* (non-Javadoc)
+	 * <p>Title: getResultJson</p>
+	 * <p>Description: </p>
+	 * @param propertyNames
+	 * @param filters
+	 * @return
+	 * @see cn.live.manager.BaseManager#getResultJson(java.lang.String[], java.util.List)
+	 */
+	@Override
+	public ResultJson getResultJson(String[] propertyNames, List<Filter> filters) {
+		return dao.getResultJson(propertyNames, filters, null);
 	}
 }

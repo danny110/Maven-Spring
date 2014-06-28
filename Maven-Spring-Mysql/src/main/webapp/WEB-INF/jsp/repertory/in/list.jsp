@@ -108,8 +108,8 @@ $(document).ready(function () {
 					<td style="width:32px;"><input name="SelectCK" type="checkbox" onclick="SelectAll(this)"/></td>
 					<td style="width:80px;">原料</td>
 					<td style="width:80px;">规格</td>
-					<td style="width:80px;">单价</td>
-					<td style="width:80px;">数量</td>
+					<td style="width:80px;">单价(元)</td>
+					<td style="width:80px;">入库数量</td>
 					<td style="width:50px;">单位</td>
 					<td style="width:80px;">合计</td>
 					<td>备注</td>

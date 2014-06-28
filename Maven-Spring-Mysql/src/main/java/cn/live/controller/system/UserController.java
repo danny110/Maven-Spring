@@ -189,7 +189,11 @@ public class UserController {
 		OperateResult<String> operateResult = new OperateResult<String>();
 		try {
 			// 判断帐号是否存在
-			List<User> users = userManager.getList(new Filter[]{Filter.eq("loginCode", user.getLoginCode())});
+			List<Filter> filters = new ArrayList<Filter>();
+			filters.add(Filter.eq("loginCode", user.getLoginCode()));
+			filters.add(Filter.eq("isDeleted", false));
+			
+			List<User> users = userManager.getList(filters);
 			if (users == null || users.size() == 0) {
 				user.setId(UUID.randomUUID().toString());
 				user.setPassword(BaseUtils.getMD5(user.getPassword().getBytes()));

@@ -183,13 +183,24 @@ public class RawMaterialController {
 	public OperateResult<String> add(RawMaterial rawMaterial) {
 		OperateResult<String> operateResult = new OperateResult<String>();
 		try {
-			rawMaterial.setId(UUID.randomUUID().toString());
-			rawMaterial.setIsDeleted(false);
-			rawMaterial.setCreateDate(simpleDateFormat.format(new Date()));
-			rawMaterial.setModifyDate(simpleDateFormat.format(new Date()));
-			rawMaterialManager.create(rawMaterial);
-			operateResult.isSuccess = true;
-			operateResult.returnValue = OperateCode.SUCCESS.toString();
+			// 判断是否存在
+			List<Filter> filters = new ArrayList<Filter>();
+			filters.add(Filter.eq("name", rawMaterial.getName()));
+			filters.add(Filter.eq("specification", rawMaterial.getSpecification()));
+			filters.add(Filter.eq("isDeleted", false));
+			List<RawMaterial> rawMaterials = rawMaterialManager.getList(filters);
+			if (rawMaterials == null || rawMaterials.size() == 0) {
+				rawMaterial.setId(UUID.randomUUID().toString());
+				rawMaterial.setIsDeleted(false);
+				rawMaterial.setCreateDate(simpleDateFormat.format(new Date()));
+				rawMaterial.setModifyDate(simpleDateFormat.format(new Date()));
+				rawMaterialManager.create(rawMaterial);
+				operateResult.isSuccess = true;
+				operateResult.returnValue = OperateCode.SUCCESS.toString();
+			} else {
+				operateResult.isSuccess = false;
+				operateResult.errorReason = OperateCode.EXISTRAWMATERIAL.toString();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			operateResult.isSuccess = false;
@@ -262,7 +273,9 @@ public class RawMaterialController {
 		OperateResult<String> operateResult = new OperateResult<String>();
 		try {
 			if (StringUtils.isNotBlank(id)) {
-				List<RawMaterial> rawMaterials = rawMaterialManager.getList(new Filter[]{Filter.eq("id", id)});
+				List<Filter> filters = new ArrayList<Filter>();
+				filters.add(Filter.eq("id", id));
+				List<RawMaterial> rawMaterials = rawMaterialManager.getList(filters);
 				if (rawMaterials != null && rawMaterials.size() == 1) {
 					RawMaterial rawMaterial = rawMaterials.get(0);
 					rawMaterial.setName(name);

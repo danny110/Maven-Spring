@@ -105,6 +105,18 @@ public enum OperateCode {
 		public String toString() {
 			return "缺少参数！";
 		}
+	},
+	EXISTRAWMATERIAL {
+		/* (non-Javadoc)
+		 * <p>Title: toString</p>
+		 * <p>Description: </p>
+		 * @return
+		 * @see java.lang.Enum#toString()
+		 */
+		@Override
+		public String toString() {
+			return "该原料已经存在！";
+		}
 	};
 	
 }

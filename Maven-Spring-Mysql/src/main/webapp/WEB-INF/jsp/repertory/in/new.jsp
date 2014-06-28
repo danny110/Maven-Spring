@@ -29,8 +29,9 @@ var webRootPath='${pageContext.request.contextPath}';
 			<td>
 				<select id="rawMaterialId" name="rawMaterialId" class="input">
 				<option value=""></option>
-				<c:forEach var="raw" items="${rawrawMaterial }">
-					<option value="${raw.id }" svalue="${raw.specification }" sunits="${raw.units }">${raw.name }(${raw.specification })</option>
+				<c:forEach var="raw" items="${resultJson.rows }">
+				${raw.units }
+					<option value="${raw.id }" svalue="${raw.specification }" sunits="${raw.units }">${raw.name }（规格：${raw.specification }）</option>
 				</c:forEach>
 			</select>
 			</td>
@@ -95,7 +96,7 @@ $(function() {
 			$sum.val(0);
 			return;
 		}
-		$sum.val($unitPrice.val()* $num.val());
+		$sum.val( parseFloat($unitPrice.val()* $num.val()).toFixed(2));
 	});
 	
 	$num.change(function() {
@@ -103,7 +104,7 @@ $(function() {
 			$sum.val(0);
 			return;
 		}
-		$sum.val($unitPrice.val() * $num.val());
+		$sum.val( parseFloat($unitPrice.val()* $num.val()).toFixed(2));
 	});
     
 	/*提交*/
@@ -115,10 +116,22 @@ $(function() {
 		if ($unitPrice.val() == "") {
 			alert("单价不能为空！");
 			return;
+		} else {
+			var unitPriceTest = /^[0-9]*[.]*[0-9]*$/;
+			if (!unitPriceTest.test($unitPrice.val())) {
+				alert("请输入正确的单价！");
+				return;
+			}
 		}
 		if ($num.val() == "") {
 			alert("数量不能为空！");
 			return;
+		} else {
+			var numTest = /^[0-9]*[.]*[0-9]*$/;
+			if (!numTest.test($num.val())) {
+				alert("请输入正确的数量！");
+				return;
+			}
 		}
 		if ($clientId.val() == "") {
 			alert("客户不能为空！");

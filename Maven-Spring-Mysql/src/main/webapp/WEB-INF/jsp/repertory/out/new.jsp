@@ -29,7 +29,7 @@ var webRootPath='${pageContext.request.contextPath}';
 			<td>
 				<select id="rawMaterialId" name="rawMaterialId" class="input">
 				<option value=""></option>
-				<c:forEach var="raw" items="${rawrawMaterial }">				
+				<c:forEach var="raw" items="${resultJson.rows }">				
 					<option value="${raw.id }" svalue="${raw.specification }"  sunits="${raw.units }">${raw.name }(${raw.specification })</option>
 				</c:forEach>
 				</select>

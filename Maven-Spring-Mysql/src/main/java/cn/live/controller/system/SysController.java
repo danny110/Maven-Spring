@@ -1,5 +1,6 @@
 package cn.live.controller.system;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -75,10 +76,13 @@ public class SysController {
 	public OperateResult<String> login(HttpServletRequest request, String loginCode, String password) {
 		OperateResult<String> operateResult = new OperateResult<String>();
 		try {
-			Filter[] filters = new Filter[] {Filter.eq("loginCode", loginCode), 
-					Filter.eq("password", BaseUtils.getMD5(password.getBytes())),
-					Filter.eq("enabled", true), 
-					Filter.eq("isDeleted", false)};
+			List<Filter> filters = new ArrayList<Filter>();
+			filters.add(Filter.eq("loginCode", loginCode));
+			filters.add(Filter.eq("password", BaseUtils.getMD5(password.getBytes())));
+			filters.add(Filter.eq("enabled", true));
+			filters.add(Filter.eq("isDeleted", false));
+			
+			
 			List<User> user = userManager.getList(filters);
 			if (user.size() == 1) {
 				operateResult.isSuccess = true;
@@ -141,9 +145,10 @@ public class SysController {
 	public OperateResult<List<RawMaterial>> getAllRawMaterial() {
 		OperateResult<List<RawMaterial>> operateResult = new OperateResult<List<RawMaterial>>();
 		try {
-			Filter filter = Filter.eq("isDeleted", false);
+			List<Filter> filters = new ArrayList<Filter>();
+			filters.add(Filter.eq("isDeleted", false));
 			operateResult.isSuccess = true;
-			operateResult.returnValue = rawMaterialManager.getList(new Filter[]{filter});
+			operateResult.returnValue = rawMaterialManager.getList(filters);
 		} catch (Exception e) {
 			e.printStackTrace();
 			operateResult.isSuccess = false;
