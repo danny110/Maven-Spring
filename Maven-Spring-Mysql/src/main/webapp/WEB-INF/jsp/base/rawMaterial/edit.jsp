@@ -23,29 +23,30 @@ var webRootPath='${pageContext.request.contextPath}';
 <body>
 <!-- 表单开始 -->
 <form id="vform" method="post">
+	<input id="id" name="id" type="hidden" value="${RawMaterial.id }"/>
 	<div>
 		<label for="name" class="label">原料名称：</label>
 	</div>
 	<div>
-		<input id="name" name="name" type="text" class="input"/>
+		<input id="name" name="name" type="text" class="input" value="${RawMaterial.name }"/>
 	</div>
 	<div>
 		<label for="specification" class="label">原料规格：</label>
 	</div>
 	<div>
-		<input id="specification" name="specification" type="text" class="input"/>
+		<input id="specification" name="specification" type="text" class="input" value="${RawMaterial.specification }"/>
 	</div>
 	<div>
 		<label for="units" class="label">单位：</label>
 	</div>
 	<div>
 		<select id="units" name="units">
-			<option value="KG">Kg</option>
-			<option value="TAO">套</option>
-			<option value="ZHI">只</option>
-			<option value="GE">个</option>
-			<option value="JIAN">件</option>
-			<option value="UNKNOWN">缺省</option>
+			<option value="KG" <c:if test="${RawMaterial.units == 'KG'}">selected="selected"</c:if>>Kg</option>
+			<option value="TAO" <c:if test="${RawMaterial.units == 'TAO'}">selected="selected"</c:if>>套</option>
+			<option value="ZHI" <c:if test="${RawMaterial.units == 'ZHI'}">selected="selected"</c:if>>只</option>
+			<option value="GE" <c:if test="${RawMaterial.units == 'GE'}">selected="selected"</c:if>>个</option>
+			<option value="JIAN" <c:if test="${RawMaterial.units == 'JIAN'}">selected="selected"</c:if>>件</option>
+			<option value="UNKNOWN" <c:if test="${RawMaterial.units == 'UNKNOWN'}">selected="selected"</c:if>>缺省</option>
 		
 		
 		</select>
@@ -54,15 +55,15 @@ var webRootPath='${pageContext.request.contextPath}';
 		<label for="mark" class="label">备注：</label>
 	</div>
 	<div>
-		<textarea id="mark" name="mark" rows="" cols="" class="input">暂无备注</textarea>
+		<textarea id="mark" name="mark" rows="" cols="" class="input">${RawMaterial.mark }</textarea>
 	</div>
 	<div>
 		<label class="label">是否启用：</label>
 	</div>
 	<div>
-		<input id="enabled0" name="enabled" type="radio" value="true" checked="checked" />
+		<input id="enabled0" name="enabled" type="radio" value="true" <c:if test="${RawMaterial.enabled == 'true'}">checked="checked"</c:if>/>
 		<label for="enabled0">启用</label>
-		<input id="enabled1" name="enabled" type="radio" value="false" />
+		<input id="enabled1" name="enabled" type="radio" value="false" <c:if test="${RawMaterial.enabled == 'false'}">checked="checked"</c:if>/>
 		<label for="enabled1">禁用</label>
 	</div>
 	<div>
@@ -75,6 +76,7 @@ var webRootPath='${pageContext.request.contextPath}';
 <!-- 表单结束 -->
 <script type="text/javascript">
 $(function() {
+	var $id = $("#id");
 	var $name = $("#name");
 	var $specification = $("#specification");
 	var $units = $("select[name=units]");
@@ -88,8 +90,9 @@ $(function() {
 		}
 		
 		$.ajax({
-			url: "<c:url value='/admin/rawMaterial/add'/>",
+			url: "<c:url value='/admin/rawMaterial/update'/>",
     		data: {
+    			id : $id.val(),
     			name : $name.val(),
     			specification : $specification.val(),
     			units : $units.val(),
