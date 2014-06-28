@@ -109,7 +109,9 @@ public class RepertoryInController {
 			if (StringUtils.isNotBlank(rawMaterialName)) filters.add(Filter.like("rawMaterialName", "%" + rawMaterialName + "%"));
 			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("createDate", beginTime));
 			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("createDate", endTime));
-			
+			if (StringUtils.isNotBlank(rawMaterialName) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
+				page = 0;
+			}
 			List<Order> orders = new ArrayList<Order>();
 			orders.add(Order.desc("createDate"));
 			

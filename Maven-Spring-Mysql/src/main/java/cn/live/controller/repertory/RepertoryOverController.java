@@ -58,7 +58,9 @@ public class RepertoryOverController {
 		try {
 			List<Filter> filters = new ArrayList<Filter>();
 			if (StringUtils.isNotBlank(rawMaterialName)) filters.add(Filter.like("rawMaterialName", "%" + rawMaterialName + "%"));
-			
+			if (StringUtils.isNotBlank(rawMaterialName)) {
+				page = 0;
+			}
 			List<Order> orders = new ArrayList<Order>();
 			orders.add(Order.desc("overNum"));
 			
