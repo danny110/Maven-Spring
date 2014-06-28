@@ -13,7 +13,6 @@ var  webRoot='${pageContext.request.contextPath}';
 </script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.lhgdialog.js'/>"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/Validform_v5.3.2.js"/>"></script>
 <script type="text/javascript">
 $(document).ready(function () {
 	$("#LoginDiv").css("padding-top",(($(document.body).height()-220)/2)+"px");
@@ -53,43 +52,41 @@ $(document).keydown(function(e){
 		<div class="bottom5px"></div>
 	</div>
 </form>
-<script type="text/javascript"> 
+<script type="text/javascript">
+var $loginCode = $("#loginCode");
+var $password = $("#password");
 $(function() {
-	/*表单提交*/
-	var vform;
-    vform = $("#vform").Validform({ tiptype: 4, showAllError: true});
-    vform.addRule([
-        {
-            ele: "#loginCode",
-            datatype: "*"
-        }, 
-        {
-            ele: "#password",
-            datatype: "*"
-        }
-    ]);
-    
 	/*提交*/
 	$("#login").click(function() {
-		vform.config({
-            ajaxpost: {
-                url: '<c:url value="/admin/login"/>',
-                success: function (data) {
-                    if( data.isSuccess ) {
-                        location.href = "<c:url value='/admin/home'/>";
-                    } else {
-                        alert(data.errorReason);
-                    }
-                },
-                error: function () {
-                    createTips("操作出现异常，请联系管理员处理！");
-                }
-            }
-        });
-
-        if (vform.check()) {
-            vform.ajaxPost();
-        }
+		if ($loginCode.val() == "") {
+			alert("帐号不能为空！");
+			return;
+		}
+		if ($password.val() == "") {
+			alert("密码不能为空！");
+			return;
+		}
+		
+		$.ajax({
+			url: "<c:url value='/admin/login'/>",
+    		data: {
+    			loginCode : $loginCode.val(),
+    			password : $password.val()
+    		},
+    		type: "POST",
+    		dataType: "json",
+    		success: function(data) {
+    			if( data.isSuccess ){
+    				location.href = "<c:url value='/admin/home'/>";
+    			}else {
+    				alert(data.errorReason);
+					return false;
+    			}
+    	 	 },error : function() {
+		    	alert("操作失败，请联系管理员！");
+				return false;
+			}
+		});
     });
 });
 </script>
