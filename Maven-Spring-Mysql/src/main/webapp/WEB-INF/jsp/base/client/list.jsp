@@ -74,6 +74,7 @@ $(document).ready(function () {
 			<table border="0" cellspacing="0" cellpadding="0" id="SearchTable">
 				<tr>
 					<td>
+						<label for="name">请输入客户姓名:</label>
 						<input type="text" name="name" id="name" value="${name }" class="inputtext" title="请输入客户姓名" />
 					</td>
 					<td>

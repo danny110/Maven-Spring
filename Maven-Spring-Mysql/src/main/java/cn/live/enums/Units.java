@@ -79,5 +79,17 @@ public enum Units {
 		public String toString() {
 			return "缺省";
 		}
+	};
+	
+	/* (non-Javadoc)
+	 * <p>Title: toString</p>
+	 * <p>Description: </p>
+	 * @return
+	 * @see java.lang.Enum#toString()
+	 */
+	@Override
+	public String toString() {
+		return toString();
 	}
+	
 }
