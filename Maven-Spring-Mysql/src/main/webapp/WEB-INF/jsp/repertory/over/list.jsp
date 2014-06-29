@@ -90,8 +90,8 @@ $(document).ready(function () {
 					<td style="width:32px;"><input name="SelectCK" type="checkbox" onclick="SelectAll(this)"/></td>
 					<td style="width:80px;">原料</td>
 					<td style="width:80px;">规格</td>
-					<td style="width:80px;">出库数量</td>
 					<td style="width:80px;">入库数量</td>
+					<td style="width:80px;">出库数量</td>
 					<td style="width:80px;">库存数量</td>
 					<td style="width:50px;">单位</td>
 					<td style="width:80px;">操作</td>

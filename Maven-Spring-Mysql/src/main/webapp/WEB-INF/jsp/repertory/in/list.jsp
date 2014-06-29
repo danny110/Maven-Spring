@@ -107,12 +107,12 @@ $(document).ready(function () {
 				<tr class="title">
 					<td style="width:32px;"><input name="SelectCK" type="checkbox" onclick="SelectAll(this)"/></td>
 					<td style="width:80px;">原料</td>
-					<td style="width:80px;">规格</td>
+					<td style="width:50px;">规格</td>
+					<td style="width:80px;">客户名称</td>
 					<td style="width:80px;">单价(元)</td>
 					<td style="width:80px;">入库数量</td>
 					<td style="width:50px;">单位</td>
 					<td style="width:80px;">合计</td>
-					<td>备注</td>
 					<td style="width:80px;">创建用户</td>
 					<td style="width:150px;">创建时间</td>
 					<td style="width:80px;">操作</td>
@@ -122,11 +122,11 @@ $(document).ready(function () {
 					<td><input name="SelectID" type="checkbox" value="${row.id }"/></td>
 					<td>${row.rawMaterialName }</td>
 					<td>${row.specification }</td>
+					<td>${row.clientName }</td>
 					<td>${row.unitPrice }</td>
 					<td>${row.num }</td>
 					<td>${row.units }</td>
 					<td>${row.sum }</td>
-					<td class="tdleft">${row.mark }</td>
 					<td>${row.loginCode }</td>
 					<td>${row.createDate }</td>
 					<td>

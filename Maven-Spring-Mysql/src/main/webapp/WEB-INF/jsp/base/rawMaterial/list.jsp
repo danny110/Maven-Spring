@@ -123,7 +123,7 @@ $(document).ready(function () {
 					<td style="width:150px;">备注</td>
 					<td style="width:80px;">是否启用</td>
 					<td style="width:150px;">创建时间</td>
-					<td style="width:80px;">操作</td>
+					<td style="width:50px;">操作</td>
 				</tr>
 				<c:forEach var="row" items="${ResultJson.rows }">
 				<tr onmouseover="$(this).addClass('MouseOn')" onmouseout="$(this).removeClass('MouseOn')" ondblclick="checkedInfo(this)">
@@ -135,8 +135,9 @@ $(document).ready(function () {
 					<td>${row.enabled == true ? "启用" : "禁用" }</td>
 					<td>${row.createDate }</td>
 					<td>
-						<a href="javascript:void(0);" onclick="view('${row.id }');">查看</a>&nbsp;
-						<a href="javascript:void(0);" onclick="edit('${row.id }');">编辑</a>
+						<a href="javascript:void(0);" onclick="view('${row.id }');">查看</a>
+					<%--&nbsp;
+						<a href="javascript:void(0);" onclick="edit('${row.id }');">编辑</a> --%>
 					</td>
 				</tr>
 				</c:forEach>

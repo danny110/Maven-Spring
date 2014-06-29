@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import cn.live.enums.Units;
+
 /**
  * @ClassName: RepertoryOutView
  * @Description: TODO
@@ -27,6 +29,7 @@ public class RepertoryOutView implements Serializable {
 	private String rawMaterialName; // 原料名称
 	private String specification; // 规格
 	private Float num; // 数量
+	private Units units; // 单位
 	private String mark; // 备注
 	private String loginCode; // 创建帐号
 	private String createDate; // 创建时间
@@ -61,6 +64,14 @@ public class RepertoryOutView implements Serializable {
 
 	public void setNum(Float num) {
 		this.num = num;
+	}
+
+	public Units getUnits() {
+		return units;
+	}
+
+	public void setUnits(Units units) {
+		this.units = units;
 	}
 
 	public String getMark() {

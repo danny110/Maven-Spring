@@ -109,7 +109,7 @@ public class RepertoryOutController {
 			page = page == null ? PAGE : page;
 			size = size == null ? SIZE : size;
 			
-			ResultJson resultJson = repertoryOutViewManager.getResultJson(page, size, new String[]{"id", "rawMaterialName", "specification","num","mark","loginCode","createDate"}, filters, orders);
+			ResultJson resultJson = repertoryOutViewManager.getResultJson(page, size, new String[]{"id", "rawMaterialName", "specification","num","units","mark","loginCode","createDate"}, filters, orders);
 			model.addAttribute("rawMaterialName", rawMaterialName);
 			model.addAttribute("beginTime", beginTime);
 			model.addAttribute("endTime", endTime);
