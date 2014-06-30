@@ -44,7 +44,7 @@ public class ClientController {
 	/**
 	 * @Fields PAGE : 初始化当前页码
 	 */
-	private static Integer PAGE = 0;
+	private static Integer PAGE = 1;
 	
 	/**
 	 * @Fields SIZE : 初始化每页行数
