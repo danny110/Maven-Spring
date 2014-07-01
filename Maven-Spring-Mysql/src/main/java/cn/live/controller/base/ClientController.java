@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.live.bean.Client;
-import cn.live.enums.Gender;
 import cn.live.enums.OperateCode;
 import cn.live.manager.ClientManager;
 import cn.live.util.Filter;
@@ -231,7 +230,7 @@ public class ClientController {
 	 * @return String
 	 * @throws
 	 */
-	@RequestMapping(value = "/edit-{id}", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/edit-{id}", method = RequestMethod.GET)
 	public String edit(@PathVariable String id, Model model) {
 		try {
 			if (StringUtils.isNotBlank(id)) {
@@ -243,7 +242,7 @@ public class ClientController {
 			e.printStackTrace();
 		}
 		return "base/client/edit";
-	}
+	}*/
 	
 	/**
 	 * @Title: update
@@ -260,7 +259,7 @@ public class ClientController {
 	 * @return OperateResult<String>
 	 * @throws
 	 */
-	@ResponseBody
+	/*@ResponseBody
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public OperateResult<String> update(String id, String name, String sex, String companyName,
 			String phone, String telephone, String mark, String enabled) {
@@ -294,5 +293,5 @@ public class ClientController {
 			operateResult.errorReason = OperateCode.ERROR.toString();
 		}
 		return operateResult;
-	}
+	}*/
 }

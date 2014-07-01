@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.live.bean.RawMaterial;
 import cn.live.enums.OperateCode;
-import cn.live.enums.Units;
 import cn.live.manager.RawMaterialManager;
 import cn.live.util.Filter;
 import cn.live.util.OperateResult;
@@ -240,7 +239,7 @@ public class RawMaterialController {
 	 * @return String
 	 * @throws
 	 */
-	@RequestMapping(value = "/edit-{id}", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/edit-{id}", method = RequestMethod.GET)
 	public String edit(@PathVariable String id, Model model) {
 		try {
 			if (StringUtils.isNotBlank(id)) {
@@ -252,7 +251,7 @@ public class RawMaterialController {
 			e.printStackTrace();
 		}
 		return "base/rawMaterial/edit";
-	}
+	}*/
 	
 	/**
 	 * @Title: update
@@ -267,7 +266,7 @@ public class RawMaterialController {
 	 * @return OperateResult<String>
 	 * @throws
 	 */
-	@ResponseBody
+	/*@ResponseBody
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public OperateResult<String> update(String id, String name, String specification, String units, String mark, String enabled) {
 		OperateResult<String> operateResult = new OperateResult<String>();
@@ -298,5 +297,5 @@ public class RawMaterialController {
 			operateResult.errorReason = OperateCode.ERROR.toString();
 		}
 		return operateResult;
-	}
+	}*/
 }
