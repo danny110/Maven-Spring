@@ -9,7 +9,7 @@
 <div class="topTd" id="MianTop">
 	<div class="topTitle">管理系统</div>
 	    <ul class="topIco">
-	    	<li class="textLi userpng png"><a href="javascript:void(0);">Administrator，您好</a></li>
+	    	<li class="textLi userpng png"><a href="javascript:void(0);"><%=request.getSession().getAttribute("_LOGINCODE") %>，您好</a></li>
 	    	<li class="splitLi2px"></li>
 	   		<li class="textLi helppng png"><a href="javascript:void(0);">帮助</a></li>
 	   		<li class="splitLi2px"></li> <li class="textLi quitpng png"><a href="<c:url value='/admin/logout'/>">退出</a></li>
