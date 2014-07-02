@@ -1,4 +1,4 @@
-package cn.live.controller.system;
+package cn.live.controller.base;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -97,7 +97,7 @@ public class UserController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "system/user/list";
+		return "base/user/list";
 	}
 	
 	/** 
@@ -171,7 +171,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String New(Model model) {
-		return "system/user/new";
+		return "base/user/new";
 	}
 	
 
@@ -191,7 +191,6 @@ public class UserController {
 			// 判断帐号是否存在
 			List<Filter> filters = new ArrayList<Filter>();
 			filters.add(Filter.eq("loginCode", user.getLoginCode()));
-			filters.add(Filter.eq("isDeleted", false));
 			
 			List<User> users = userManager.getList(filters);
 			if (users == null || users.size() == 0) {

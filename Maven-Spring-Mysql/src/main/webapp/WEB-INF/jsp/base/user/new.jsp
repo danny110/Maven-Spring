@@ -66,6 +66,13 @@ $(function() {
 		if ($loginCode.val() == "") {
 			alert("帐号不能为空！");
 			return;
+		} else {
+			// 只能是数字+字母
+			var loginCodeTest = /([0-9a-zA-Z])$/;
+			if (!loginCodeTest.test($loginCode.val())) {
+				alert("帐号只能由数字或字母组成！");
+				return;
+			}
 		}
 		if ($password.val() == "") {
 			alert("密码不能为空！");

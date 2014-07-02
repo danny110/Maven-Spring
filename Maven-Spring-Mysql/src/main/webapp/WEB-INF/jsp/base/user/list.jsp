@@ -67,12 +67,11 @@ $(document).ready(function () {
 <div id="RightTd">
 	<!-- 表单开始 -->
 	<form id="vform" method="POST" action="">
-		<div id="Head">用户信息</div>
 		<div id="ButtonDiv">
 			<table border="0" cellspacing="0" cellpadding="0" id="SearchTable">
 				<tr>
 					<td>
-						<label for="loginCode">请输入帐号:</label>
+						<label for="loginCode">帐号:</label>
 						<input type="text" name="loginCode" id="loginCode" value="${loginCode }" class="inputtext" title="请输入帐号" />
 					</td>
 					<td>
@@ -84,6 +83,7 @@ $(document).ready(function () {
 					</td>
 					<td>
 						<input name="" type="image" src="<c:url value='/resources/images/image_07.gif'/>"/>
+						
 					</td>
   				</tr>
 			</table>
@@ -115,8 +115,8 @@ $(document).ready(function () {
 			<table width="100%" border="0" cellspacing="1" cellpadding="0" id="ListTable">
 				<tr class="title">
 					<td style="width:32px;"><input name="SelectCK" type="checkbox" onclick="SelectAll(this)"/></td>
-					<td style="width:80px;">帐号</td>
-					<td>备注</td>
+					<td style="width:150px;">帐号</td>
+					<td style="min-width: 150px;">备注</td>
 					<td style="width:80px;">是否启用</td>
 					<td style="width:150px;">创建时间</td>
 				</tr>
