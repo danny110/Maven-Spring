@@ -117,6 +117,19 @@ public enum OperateCode {
 		public String toString() {
 			return "该原料已经存在！";
 		}
+	},
+	EXISTCONPANYNAME {
+		/* (non-Javadoc)
+		 * <p>Title: toString</p>
+		 * <p>Description: </p>
+		 * @return
+		 * @see java.lang.Enum#toString()
+		 */
+		@Override
+		public String toString() {
+			// TODO Auto-generated method stub
+			return "该单位名称已经存在！";
+		}
 	};
 	
 }

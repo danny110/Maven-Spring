@@ -30,17 +30,17 @@ var webRootPath='${pageContext.request.contextPath}';
 <form id="vform" method="post">
 	<table>
 		<tr>
-			<td class="td"><span style="color: red;">*</span>姓名：</td>
+			<td class="td"><span style="color: red;">*</span>单位名称：</td>
+			<td colspan="3"><input id="companyName" name="companyName" class="input" style="width: 413px;"></td>
+		</tr>
+		<tr>
+			<td class="td">联系人：</td>
 			<td><input id="name" name="name" class="input"></td>
 			<td class="td">性别：</td>
 			<td>
 				<input id="MAN" name="sex" value="MAN" type="radio" checked="checked"/><label for="MAN">男</label>
 				<input id="WOMEN" name="sex" value="WOMEN" type="radio"/><label for="WOMEN">女</label>
 			</td>
-		</tr>
-		<tr>
-			<td class="td">公司名称：</td>
-			<td colspan="3"><input id="companyName" name="companyName" class="input" style="width: 413px;"></td>
 		</tr>
 		<tr>
 			<td class="td">手机号码：</td>
@@ -80,8 +80,8 @@ $(function() {
     
 	/*提交*/
 	$("#btn_add").click(function() {
-		if ($name.val() == "") {
-			alert("姓名不能为空！");
+		if ($companyName.val() == "") {
+			alert("单位名称不能为空！");
 			return;
 		}
 		

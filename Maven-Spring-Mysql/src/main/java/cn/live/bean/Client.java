@@ -13,7 +13,7 @@ import cn.live.enums.Gender;
 
 /**
  * @ClassName: Client
- * @Description: TODO 客户表
+ * @Description: TODO 来往单位（客户）表
  * @author FOAMVALUE FOAMVALUE@LIVE.CN
  * @date 2014年6月21日 下午3:12:39
  * 
@@ -29,8 +29,8 @@ public class Client implements Serializable {
 
 	@Id
 	private String id;
-	private String name; // 名称
-	private String companyName; // 公司名称
+	private String companyName; // 单位名称
+	private String name; // 联系人
 	private Gender sex; // 性别
 	private String phone; // 手机号码
 	private String telephone; // 座机号码

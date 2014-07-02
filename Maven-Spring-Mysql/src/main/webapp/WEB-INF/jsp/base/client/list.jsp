@@ -69,13 +69,16 @@ $(document).ready(function () {
 <div id="RightTd">
 <!-- 表单开始 -->
 	<form id="vform" method="POST" action="">
-		<div id="Head">客户信息</div>
 		<div id="ButtonDiv">
 			<table border="0" cellspacing="0" cellpadding="0" id="SearchTable">
 				<tr>
 					<td>
-						<label for="name">请输入客户姓名:</label>
-						<input type="text" name="name" id="name" value="${name }" class="inputtext" title="请输入客户姓名" />
+						<label for="companyName">单位名称:</label>
+						<input type="text" name="companyName" id="companyName" value="${companyName }" class="inputtext" title="请输入单位名称" />
+					</td>
+					<td>
+						<label for="name">联系人:</label>
+						<input type="text" name="name" id="name" value="${name }" class="inputtext" title="请输入联系人" />
 					</td>
 					<td>
 						<select name="enabled" class="selectclass">
@@ -117,12 +120,11 @@ $(document).ready(function () {
 			<table width="100%" border="0" cellspacing="1" cellpadding="0" id="ListTable">
 				<tr class="title">
 					<td style="width:32px;"><input name="SelectCK" type="checkbox" onclick="SelectAll(this)"/></td>
-					<td style="width:80px;">姓名</td>
-					<td style="width:50px;">性别</td>
+					<td style="width:150px;">单位名称</td>
+					<td style="width:80px;">联系人</td>
 					<td style="width:100px;">手机号码</td>
-					<td style="width:150px;">公司名称</td>
 					<td style="width:100px;">座机号码</td>
-					<td style="width:150px;">备注</td>
+					<td style="min-width:150px;">备注</td>
 					<td style="width:80px;">是否启用</td>
 					<td style="width:150px;">创建时间</td>
 					<td style="width:50px;">操作</td>
@@ -130,10 +132,9 @@ $(document).ready(function () {
 				<c:forEach var="row" items="${ResultJson.rows }">
 				<tr onmouseover="$(this).addClass('MouseOn')" onmouseout="$(this).removeClass('MouseOn')" ondblclick="checkedInfo(this)">
 					<td><input name="SelectID" type="checkbox" value="${row.id }"/></td>
-					<td>${row.name }</td>
-					<td>${row.sex }</td>
-					<td>${row.phone }</td>
 					<td>${row.companyName }</td>
+					<td>${row.name }</td>
+					<td>${row.phone }</td>
 					<td>${row.telephone }</td>
 					<td class="tdleft">${row.mark }</td>
 					<td>${row.enabled == true ? "启用" : "禁用" }</td>

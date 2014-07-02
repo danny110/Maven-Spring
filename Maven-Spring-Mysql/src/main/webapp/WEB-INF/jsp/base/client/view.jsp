@@ -30,17 +30,17 @@ var webRootPath='${pageContext.request.contextPath}';
 <form id="vform" method="post">
 	<table>
 		<tr>
-			<td class="td"><span style="color: red;">*</span>姓名：</td>
+			<td class="td"><span style="color: red;">*</span>单位名称：</td>
+			<td colspan="3"><input id="companyName" name="companyName" class="input" style="width: 413px;" value="${Client.companyName }" disabled="disabled"/></td>
+		</tr>
+		<tr>
+			<td class="td">联系人：</td>
 			<td><input id="name" name="name" class="input" value="${Client.name }" disabled="disabled"></td>
 			<td class="td">性别：</td>
 			<td>
 				<input id="MAN" name="sex" value="MAN" type="radio" disabled="disabled" <c:if test="${Client.sex == 'MAN' }">checked="checked"</c:if>/><label for="MAN">男</label>
 				<input id="WOMEN" name="sex" value="WOMEN" type="radio" disabled="disabled" <c:if test="${Client.sex == 'WOMEN' }">checked="checked"</c:if>/><label for="WOMEN">女</label>
 			</td>
-		</tr>
-		<tr>
-			<td class="td">公司名称：</td>
-			<td colspan="3"><input id="companyName" name="companyName" class="input" style="width: 413px;" value="${Client.companyName }" disabled="disabled"/></td>
 		</tr>
 		<tr>
 			<td class="td">手机号码：</td>

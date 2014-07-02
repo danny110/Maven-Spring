@@ -26,7 +26,7 @@ import cn.live.util.ResultJson;
 
 /**
  * @ClassName: ClientController
- * @Description: TODO 客户管理
+ * @Description: TODO 来往单位（客户）管理
  * @author FOAMVALUE FOAMVALUE@LIVE.CN
  * @date 2014年6月18日 下午10:56:07
  *
@@ -51,17 +51,18 @@ public class ClientController {
 	private static Integer SIZE = 10;
 	
 	/**
-	 * @Fields clientManager : 客户
+	 * @Fields clientManager : 来往单位（客户）
 	 */
 	@Resource(name = "clientManager")
 	private ClientManager clientManager;
 	
 	/**
-	 * @Title: list 客户管理列表
+	 * @Title: list 来往单位（客户）列表
 	 * @Description: TODO
-	 * @param @param name
-	 * @param @param enabled
-	 * @param @param page
+	 * @param @param companyName 单位名称
+	 * @param @param name 联系人
+	 * @param @param enabled 是否启用
+	 * @param @param page 当前页码
 	 * @param @param size
 	 * @param @param model
 	 * @param @return
@@ -69,8 +70,11 @@ public class ClientController {
 	 * @throws
 	 */
 	@RequestMapping(value = "/list")
-	public String list(String name, Boolean enabled, Integer page, Integer size, Model model) {
+	public String list(String companyName, String name, Boolean enabled, Integer page, Integer size, Model model) {
 		List<Filter> filters = new ArrayList<Filter>();
+		if (StringUtils.isNotBlank(companyName)) {
+			filters.add(Filter.like("companyName", "%" + companyName + "%"));
+		}
 		if (StringUtils.isNotBlank(name)) {
 			filters.add(Filter.like("name", "%" + name + "%"));
 		}
@@ -97,7 +101,7 @@ public class ClientController {
 	
 	/** 
 	 * @Title: del 
-	 * @Description: TODO 删除客户
+	 * @Description: TODO 删除来往单位（客户）
 	 * @param @param id 
 	 * @return void
 	 * @throws 
@@ -172,7 +176,7 @@ public class ClientController {
 
 	/** 
 	 * @Title: add 
-	 * @Description: TODO 新增一条客户记录
+	 * @Description: TODO 新增一条来往单位（客户）记录
 	 * @param @param client
 	 * @param @return 
 	 * @return OperateResult<String>
@@ -183,13 +187,24 @@ public class ClientController {
 	public OperateResult<String> add(Client client) {
 		OperateResult<String> operateResult = new OperateResult<String>();
 		try {
-			client.setId(UUID.randomUUID().toString());
-			client.setIsDeleted(false);
-			client.setCreateDate(simpleDateFormat.format(new Date()));
-			client.setModifyDate(simpleDateFormat.format(new Date()));
-			clientManager.create(client);
-			operateResult.isSuccess = true;
-			operateResult.returnValue = OperateCode.SUCCESS.toString();
+			// 判断帐号是否存在
+			List<Filter> filters = new ArrayList<Filter>();
+			filters.add(Filter.eq("companyName", client.getCompanyName()));
+			
+			List<Client> clients = clientManager.getList(filters);
+			if (clients == null || clients.size() == 0) {
+				client.setId(UUID.randomUUID().toString());
+				client.setIsDeleted(false);
+				client.setCreateDate(simpleDateFormat.format(new Date()));
+				client.setModifyDate(simpleDateFormat.format(new Date()));
+				clientManager.create(client);
+				operateResult.isSuccess = true;
+				operateResult.returnValue = OperateCode.SUCCESS.toString();
+			} else {
+				operateResult.isSuccess = false;
+				operateResult.errorReason = OperateCode.EXISTCONPANYNAME.toString();
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			operateResult.isSuccess = false;
