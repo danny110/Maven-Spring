@@ -58,13 +58,6 @@ var webRootPath='${pageContext.request.contextPath}';
 				<label for="enabled1">禁用</label>
 			</td>
 		</tr>
-		<tr>
-			<td></td>
-			<td>
-				<input id="btn_add" name="btn_add" type="button" value="提交"/>
-				<input id="btn_cancel" name="btn_cancel" type="button" value="取消"/>
-			</td>
-		</tr>
 	</table>
 </form>
 </body>

@@ -69,12 +69,11 @@ $(document).ready(function () {
 <div id="RightTd">
 	<!-- 表单开始 -->
 	<form id="vform" method="POST" action="">
-		<div id="Head">原料信息</div>
 		<div id="ButtonDiv">
 			<table border="0" cellspacing="0" cellpadding="0" id="SearchTable">
 				<tr>
 					<td>
-						<label for="name">请输入原料名称：</label>
+						<label for="name">原料：</label>
 						<input type="text" name="name" id="name" value="${name }" class="inputtext" title="请输入原料名称" />
 					</td>
 					<td>
@@ -120,7 +119,7 @@ $(document).ready(function () {
 					<td style="width:80px;">原料名称</td>
 					<td style="width:50px;">规格</td>
 					<td style="width:100px;">单位</td>
-					<td style="width:150px;">备注</td>
+					<td style="min-width: 150px;">备注</td>
 					<td style="width:80px;">是否启用</td>
 					<td style="width:150px;">创建时间</td>
 					<td style="width:50px;">操作</td>
