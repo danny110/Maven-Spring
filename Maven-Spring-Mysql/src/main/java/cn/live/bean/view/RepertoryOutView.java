@@ -26,6 +26,7 @@ public class RepertoryOutView implements Serializable {
 
 	@Id
 	private String id; // 入库表ID
+	private String rawMaterialId; // 原料编号
 	private String rawMaterialName; // 原料名称
 	private String specification; // 规格
 	private Float num; // 数量
@@ -40,6 +41,14 @@ public class RepertoryOutView implements Serializable {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getRawMaterialId() {
+		return rawMaterialId;
+	}
+
+	public void setRawMaterialId(String rawMaterialId) {
+		this.rawMaterialId = rawMaterialId;
 	}
 
 	public String getRawMaterialName() {

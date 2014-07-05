@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import cn.live.bean.RawMaterial;
 import cn.live.manager.RawMaterialManager;
 import cn.live.manager.RepertoryInViewManager;
+import cn.live.manager.RepertoryOutViewManager;
 import cn.live.manager.RepertoryOverViewManager;
 import cn.live.util.Filter;
 import cn.live.util.Order;
@@ -42,6 +43,12 @@ public class RepertoryOverController {
 	 */
 	@Resource(name = "repertoryInViewManager")
 	private RepertoryInViewManager repertoryInViewManager;
+	
+	/**
+	 * @Fields repertoryOutViewManager : 出库视图
+	 */
+	@Resource(name = "repertoryOutViewManager")
+	public RepertoryOutViewManager repertoryOutViewManager;
 	
 	/**
 	 * @Fields rawMaterialManager : 原料
@@ -121,7 +128,7 @@ public class RepertoryOverController {
 			if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.like("loginCode", "%" + loginCode + "%"));
 			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("inDate", beginTime));
 			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("inDate", endTime));
-			if (StringUtils.isNotBlank(companyName) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
+			if (StringUtils.isNotBlank(companyName) || StringUtils.isNotBlank(loginCode) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
 				page = 1;
 			}
 			List<Order> orders = new ArrayList<Order>();
@@ -153,9 +160,45 @@ public class RepertoryOverController {
 	 * @return String
 	 * @throws
 	 */
-	@RequestMapping(value = "/outView-{id}")
-	public String outView(@PathVariable String id) {
-		
+	@RequestMapping(value = "/outView-{rawMaterialId}")
+	public String outView(@PathVariable String rawMaterialId, String loginCode, String beginTime, String endTime, Integer page, Integer size, Model model) {
+		try {
+			/*
+			 * 原料数据
+			 * */
+			RawMaterial rawMaterial = rawMaterialManager.findById(rawMaterialId);
+			/*
+			 * 合计数据
+			 * */
+			Map<String, Float> sum = repertoryOutViewManager.getSumBySQL(rawMaterialId, loginCode, beginTime, endTime);
+			/*
+			 * 分页数据
+			 * */
+			List<Filter> filters = new ArrayList<Filter>();
+			filters.add(Filter.eq("rawMaterialId", rawMaterialId));
+			if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.like("loginCode", "%" + loginCode + "%"));
+			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("outDate", beginTime));
+			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("outDate", endTime));
+			if (StringUtils.isNotBlank(loginCode) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
+				page = 1;
+			}
+			List<Order> orders = new ArrayList<Order>();
+			orders.add(Order.desc("outDate"));
+			
+			page = page == null ? PAGE : page;
+			size = size == null ? SIZE : size;
+			
+			ResultJson resultJson = repertoryOutViewManager.getResultJson(page, size, new String[]{"id", "num", "mark","loginCode","outDate"}, filters, orders);
+			model.addAttribute("rawMaterialId", rawMaterialId);
+			model.addAttribute("rawMaterial", rawMaterial); // 原料对象
+			model.addAttribute("sum", sum); // 合计
+			model.addAttribute("loginCode", loginCode); // 经手人
+			model.addAttribute("beginTime", beginTime); // 开始日期
+			model.addAttribute("endTime", endTime); // 结束日期
+			model.addAttribute("ResultJson", resultJson); // 分页数据
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return "repertory/over/outView";
 	}

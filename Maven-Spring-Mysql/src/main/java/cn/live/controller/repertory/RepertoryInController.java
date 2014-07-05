@@ -112,7 +112,7 @@ public class RepertoryInController {
 			if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.like("loginCode", "%" + loginCode + "%"));
 			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("inDate", beginTime));
 			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("inDate", endTime));
-			if (StringUtils.isNotBlank(companyName) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
+			if (StringUtils.isNotBlank(companyName) || StringUtils.isNotBlank(rawMaterialName) || StringUtils.isNotBlank(loginCode) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
 				page = 1;
 			}
 			List<Order> orders = new ArrayList<Order>();

@@ -71,14 +71,15 @@ public class RepertoryInViewManagerImpl extends BaseManagerImpl<RepertoryInView,
 			sql.append("' ");
 		}
 		List<?> list = this.getBySQL(sql.toString());
-		if (list == null || list.size() == 0) {
-			return null;
-		}
-		
 		Map<String, Float> data = new HashMap<String, Float>();
-		Object[] objects = (Object[]) list.get(0);
-		data.put("nums", Float.valueOf(objects[0].toString()));
-		data.put("sums", Float.valueOf(objects[1].toString()));
+		if (list == null || list.size() == 0) {
+			data.put("nums", 0F);
+			data.put("sums", 0F);
+		} else {
+			Object[] objects = (Object[]) list.get(0);
+			data.put("nums", Float.valueOf(objects[0] == null ? "0" : objects[0].toString()));
+			data.put("sums", Float.valueOf(objects[1] == null ? "0" : objects[1].toString()));
+		}
 		return data;
 	}
 }
