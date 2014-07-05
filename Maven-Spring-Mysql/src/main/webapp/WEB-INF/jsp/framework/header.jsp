@@ -11,10 +11,29 @@
 	    <ul class="topIco">
 	    	<li class="textLi userpng png"><a href="javascript:void(0);"><%=request.getSession().getAttribute("_LOGINCODE") %>，您好</a></li>
 	    	<li class="splitLi2px"></li>
+	    	<li class="textLi reset png"><a href="javascript:void(0);" onclick="reset()">修改密码</a></li>
+	    	<li class="splitLi2px"></li>
 	   		<li class="textLi helppng png"><a href="javascript:void(0);">帮助</a></li>
-	   		<li class="splitLi2px"></li> <li class="textLi quitpng png"><a href="<c:url value='/admin/logout'/>">退出</a></li>
+	   		<li class="splitLi2px"></li>
+	   		<li class="textLi quitpng png"><a href="<c:url value='/admin/logout'/>">退出</a></li>
 	    </ul>
 	</div>
 <div class="midTd" id="MianMid"><img src="<c:url value='/resources/images/height5px.gif'/>" width="8" height="5" /></div>
+<script type="text/javascript">
+/*新增原料*/
+function reset() {
+	var diag = new Dialog();
+	diag.Width = 450;
+	diag.Height = 150;
+	diag.URL = '<c:url value="/admin/user/resetPage"/>';
+	diag.Title = "修改密码";
+	diag.CancelEvent = function () {
+		diag.close();
+		location.reload();
+	};
+	diag.show();
+};
+</script>
+
 </body>
 </html>

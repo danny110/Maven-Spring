@@ -119,6 +119,7 @@ $(document).ready(function () {
 					<td style="min-width: 150px;">备注</td>
 					<td style="width:80px;">是否启用</td>
 					<td style="width:150px;">创建时间</td>
+					<td style="width: 80px;">操作</td>
 				</tr>
 				<c:forEach var="row" items="${ResultJson.rows }">
 				<tr onmouseover="$(this).addClass('MouseOn')" onmouseout="$(this).removeClass('MouseOn')" ondblclick="checkedInfo(this)">
@@ -127,10 +128,11 @@ $(document).ready(function () {
 					<td class="tdleft">${row.mark }</td>
 					<td>${row.enabled == true ? "启用" : "禁用" }</td>
 					<td>${row.createDate }</td>
+					<td><a href="javascript:void(0);" onclick="resetPWD('${row.id }')">重置密码</a></td>
 				</tr>
 				</c:forEach>
 				<tr onmouseover="$(this).addClass('MouseOn')" onmouseout="$(this).removeClass('MouseOn')">
-					<td colspan="5" id="InsPageDiv">&nbsp;</td>
+					<td colspan="6" id="InsPageDiv">&nbsp;</td>
 				</tr>
 			</table>
 		</div>
@@ -290,6 +292,31 @@ function checkedInfo(node) {
 		$input.attr("checked", "checked");
 	};
 };
+
+// 重置密码
+function resetPWD(id) {
+	if (confirm("确定要重置吗？")) {
+		$.ajax({
+			url: "<c:url value='/admin/user/resetPWD'/>",
+    		data: {
+    			id : id
+    		},
+    		type: "POST",
+    		dataType: "json",
+    		success: function(data) {
+    			if( data.isSuccess ){
+    				location.reload();
+    			}else {
+    				alert(data.errorReason);
+					return false;
+    			}
+    	 	 },error : function() {
+		    	alert("操作失败，请联系管理员！");
+				return false;
+			}
+		});
+	};
+}
 </script>
 </body>
 </html>

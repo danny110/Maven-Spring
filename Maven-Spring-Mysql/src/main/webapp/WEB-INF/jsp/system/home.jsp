@@ -13,9 +13,12 @@
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.lhgdialog.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.validity.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/Common.js'/>"></script>
-
 <script type="text/javascript">
-var webRootPath="${pageContext.request.contextPath}";
+var webRootPath='${pageContext.request.contextPath}';
+</script>
+<script type="text/javascript" src="<c:url value="/resources/js/zDialog.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/zDrag.js"/>"></script>
+<script type="text/javascript">
 var LeftLiTdHeight=0;
 //计算页面一些元素的高度和宽度
 function SetBodySize(){

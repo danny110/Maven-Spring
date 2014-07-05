@@ -53,7 +53,19 @@ public enum OperateCode {
 		 */
 		@Override
 		public String toString() {
-			return "用户登陆失败！";
+			return "帐号不存在或密码不匹配！";
+		}
+	},
+	PWDERROR {
+		/* (non-Javadoc)
+		 * <p>Title: toString</p>
+		 * <p>Description: </p>
+		 * @return
+		 * @see java.lang.Enum#toString()
+		 */
+		@Override
+		public String toString() {
+			return "密码不正确！";
 		}
 	},
 	USEREXCEPTION {

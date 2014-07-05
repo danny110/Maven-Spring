@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,11 @@ import cn.live.util.ResultJson;
 public class UserController {
 	
 	/**
+	 * @Fields _LOGINCODE : 用户帐号标识
+	 */
+	public static final String _LOGINCODE = "_LOGINCODE";
+	
+	/**
 	 * @Fields simpleDateFormat : 日期格式
 	 */
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -55,7 +61,6 @@ public class UserController {
 	 */
 	@Resource(name = "userManager")
 	private UserManager userManager;
-	
 	
 	/** 
 	 * @Title: list
@@ -174,7 +179,6 @@ public class UserController {
 		return "base/user/new";
 	}
 	
-
 	/** 
 	 * @Title: add 
 	 * @Description: TODO 新增一条用户记录
@@ -205,6 +209,87 @@ public class UserController {
 			} else {
 				operateResult.isSuccess = false;
 				operateResult.errorReason = OperateCode.EXISTLOGINCODE.toString();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			operateResult.isSuccess = false;
+			operateResult.errorReason = OperateCode.ERROR.toString();
+		}
+		return operateResult;
+	}
+	
+	/**
+	 * @Title: resetPWD
+	 * @Description: TODO 重置密码
+	 * @param @param id
+	 * @param @return
+	 * @return OperateResult<String>
+	 * @throws
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/resetPWD", method = RequestMethod.POST)
+	public OperateResult<String> resetPWD(String id) {
+		OperateResult<String> operateResult = new OperateResult<String>();
+		try {
+			User user= userManager.findById(id);
+			if (user != null) {
+				user.setPassword(BaseUtils.getMD5("123456".getBytes()));
+				userManager.merge(user);
+				operateResult.isSuccess = true;
+				operateResult.returnValue = OperateCode.SUCCESS.toString();
+			} else {
+				operateResult.isSuccess = false;
+				operateResult.errorReason = OperateCode.ERROR.toString();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			operateResult.isSuccess = false;
+			operateResult.errorReason = OperateCode.ERROR.toString();
+		}
+		return operateResult;
+	}
+	
+	/**
+	 * @Title: resetPage
+	 * @Description: TODO 页面跳转
+	 * @param @return
+	 * @return String
+	 * @throws
+	 */
+	@RequestMapping(value = "/resetPage")
+	public String resetPage() {
+		return "framework/reset";
+	}
+	
+	/**
+	 * @Title: reset
+	 * @Description: TODO 重置密码
+	 * @param @param oldPWD
+	 * @param @param newPWD
+	 * @param @return
+	 * @return OperateResult<String>
+	 * @throws
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/reset", method = RequestMethod.POST)
+	public OperateResult<String> resetPWD(HttpServletRequest request, String oldPWD, String newPWD) {
+		OperateResult<String> operateResult = new OperateResult<String>();
+		try {
+			List<Filter> filters = new ArrayList<Filter>();
+			filters.add(Filter.eq("loginCode", request.getSession().getAttribute(_LOGINCODE)));
+			filters.add(Filter.eq("password", BaseUtils.getMD5(oldPWD.getBytes())));
+			List<User> users = userManager.getList(filters);
+			if (users != null && users.size() > 0) {
+				User user = users.get(0);
+				user.setPassword(BaseUtils.getMD5(newPWD.getBytes()));
+				userManager.merge(user);
+				operateResult.isSuccess = true;
+				operateResult.returnValue = OperateCode.SUCCESS.toString();
+			} else {
+				operateResult.isSuccess = false;
+				operateResult.errorReason = OperateCode.PWDERROR.toString();
 			}
 			
 		} catch (Exception e) {
