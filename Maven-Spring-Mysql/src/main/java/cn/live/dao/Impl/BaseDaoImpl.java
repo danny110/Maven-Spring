@@ -96,6 +96,17 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 	}
 	
 	/* (non-Javadoc)
+	 * <p>Title: getList</p>
+	 * <p>Description: </p>
+	 * @return
+	 * @see cn.live.dao.BaseDao#getList()
+	 */
+	@Override
+	public List<T> getList() {
+		return getList(null, null);
+	}
+	
+	/* (non-Javadoc)
 	 * <p>Title: getList</p> 
 	 * <p>Description: </p> 
 	 * @param filters

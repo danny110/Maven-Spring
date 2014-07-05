@@ -44,6 +44,16 @@ public interface BaseDao<T, ID extends Serializable> {
 	 */
 	void merge(T entity);
 	
+	
+	/**
+	 * @Title: getList
+	 * @Description: TODO 获取列表
+	 * @param @return
+	 * @return List<T>
+	 * @throws
+	 */
+	List<T> getList();
+	
 	/** 
 	 * @Title: getList 
 	 * @Description: TODO 获取列表

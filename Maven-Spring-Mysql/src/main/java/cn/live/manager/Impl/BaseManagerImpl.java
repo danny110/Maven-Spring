@@ -71,6 +71,17 @@ public class BaseManagerImpl<T, ID extends Serializable> implements BaseManager<
 	}
 	
 	/* (non-Javadoc)
+	 * <p>Title: getList</p>
+	 * <p>Description: </p>
+	 * @return
+	 * @see cn.live.manager.BaseManager#getList()
+	 */
+	@Override
+	public List<T> getList() {
+		return dao.getList();
+	}
+	
+	/* (non-Javadoc)
 	 * <p>Title: getList</p> 
 	 * <p>Description: </p> 
 	 * @param filters
