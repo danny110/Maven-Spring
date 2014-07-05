@@ -92,7 +92,8 @@ public class RepertoryInController {
 	/**
 	 * @Title: list
 	 * @Description: TODO 入库管理列表
-	 * @param @param companyName
+	 * @param @param companyName 进货单位名称
+	 * @param @param loginCode 经手人
 	 * @param @param beginTime
 	 * @param @param endTime
 	 * @param @param page
@@ -103,10 +104,11 @@ public class RepertoryInController {
 	 * @throws
 	 */
 	@RequestMapping(value = "/list")
-	public String list(String companyName, String beginTime, String endTime, Integer page, Integer size, Model model) {
+	public String list(String companyName,String loginCode, String beginTime, String endTime, Integer page, Integer size, Model model) {
 		try {
 			List<Filter> filters = new ArrayList<Filter>();
 			if (StringUtils.isNotBlank(companyName)) filters.add(Filter.like("companyName", "%" + companyName + "%"));
+			if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.like("loginCode", "%" + loginCode + "%"));
 			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("inDate", beginTime));
 			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("inDate", endTime));
 			if (StringUtils.isNotBlank(companyName) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
@@ -120,6 +122,7 @@ public class RepertoryInController {
 			
 			ResultJson resultJson = repertoryInViewManager.getResultJson(page, size, new String[]{"id", "rawMaterialName", "specification", "units","companyName","num","unitPrice","sum","mark","loginCode","inDate"}, filters, orders);
 			model.addAttribute("companyName", companyName);
+			model.addAttribute("loginCode", loginCode);
 			model.addAttribute("beginTime", beginTime);
 			model.addAttribute("endTime", endTime);
 			model.addAttribute("ResultJson", resultJson);
@@ -274,15 +277,7 @@ public class RepertoryInController {
 		try {
 			if (StringUtils.isNotBlank(id)) {
 				RepertoryIn repertoryIn = repertoryInManager.findById(id);
-				
-				List<Filter> filters = new ArrayList<Filter>();
-				filters.add(Filter.eq("enabled", true));
-				filters.add(Filter.eq("isDeleted", false));
-				
-				List<Order> orders = new ArrayList<Order>();
-				orders.add(Order.asc("name"));
-				orders.add(Order.asc("specification"));
-				List<RawMaterial> rawMaterials = rawMaterialManager.getList(filters, orders);
+				List<RawMaterial> rawMaterials = rawMaterialManager.getList();
 				RawMaterial rawMaterial = new RawMaterial();
 				for (RawMaterial material : rawMaterials) {
 					if (material.getId().equals(repertoryIn.getRawMaterialId())) {
@@ -290,7 +285,7 @@ public class RepertoryInController {
 						break;
 					}
 				}
-				List<Client> clients = clientManager.getList(filters);
+				List<Client> clients = clientManager.getList();
 				Client client = new Client();
 				for (Client data : clients) {
 					if (data.getId().equals(repertoryIn.getClientId())) {

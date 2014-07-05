@@ -80,6 +80,10 @@ $(document).ready(function () {
 						<input type="text" name="companyName" id="companyName" value="${companyName }" class="inputtext" title="请输入原料名称" />
 					</td>
 					<td>
+						<label for="loginCode">经手人：</label>
+						<input type="text" name="loginCode" id="loginCode" value="${loginCode }" class="inputtext" title="请输入经手人" />
+					</td>
+					<td>
 						<label for="beginTime">开始时间：</label>
 						<input type="text" name="beginTime" id="beginTime" value="${beginTime }" class="inputtext" title="请输入开始时间" />
 					</td>
@@ -123,6 +127,7 @@ $(document).ready(function () {
 					<td style="width:80px;">合计</td>
 					<td style="width:80px;">经手人</td>
 					<td style="width:100px;">进货日期</td>
+					<td style="min-width: 150px;">备注</td>
 					<td style="width:50px;">操作</td>
 				</tr>
 				<c:forEach var="row" items="${ResultJson.rows }">
@@ -137,6 +142,7 @@ $(document).ready(function () {
 					<td>${row.sum }</td>
 					<td>${row.loginCode }</td>
 					<td>${row.inDate }</td>
+					<td>${row.mark }</td>
 					<td>
 						<a href="javascript:void(0);" onclick="view('${row.id }');">查看</a>
 					</td>
