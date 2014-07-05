@@ -53,6 +53,7 @@ public class InReportController {
 	/**
 	 * @Title: list
 	 * @Description: TODO 进货报表
+	 * @param @param enabled
 	 * @param @param companyName
 	 * @param @param rawMaterialName
 	 * @param @param specification
@@ -67,7 +68,7 @@ public class InReportController {
 	 * @throws
 	 */
 	@RequestMapping(value = "/list")
-	public String list(String companyName, String rawMaterialName, String specification, String loginCode, String beginTime, String endTime, Integer page, Integer size, Model model) {
+	public String list(Boolean enabled, String companyName, String rawMaterialName, String specification, String loginCode, String beginTime, String endTime, Integer page, Integer size, Model model) {
 		try {
 			/*
 			 * 合计数据
@@ -77,10 +78,17 @@ public class InReportController {
 			 * 分页数据
 			 * */
 			List<Filter> filters = new ArrayList<Filter>();
-			if (StringUtils.isNotBlank(companyName)) filters.add(Filter.like("companyName", "%" + companyName + "%"));
-			if (StringUtils.isNotBlank(rawMaterialName)) filters.add(Filter.like("rawMaterialName", "%" + rawMaterialName + "%"));
-			if (StringUtils.isNotBlank(specification)) filters.add(Filter.like("specification", "%" + specification + "%"));
-			if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.like("loginCode", "%" + loginCode + "%"));
+			if (enabled == null || enabled) {
+				if (StringUtils.isNotBlank(companyName)) filters.add(Filter.like("companyName", "%" + companyName + "%"));
+				if (StringUtils.isNotBlank(rawMaterialName)) filters.add(Filter.like("rawMaterialName", "%" + rawMaterialName + "%"));
+				if (StringUtils.isNotBlank(specification)) filters.add(Filter.like("specification", "%" + specification + "%"));
+				if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.like("loginCode", "%" + loginCode + "%"));
+			} else {
+				if (StringUtils.isNotBlank(companyName)) filters.add(Filter.eq("companyName", companyName));
+				if (StringUtils.isNotBlank(rawMaterialName)) filters.add(Filter.eq("rawMaterialName", rawMaterialName));
+				if (StringUtils.isNotBlank(specification)) filters.add(Filter.eq("specification", specification));
+				if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.eq("loginCode", loginCode));
+			}
 			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("inDate", beginTime));
 			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("inDate", endTime));
 			if (StringUtils.isNotBlank(companyName) || StringUtils.isNotBlank(rawMaterialName) || StringUtils.isNotBlank(specification) || StringUtils.isNotBlank(loginCode) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
@@ -94,6 +102,7 @@ public class InReportController {
 			
 			ResultJson resultJson = repertoryInViewManager.getResultJson(page, size, new String[]{"id", "rawMaterialName", "specification", "units","companyName","num","unitPrice","sum","mark","loginCode","inDate"}, filters, orders);
 			model.addAttribute("sum", sum); // 合计
+			model.addAttribute("enabled", enabled);
 			model.addAttribute("companyName", companyName); // 单位名称
 			model.addAttribute("specification", specification); // 规格
 			model.addAttribute("rawMaterialName", rawMaterialName); // 原料名称

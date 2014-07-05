@@ -103,13 +103,21 @@ public class RepertoryOverController {
 	/**
 	 * @Title: inView
 	 * @Description: TODO 进货明细
-	 * @param @param id
+	 * @param @param rawMaterialId 原料编号
+	 * @param @param enabled 是否模糊查询
+	 * @param @param companyName 进货单位
+	 * @param @param loginCode 经手人
+	 * @param @param beginTime
+	 * @param @param endTime
+	 * @param @param page
+	 * @param @param size
+	 * @param @param model
 	 * @param @return
 	 * @return String
 	 * @throws
 	 */
 	@RequestMapping(value = "/inView-{rawMaterialId}")
-	public String inView(@PathVariable String rawMaterialId, String companyName,String loginCode, String beginTime, String endTime, Integer page, Integer size, Model model) {
+	public String inView(@PathVariable String rawMaterialId, Boolean enabled, String companyName, String loginCode, String beginTime, String endTime, Integer page, Integer size, Model model) {
 		try {
 			/*
 			 * 原料数据
@@ -124,8 +132,13 @@ public class RepertoryOverController {
 			 * */
 			List<Filter> filters = new ArrayList<Filter>();
 			filters.add(Filter.eq("rawMaterialId", rawMaterialId));
-			if (StringUtils.isNotBlank(companyName)) filters.add(Filter.like("companyName", "%" + companyName + "%"));
-			if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.like("loginCode", "%" + loginCode + "%"));
+			if (enabled == null || enabled) {
+				if (StringUtils.isNotBlank(companyName)) filters.add(Filter.like("companyName", "%" + companyName + "%"));
+				if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.like("loginCode", "%" + loginCode + "%"));
+			} else {
+				if (StringUtils.isNotBlank(companyName)) filters.add(Filter.eq("companyName", companyName));
+				if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.eq("loginCode", loginCode));
+			}
 			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("inDate", beginTime));
 			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("inDate", endTime));
 			if (StringUtils.isNotBlank(companyName) || StringUtils.isNotBlank(loginCode) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
@@ -139,6 +152,7 @@ public class RepertoryOverController {
 			
 			ResultJson resultJson = repertoryInViewManager.getResultJson(page, size, new String[]{"id","companyName","num","unitPrice","sum","mark","loginCode","inDate"}, filters, orders);
 			model.addAttribute("rawMaterialId", rawMaterialId);
+			model.addAttribute("enabled", enabled);
 			model.addAttribute("rawMaterial", rawMaterial); // 原料对象
 			model.addAttribute("sum", sum); // 合计
 			model.addAttribute("companyName", companyName); // 单位名称
@@ -155,13 +169,20 @@ public class RepertoryOverController {
 	/**
 	 * @Title: outView
 	 * @Description: TODO 出库明细
-	 * @param @param id
+	 * @param @param rawMaterialId 原料编号
+	 * @param @param enabled 是否模糊查询
+	 * @param @param loginCode 经手人
+	 * @param @param beginTime
+	 * @param @param endTime
+	 * @param @param page
+	 * @param @param size
+	 * @param @param model
 	 * @param @return
 	 * @return String
 	 * @throws
 	 */
 	@RequestMapping(value = "/outView-{rawMaterialId}")
-	public String outView(@PathVariable String rawMaterialId, String loginCode, String beginTime, String endTime, Integer page, Integer size, Model model) {
+	public String outView(@PathVariable String rawMaterialId, Boolean enabled, String loginCode, String beginTime, String endTime, Integer page, Integer size, Model model) {
 		try {
 			/*
 			 * 原料数据
@@ -176,7 +197,11 @@ public class RepertoryOverController {
 			 * */
 			List<Filter> filters = new ArrayList<Filter>();
 			filters.add(Filter.eq("rawMaterialId", rawMaterialId));
-			if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.like("loginCode", "%" + loginCode + "%"));
+			if (enabled == null || enabled) {
+				if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.like("loginCode", "%" + loginCode + "%"));
+			} else {
+				if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.eq("loginCode", loginCode));
+			}
 			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("outDate", beginTime));
 			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("outDate", endTime));
 			if (StringUtils.isNotBlank(loginCode) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
@@ -190,6 +215,7 @@ public class RepertoryOverController {
 			
 			ResultJson resultJson = repertoryOutViewManager.getResultJson(page, size, new String[]{"id", "num", "mark","loginCode","outDate"}, filters, orders);
 			model.addAttribute("rawMaterialId", rawMaterialId);
+			model.addAttribute("enabled", enabled);
 			model.addAttribute("rawMaterial", rawMaterial); // 原料对象
 			model.addAttribute("sum", sum); // 合计
 			model.addAttribute("loginCode", loginCode); // 经手人

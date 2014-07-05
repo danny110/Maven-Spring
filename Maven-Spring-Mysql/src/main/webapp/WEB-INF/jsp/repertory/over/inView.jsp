@@ -27,19 +27,26 @@
 		<tr>
 			<td>
 				<label for="companyName">进货单位：</label>
-				<input type="text" name="companyName" id="companyName" value="${companyName }" class="inputtext" title="请输入进货单位" />
+				<input type="text" name="companyName" id="companyName" value="${companyName }" class="inputtext" style="width: 120px;" title="请输入进货单位" />
 			</td>
 			<td>
 				<label for="loginCode">经手人：</label>
-				<input type="text" name="loginCode" id="loginCode" value="${loginCode }" class="inputtext" title="请输入经手人" />
+				<input type="text" name="loginCode" id="loginCode" value="${loginCode }" class="inputtext" style="width: 120px;" title="请输入经手人" />
 			</td>
 			<td>
 				<label for="beginTime">开始时间：</label>
-				<input type="text" name="beginTime" id="beginTime" value="${beginTime }" class="inputtext" title="请输入开始时间" />
+				<input type="text" name="beginTime" id="beginTime" value="${beginTime }" class="inputtext" style="width: 120px;" title="请输入开始时间" />
 			</td>
 			<td>
 				<label for="endTime">结束时间：</label>
-				<input type="text" name="endTime" id="endTime" value="${endTime }" class="inputtext" title="请输入结束时间" />
+				<input type="text" name="endTime" id="endTime" value="${endTime }" class="inputtext" style="width: 120px;" title="请输入结束时间" />
+			</td>
+			<td>
+				<select name="enabled" class="selectclass">
+					<option value="" <c:if test="${enabled == '' }">selected="selected"</c:if>>-请选择类型-</option>
+					<option value="true" <c:if test="${enabled == 'true' }">selected="selected"</c:if>>模糊查询</option>
+					<option value="false" <c:if test="${enabled == 'false' }">selected="selected"</c:if>>直接查询</option>
+				</select>
 			</td>
 			<td>
 				<input name="" type="image" src="<c:url value='/resources/images/image_07.gif'/>"/>

@@ -53,6 +53,7 @@ public class OutReportController {
 	/**
 	 * @Title: list
 	 * @Description: TODO 出货报表
+	 * @param @param enabled
 	 * @param @param rawMaterialName
 	 * @param @param specification
 	 * @param @param loginCode
@@ -66,7 +67,7 @@ public class OutReportController {
 	 * @throws
 	 */
 	@RequestMapping(value = "/list")
-	public String list(String rawMaterialName, String specification, String loginCode, String beginTime, String endTime, Integer page, Integer size, Model model) {
+	public String list(Boolean enabled, String rawMaterialName, String specification, String loginCode, String beginTime, String endTime, Integer page, Integer size, Model model) {
 		try {
 			/*
 			 * 合计数据
@@ -76,9 +77,15 @@ public class OutReportController {
 			 * 分页数据
 			 * */
 			List<Filter> filters = new ArrayList<Filter>();
-			if (StringUtils.isNotBlank(rawMaterialName)) filters.add(Filter.like("rawMaterialName", "%" + rawMaterialName + "%"));
-			if (StringUtils.isNotBlank(specification)) filters.add(Filter.like("specification", "%" + specification + "%"));
-			if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.like("loginCode", "%" + loginCode + "%"));
+			if (enabled == null || enabled) {
+				if (StringUtils.isNotBlank(rawMaterialName)) filters.add(Filter.like("rawMaterialName", "%" + rawMaterialName + "%"));
+				if (StringUtils.isNotBlank(specification)) filters.add(Filter.like("specification", "%" + specification + "%"));
+				if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.like("loginCode", "%" + loginCode + "%"));
+			} else {
+				if (StringUtils.isNotBlank(rawMaterialName)) filters.add(Filter.eq("rawMaterialName", rawMaterialName));
+				if (StringUtils.isNotBlank(specification)) filters.add(Filter.eq("specification", specification));
+				if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.eq("loginCode", loginCode));
+			}
 			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("outDate", beginTime));
 			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("outDate", endTime));
 			if (StringUtils.isNotBlank(loginCode) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
@@ -92,6 +99,7 @@ public class OutReportController {
 			
 			ResultJson resultJson = repertoryOutViewManager.getResultJson(page, size, new String[]{"id", "rawMaterialName", "specification","num","units","mark","loginCode","outDate"}, filters, orders);
 			model.addAttribute("sum", sum); // 合计
+			model.addAttribute("enabled", enabled);
 			model.addAttribute("rawMaterialName", rawMaterialName); // 原料名称
 			model.addAttribute("specification", specification); // 原料规格
 			model.addAttribute("loginCode", loginCode); // 经手人
