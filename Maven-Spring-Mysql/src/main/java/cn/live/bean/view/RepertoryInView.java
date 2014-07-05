@@ -29,13 +29,13 @@ public class RepertoryInView implements Serializable {
 	private String rawMaterialName; // 原料名称
 	private String specification; // 规格
 	private Units units; // 单位
-	private String clientName; // 客户名称
+	private String companyName; // 单位名称
 	private Float num; // 数量
 	private Float unitPrice; // 单价
 	private Float sum; // 合计
 	private String mark; // 备注
-	private String loginCode; // 创建帐号
-	private String createDate; // 创建时间
+	private String loginCode; // 经手人
+	private String inDate; // 进货日期
 
 	public String getId() {
 		return id;
@@ -69,12 +69,12 @@ public class RepertoryInView implements Serializable {
 		this.units = units;
 	}
 
-	public String getClientName() {
-		return clientName;
+	public String getCompanyName() {
+		return companyName;
 	}
 
-	public void setClientName(String clientName) {
-		this.clientName = clientName;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 
 	public Float getNum() {
@@ -117,12 +117,12 @@ public class RepertoryInView implements Serializable {
 		this.loginCode = loginCode;
 	}
 
-	public String getCreateDate() {
-		return createDate;
+	public String getInDate() {
+		return inDate;
 	}
 
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
+	public void setInDate(String inDate) {
+		this.inDate = inDate;
 	}
 
 	public static long getSerialversionuid() {

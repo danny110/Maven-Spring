@@ -5,13 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<style type="text/css">
-body{font-size: 13pt; margin: 15px auto; padding: 0;}
-table{margin: 0 auto;}
-td{line-height: 30px;}
-.td{float: right;}
-.input{width: 150px;}
-</style>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/jquery.ui.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/newAndView.css'/>"/>
 <script type="text/javascript">
 var webRootPath='${pageContext.request.contextPath}';
 </script>
@@ -25,28 +20,32 @@ var webRootPath='${pageContext.request.contextPath}';
 <form id="vform" method="post">
 	<table>
 		<tr>
-			<td class="td"><span style="color: red;">*</span>原料：</td>
-			<td><input id="rawMaterialId" type="text" class="input" value="${RawrawMaterial.name }" disabled="disabled"/></td>
-			<td class="td"><span style="color: red;">*</span>规格：</td>
-			<td><input id="specification" type="text" class="input" value="${RawrawMaterial.specification }" disabled="disabled"/></td>
+			<td class="td100"><span style="color: red;">*</span>进货单位：</td>
+			<td class="td150"><input type="text" class="input" value="${Client.companyName }" disabled="disabled"/></td>
+			<td class="td100"><span style="color: red;">*</span>原料：</td>
+			<td class="td150"><input type="text" class="input" value="${RawrawMaterial.name }" disabled="disabled"/></td>
 		</tr>
 		<tr>
-			<td class="td"><span style="color: red;">*</span>单价(元)：</td>
-			<td><input id="unitPrice" name="unitPrice" value="${RepertoryIn.unitPrice }" class="input" disabled="disabled"/></td>
-			<td class="td">单位：</td>
-			<td><input id="units" name="units" class="input" value="${RawrawMaterial.units }" disabled="disabled"/></td>
+			<td class="td100"><span style="color: red;">*</span>规格：</td>
+			<td class="td150"><input type="text" class="input" value="${RawrawMaterial.specification }" disabled="disabled"/></td>
+			<td class="td100">单位：</td>
+			<td class="td150"><input type="text" class="input" value="${RawrawMaterial.units.toString() }" disabled="disabled"/></td>
 		</tr>
 		<tr>
-			<td class="td"><span style="color: red;">*</span>数量：</td>
-			<td><input id="num" name="num" class="input" value="${RepertoryIn.num }" disabled="disabled"/></td>
-			<td class="td">合计：</td>
-			<td><input id="sum" name="sum" class="input" value="${RepertoryIn.sum }" disabled="disabled"/></td>
+			<td class="td100"><span style="color: red;">*</span>单价(元)：</td>
+			<td class="td150"><input type="text" class="input" value="${RepertoryIn.unitPrice }" disabled="disabled"/></td>
+			<td class="td100"><span style="color: red;">*</span>数量：</td>
+			<td class="td150"><input type="text" class="input" value="${RepertoryIn.num }" disabled="disabled"/></td>
 		</tr>
 		<tr>
-			<td class="td"><span style="color: red;">*</span>客户：</td>
-			<td><input id="clientId" name="clientId" class="input" value="${Client.name }" disabled="disabled"/></td>
-			<td class="td">备注：</td>
-			<td><textarea id="mark" name="mark" rows="" cols="" class="input" disabled="disabled">${RepertoryIn.mark }</textarea></td>
+			<td class="td100">合计：</td>
+			<td class="td150"><input type="text" class="input" value="${RepertoryIn.sum }" disabled="disabled"/></td>
+			<td class="td100"><span style="color: red;">*</span>进货日期：</td>
+			<td class="td150"><input id="inDate" class="input" value="${RepertoryIn.inDate }" disabled="disabled"/></td>
+		</tr>
+		<tr>
+			<td class="td100">备注：</td>
+			<td colspan="3"><textarea rows="" cols="" style="width: 398px;" disabled="disabled">${RepertoryIn.mark }</textarea></td>
 		</tr>
 	</table>
 </form>

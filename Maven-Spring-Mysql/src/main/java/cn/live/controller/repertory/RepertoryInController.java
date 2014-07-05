@@ -92,7 +92,7 @@ public class RepertoryInController {
 	/**
 	 * @Title: list
 	 * @Description: TODO 入库管理列表
-	 * @param @param rawMaterialName
+	 * @param @param companyName
 	 * @param @param beginTime
 	 * @param @param endTime
 	 * @param @param page
@@ -103,23 +103,23 @@ public class RepertoryInController {
 	 * @throws
 	 */
 	@RequestMapping(value = "/list")
-	public String list(String rawMaterialName, String beginTime, String endTime, Integer page, Integer size, Model model) {
+	public String list(String companyName, String beginTime, String endTime, Integer page, Integer size, Model model) {
 		try {
 			List<Filter> filters = new ArrayList<Filter>();
-			if (StringUtils.isNotBlank(rawMaterialName)) filters.add(Filter.like("rawMaterialName", "%" + rawMaterialName + "%"));
-			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("createDate", beginTime));
-			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("createDate", endTime));
-			if (StringUtils.isNotBlank(rawMaterialName) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
+			if (StringUtils.isNotBlank(companyName)) filters.add(Filter.like("companyName", "%" + companyName + "%"));
+			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("inDate", beginTime));
+			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("inDate", endTime));
+			if (StringUtils.isNotBlank(companyName) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
 				page = 0;
 			}
 			List<Order> orders = new ArrayList<Order>();
-			orders.add(Order.desc("createDate"));
+			orders.add(Order.desc("inDate"));
 			
 			page = page == null ? PAGE : page;
 			size = size == null ? SIZE : size;
 			
-			ResultJson resultJson = repertoryInViewManager.getResultJson(page, size, new String[]{"id", "rawMaterialName", "specification", "units","clientName","num","unitPrice","sum","mark","loginCode","createDate"}, filters, orders);
-			model.addAttribute("rawMaterialName", rawMaterialName);
+			ResultJson resultJson = repertoryInViewManager.getResultJson(page, size, new String[]{"id", "rawMaterialName", "specification", "units","companyName","num","unitPrice","sum","mark","loginCode","inDate"}, filters, orders);
+			model.addAttribute("companyName", companyName);
 			model.addAttribute("beginTime", beginTime);
 			model.addAttribute("endTime", endTime);
 			model.addAttribute("ResultJson", resultJson);

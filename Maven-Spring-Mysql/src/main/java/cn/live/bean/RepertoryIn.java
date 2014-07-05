@@ -29,6 +29,7 @@ public class RepertoryIn implements Serializable {
 	private Float num; // 数量
 	private Float unitPrice; // 单价
 	private Float sum; // 总价
+	private String inDate; // 入库时间
 	private String mark; // 备注
 	private String userId; // 创建用户
 	private String createDate; // 创建时间
@@ -81,6 +82,14 @@ public class RepertoryIn implements Serializable {
 
 	public void setSum(Float sum) {
 		this.sum = sum;
+	}
+
+	public String getInDate() {
+		return inDate;
+	}
+
+	public void setInDate(String inDate) {
+		this.inDate = inDate;
 	}
 
 	public String getMark() {

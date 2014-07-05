@@ -1,0 +1,8 @@
+@CHARSET "UTF-8";
+body{font-size: 13pt; margin: 15px auto; padding: 0; border: 0;}
+table{margin: 0 auto; padding: 0;}
+td{line-height: 30px; padding: 0}
+select{height: 20px;line-height: 20px;font-size: 12pt;}
+.td100{width: 100px; text-align: right;}
+.td150{width: 150px;}
+.input{width: 146px;}

@@ -5,18 +5,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<style type="text/css">
-body{font-size: 13pt; margin: 15px auto; padding: 0;}
-table{margin: 0 auto;}
-td{line-height: 30px;}
-.td{float: right;}
-.input{width: 150px;}
-</style>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/jquery.ui.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/newAndView.css'/>"/>
 <script type="text/javascript">
 var webRootPath='${pageContext.request.contextPath}';
 </script>
-
-<script type="text/javascript" src="<c:url value='/resources/jqGrid/js/jquery-1.9.0.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery.ui.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery.ui.datepicker-zh-CN.js'/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/zDialog.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/zDrag.js"/>"></script>
 </head>
@@ -25,43 +21,47 @@ var webRootPath='${pageContext.request.contextPath}';
 <form id="vform" method="post">
 	<table>
 		<tr>
-			<td class="td"><span style="color: red;">*</span>原料：</td>
-			<td>
-				<select id="rawMaterialId" name="rawMaterialId" class="input">
+			<td class="td100"><span style="color: red;">*</span>进货单位：</td>
+			<td class="td150">
+				<select id="clientId" name="clientId" style="width: 150px;">
+					<option value=""></option>
+					<c:forEach var="raw" items="${client }">				
+					<option value="${raw.id }">${raw.companyName }</option>
+					</c:forEach>
+				</select>
+			</td>
+			<td class="td100"><span style="color: red;">*</span>原料：</td>
+			<td class="td150">
+				<select id="rawMaterialId" name="rawMaterialId" style="width: 150px;">
 				<option value=""></option>
 				<c:forEach var="raw" items="${resultJson.rows }">
-				${raw.units }
 					<option value="${raw.id }" svalue="${raw.specification }" sunits="${raw.units }">${raw.name }（规格：${raw.specification }）</option>
 				</c:forEach>
 			</select>
 			</td>
-			<td class="td"><span style="color: red;">*</span>规格：</td>
-			<td><input id="specification" type="text" class="input" value="" disabled="disabled"/></td>
+			
 		</tr>
 		<tr>
-			<td class="td"><span style="color: red;">*</span>单价(元)：</td>
-			<td><input id="unitPrice" name="unitPrice" class="input"></td>
-			<td class="td">单位：</td>
-			<td><input id="units" name="units" class="input" disabled="disabled"></td>
+			<td class="td100"><span style="color: red;">*</span>规格：</td>
+			<td class="td150"><input id="specification" type="text" class="input" value="" disabled="disabled"/></td>
+			<td class="td100">单位：</td>
+			<td class="td150"><input id="units" name="units" class="input" disabled="disabled"></td>
 		</tr>
 		<tr>
-			<td class="td"><span style="color: red;">*</span>数量：</td>
-			<td><input id="num" name="num" class="input"></td>
-			<td class="td">合计：</td>
-			<td><input id="sum" name="sum" class="input" disabled="disabled"/></td>
+			<td class="td100"><span style="color: red;">*</span>单价(元)：</td>
+			<td class="td150"><input id="unitPrice" name="unitPrice" class="input"></td>
+			<td class="td100"><span style="color: red;">*</span>数量：</td>
+			<td class="td150"><input id="num" name="num" class="input"></td>
 		</tr>
 		<tr>
-			<td class="td"><span style="color: red;">*</span>客户：</td>
-			<td>
-				<select id="clientId" name="clientId" class="input">
-				<option value=""></option>
-				<c:forEach var="raw" items="${client }">				
-					<option value="${raw.id }">${raw.name }</option>
-				</c:forEach>
-			</select>
-			</td>
-			<td class="td">备注：</td>
-			<td><textarea id="mark" name="mark" rows="" cols="" class="input">暂无备注</textarea></td>
+			<td class="td100">合计：</td>
+			<td class="td150"><input id="sum" name="sum" class="input" disabled="disabled"/></td>
+			<td class="td100"><span style="color: red;">*</span>进货日期：</td>
+			<td class="td150"><input id="inDate" name="inDate" class="input"/></td>
+		</tr>
+		<tr>
+			<td class="td100">备注：</td>
+			<td colspan="3"><textarea id="mark" name="mark" rows="" cols="" style="width: 398px;">暂无备注</textarea></td>
 		</tr>
 		<tr>
 			<td></td>
@@ -83,6 +83,7 @@ var $unitPrice = $("#unitPrice");
 var $num = $("#num");
 var $clientId = $("#clientId");
 var $sum = $("#sum");
+var $inDate = $("#inDate");
 var $mark = $("#mark");
 
 $(function() {
@@ -106,9 +107,15 @@ $(function() {
 		}
 		$sum.val( parseFloat($unitPrice.val()* $num.val()).toFixed(2));
 	});
-    
+	
+	$( "#inDate" ).datepicker();
+	
 	/*提交*/
 	$("#btn_add").click(function() {
+		if ($clientId.val() == "") {
+			alert("进货单位不能为空！");
+			return;
+		}
 		if ($rawMaterialId.val() == "") {
 			alert("原料不能为空！");
 			return;
@@ -133,8 +140,8 @@ $(function() {
 				return;
 			}
 		}
-		if ($clientId.val() == "") {
-			alert("客户不能为空！");
+		if ($inDate.val() == "") {
+			alert("进货日期不能为空！");
 			return;
 		}
 		
@@ -146,6 +153,7 @@ $(function() {
     			num : $num.val(),
     			clientId : $clientId.val(),
     			sum : $sum.val(),
+    			inDate : $inDate.val(),
     			mark : $mark.val()
     		},
     		type: "POST",
