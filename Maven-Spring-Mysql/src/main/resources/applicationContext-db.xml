@@ -36,8 +36,8 @@
         <property name="staticMethod" value="java.lang.System.setProperty"/>
         <property name="arguments">
             <list>
-                <value>system.project_name</value>
-                <value>${system.project_name}</value>
+                <value>system.name</value>
+                <value>${system.name}</value>
             </list>
         </property>
     </bean>

@@ -64,7 +64,6 @@ public class RepertoryInController {
 	@Resource(name = "repertoryInManager")
 	private RepertoryInManager repertoryInManager;
 	
-	
 	/**
 	 * @Fields rawMaterialManager : 原料
 	 */
@@ -93,6 +92,7 @@ public class RepertoryInController {
 	 * @Title: list
 	 * @Description: TODO 入库管理列表
 	 * @param @param companyName 进货单位名称
+	 * @param @param rawMaterialName 原料名称
 	 * @param @param loginCode 经手人
 	 * @param @param beginTime
 	 * @param @param endTime
@@ -104,17 +104,19 @@ public class RepertoryInController {
 	 * @throws
 	 */
 	@RequestMapping(value = "/list")
-	public String list(String companyName,String loginCode, String beginTime, String endTime, Integer page, Integer size, Model model) {
+	public String list(String companyName,String rawMaterialName, String loginCode, String beginTime, String endTime, Integer page, Integer size, Model model) {
 		try {
 			List<Filter> filters = new ArrayList<Filter>();
 			if (StringUtils.isNotBlank(companyName)) filters.add(Filter.like("companyName", "%" + companyName + "%"));
+			if (StringUtils.isNotBlank(rawMaterialName)) filters.add(Filter.like("rawMaterialName", "%" + rawMaterialName + "%"));
 			if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.like("loginCode", "%" + loginCode + "%"));
 			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("inDate", beginTime));
 			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("inDate", endTime));
 			if (StringUtils.isNotBlank(companyName) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
-				page = 0;
+				page = 1;
 			}
 			List<Order> orders = new ArrayList<Order>();
+			orders.add(Order.desc("rawMaterialName"));
 			orders.add(Order.desc("inDate"));
 			
 			page = page == null ? PAGE : page;
@@ -122,6 +124,7 @@ public class RepertoryInController {
 			
 			ResultJson resultJson = repertoryInViewManager.getResultJson(page, size, new String[]{"id", "rawMaterialName", "specification", "units","companyName","num","unitPrice","sum","mark","loginCode","inDate"}, filters, orders);
 			model.addAttribute("companyName", companyName);
+			model.addAttribute("rawMaterialName", rawMaterialName);
 			model.addAttribute("loginCode", loginCode);
 			model.addAttribute("beginTime", beginTime);
 			model.addAttribute("endTime", endTime);
@@ -210,9 +213,9 @@ public class RepertoryInController {
 		orders.add(Order.asc("name"));
 		orders.add(Order.asc("specification"));
 		
-		ResultJson resultJson = rawMaterialManager.getResultJson(new String[]{"id", "name", "specification", "units"}, filters, orders);
+		List<RawMaterial> rawMaterials = rawMaterialManager.getList(filters, orders);
 		List<Client> clients = clientManager.getList(filters);
-		model.addAttribute("resultJson", resultJson);
+		model.addAttribute("rawMaterials", rawMaterials);
 		model.addAttribute("client", clients);
 		return "repertory/in/new";
 	}

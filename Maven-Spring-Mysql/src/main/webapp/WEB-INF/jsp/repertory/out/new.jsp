@@ -25,8 +25,8 @@ var webRootPath='${pageContext.request.contextPath}';
 			<td class="td150">
 				<select id="rawMaterialId" name="rawMaterialId" style="width: 150px;">
 				<option value=""></option>
-				<c:forEach var="raw" items="${resultJson.rows }">				
-					<option value="${raw.id }" svalue="${raw.specification }"  sunits="${raw.units }">${raw.name }（规格：${raw.specification }）</option>
+				<c:forEach var="raw" items="${rawMaterials }">				
+					<option value="${raw.id }" svalue="${raw.specification }"  sunits="${raw.units.toString() }">${raw.name }（规格：${raw.specification }）</option>
 				</c:forEach>
 				</select>
 			</td>

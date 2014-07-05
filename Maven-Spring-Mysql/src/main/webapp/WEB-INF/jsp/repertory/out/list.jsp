@@ -76,7 +76,7 @@ $(document).ready(function () {
 			<table border="0" cellspacing="0" cellpadding="0" id="SearchTable">
 				<tr>
 					<td>
-						<label for="rawMaterialName">原料名称：</label>
+						<label for="rawMaterialName">原料：</label>
 						<input type="text" name="rawMaterialName" id="rawMaterialName" value="${rawMaterialName }" class="inputtext" title="请输入原料名称" />
 					</td>
 					<td>

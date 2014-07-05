@@ -69,12 +69,11 @@ $(document).ready(function () {
 <div id="RightTd">
 	<!-- 表单开始 -->
 	<form id="vform" method="POST" action="">
-		<div id="Head">入库信息</div>
-		<div id="ButtonDiv">
+		<div id="ButtonDiv" style="height: 36px;">
 			<table border="0" cellspacing="0" cellpadding="0" id="SearchTable">
 				<tr>
 					<td>
-						<label for="rawMaterialName">请输入原料名称：</label>
+						<label for="rawMaterialName">原料名称：</label>
 						<input type="text" name="rawMaterialName" id="rawMaterialName" value="${rawMaterialName }" class="inputtext" title="请输入原料名称" />
 					</td>
 					<td>
@@ -103,11 +102,15 @@ $(document).ready(function () {
 					<td>${row.specification }</td>
 					<td>${row.inNum }</td>
 					<td>${row.outNum }</td>
-					<td>${row.overNum }</td>
+					<td>
+					<c:if test="${row.overNum < 0}"><span style="color: red;"></c:if>
+					${row.overNum }
+					<c:if test="${row.overNum < 0}"></span></c:if>
+					</td>
 					<td>${row.units }</td>
 					<td>
-						<a href="javascript:void(0);" onclick="view('${row.id }');">入库明细</a>&nbsp;
-						<a href="javascript:void(0);" onclick="batchDel('${row.id }');">出库明细</a>
+						<a href="<c:url value='/admin/repertory/over/inView-${row.rawMaterialId }'/>" target="inView">进货明细</a>&nbsp;
+						<a href="<c:url value='/admin/repertory/over/outView-${row.rawMaterialId }'/>" target="outView">出库明细</a>
 					</td>
 				</tr>
 				</c:forEach>

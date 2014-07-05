@@ -44,26 +44,6 @@ public interface BaseDao<T, ID extends Serializable> {
 	 */
 	void merge(T entity);
 	
-	
-	/**
-	 * @Title: getList
-	 * @Description: TODO 获取列表
-	 * @param @return
-	 * @return List<T>
-	 * @throws
-	 */
-	List<T> getList();
-	
-	/** 
-	 * @Title: getList 
-	 * @Description: TODO 获取列表
-	 * @param @param filters
-	 * @param @return 
-	 * @return List<T>
-	 * @throws 
-	 */
-	List<T> getList(List<Filter> filters);
-	
 	/** 
 	 * @Title: getList 
 	 * @Description: TODO 获取列表
@@ -77,7 +57,7 @@ public interface BaseDao<T, ID extends Serializable> {
 	
 	/**
 	 * @Title: getResultJson
-	 * @Description: TODO
+	 * @Description: TODO 获取分页数据
 	 * @param @param page
 	 * @param @param rows
 	 * @param @param propertyNames
@@ -90,14 +70,12 @@ public interface BaseDao<T, ID extends Serializable> {
 	ResultJson getResultJson(Integer page, Integer rows, String[] propertyNames, List<Filter> filters, List<Order> orders);
 	
 	/**
-	 * @Title: getResultJson
-	 * @Description: TODO
-	 * @param @param propertyNames
-	 * @param @param filters
-	 * @param @param orders
+	 * @Title: getBySQL
+	 * @Description: TODO 通过 SQL 查询
+	 * @param @param sql
 	 * @param @return
-	 * @return ResultJson
+	 * @return List<?>
 	 * @throws
 	 */
-	ResultJson getResultJson(String[] propertyNames, List<Filter> filters, List<Order> orders);
+	List<?> getBySQL(String sql);
 }

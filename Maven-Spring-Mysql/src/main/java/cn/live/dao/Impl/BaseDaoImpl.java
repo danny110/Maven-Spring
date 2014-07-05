@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -95,28 +96,6 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
 		this.getSession().flush();
 	}
 	
-	/* (non-Javadoc)
-	 * <p>Title: getList</p>
-	 * <p>Description: </p>
-	 * @return
-	 * @see cn.live.dao.BaseDao#getList()
-	 */
-	@Override
-	public List<T> getList() {
-		return getList(null, null);
-	}
-	
-	/* (non-Javadoc)
-	 * <p>Title: getList</p> 
-	 * <p>Description: </p> 
-	 * @param filters
-	 * @return 
-	 * @see cn.live.dao.BaseDao#getList(java.util.List) 
-	 */
-	@Override
-	public List<T> getList(List<Filter> filters) {
-		return getList(filters, null);
-	}
 	
 	/* (non-Javadoc)
 	 * <p>Title: getList</p> 
@@ -171,30 +150,18 @@ public class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
         return resultJson;
 	}
 	
+
 	/* (non-Javadoc)
-	 * <p>Title: getResultJson</p>
+	 * <p>Title: getBySQL</p>
 	 * <p>Description: </p>
-	 * @param propertyNames
-	 * @param filters
-	 * @param orders
+	 * @param sql
 	 * @return
-	 * @see cn.live.dao.BaseDao#getResultJson(java.lang.String[], java.util.List, java.util.List)
+	 * @see cn.live.dao.BaseDao#getBySQL(java.lang.String)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public ResultJson getResultJson(String[] propertyNames, List<Filter> filters, List<cn.live.util.Order> orders) {
-		Criteria criteria = (Criteria) this.getSession().createCriteria(clazz);
-		if (filters != null) {
-            setQueryCriteria(criteria, filters);
-        }
-		if (orders != null) {
-			setQueryOrders(criteria, orders);
-		}
-		criteria.setProjection(null);
-		List<T> temp = criteria.list();
-		ResultJson resultJson = new ResultJson();
-		fillJQueryGridData(resultJson, temp, (String[]) propertyNames);
-        return resultJson;
+	public List<?> getBySQL(String sql) {
+		SQLQuery sqlQuery = this.getSession().createSQLQuery(sql);
+		return sqlQuery.list();
 	}
 	
 	/** 

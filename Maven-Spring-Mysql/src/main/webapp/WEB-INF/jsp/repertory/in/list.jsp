@@ -77,19 +77,23 @@ $(document).ready(function () {
 				<tr>
 					<td>
 						<label for="companyName">进货单位：</label>
-						<input type="text" name="companyName" id="companyName" value="${companyName }" class="inputtext" title="请输入原料名称" />
+						<input type="text" name="companyName" id="companyName" value="${companyName }" class="inputtext" style="width: 120px;" title="请输入原料名称" />
+					</td>
+					<td>
+						<label for="rawMaterialName">原料：</label>
+						<input type="text" name="rawMaterialName" id="rawMaterialName" value="${rawMaterialName }" class="inputtext" style="width: 120px;" title="请输入原料名称" />
 					</td>
 					<td>
 						<label for="loginCode">经手人：</label>
-						<input type="text" name="loginCode" id="loginCode" value="${loginCode }" class="inputtext" title="请输入经手人" />
+						<input type="text" name="loginCode" id="loginCode" value="${loginCode }" class="inputtext" style="width: 120px;" title="请输入经手人" />
 					</td>
 					<td>
 						<label for="beginTime">开始时间：</label>
-						<input type="text" name="beginTime" id="beginTime" value="${beginTime }" class="inputtext" title="请输入开始时间" />
+						<input type="text" name="beginTime" id="beginTime" value="${beginTime }" class="inputtext" style="width: 120px;" title="请输入开始时间" />
 					</td>
 					<td>
 						<label for="endTime">结束时间：</label>
-						<input type="text" name="endTime" id="endTime" value="${endTime }" class="inputtext" title="请输入结束时间" />
+						<input type="text" name="endTime" id="endTime" value="${endTime }" class="inputtext" style="width: 120px;" title="请输入结束时间" />
 					</td>
 					<td>
 						<input name="" type="image" src="<c:url value='/resources/images/image_07.gif'/>"/>

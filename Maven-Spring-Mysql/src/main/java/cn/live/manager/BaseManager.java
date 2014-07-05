@@ -103,25 +103,12 @@ public interface BaseManager<T, ID extends Serializable> {
 	ResultJson getResultJson(Integer page, Integer rows, String[] propertyNames, List<Order> orders);
 	
 	/**
-	 * @Title: getResultJson
-	 * @Description: TODO
-	 * @param @param propertyNames
-	 * @param @param filters
-	 * @param @param orders
+	 * @Title: getBySQL
+	 * @Description: TODO 通过 SQL 查询
+	 * @param @param sql
 	 * @param @return
-	 * @return ResultJson
+	 * @return List<?>
 	 * @throws
 	 */
-	ResultJson getResultJson(String[] propertyNames, List<Filter> filters, List<Order> orders);
-	
-	/**
-	 * @Title: getResultJson
-	 * @Description: TODO
-	 * @param @param propertyNames
-	 * @param @param filters
-	 * @param @return
-	 * @return ResultJson
-	 * @throws
-	 */
-	ResultJson getResultJson(String[] propertyNames, List<Filter> filters);
+	List<?> getBySQL(String sql);
 }

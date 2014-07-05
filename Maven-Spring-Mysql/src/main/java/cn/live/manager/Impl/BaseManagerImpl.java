@@ -78,7 +78,7 @@ public class BaseManagerImpl<T, ID extends Serializable> implements BaseManager<
 	 */
 	@Override
 	public List<T> getList() {
-		return dao.getList();
+		return dao.getList(null, null);
 	}
 	
 	/* (non-Javadoc)
@@ -90,7 +90,7 @@ public class BaseManagerImpl<T, ID extends Serializable> implements BaseManager<
 	 */
 	@Override
 	public List<T> getList(List<Filter> filters) {
-		return dao.getList(filters);
+		return dao.getList(filters, null);
 	}
 	
 	/* (non-Javadoc)
@@ -136,31 +136,16 @@ public class BaseManagerImpl<T, ID extends Serializable> implements BaseManager<
 	public ResultJson getResultJson(Integer page, Integer rows, String[] propertyNames, List<Order> orders) {
 		return dao.getResultJson(page, rows, propertyNames, null, orders);
 	}
-	
+
 	/* (non-Javadoc)
-	 * <p>Title: getResultJson</p>
+	 * <p>Title: getBySQL</p>
 	 * <p>Description: </p>
-	 * @param propertyNames
-	 * @param filters
-	 * @param orders
+	 * @param sql
 	 * @return
-	 * @see cn.live.manager.BaseManager#getResultJson(java.lang.String[], java.util.List, java.util.List)
+	 * @see cn.live.manager.BaseManager#getBySQL(java.lang.String)
 	 */
 	@Override
-	public ResultJson getResultJson(String[] propertyNames, List<Filter> filters, List<Order> orders) {
-		return dao.getResultJson(propertyNames, filters, orders);
-	}
-	
-	/* (non-Javadoc)
-	 * <p>Title: getResultJson</p>
-	 * <p>Description: </p>
-	 * @param propertyNames
-	 * @param filters
-	 * @return
-	 * @see cn.live.manager.BaseManager#getResultJson(java.lang.String[], java.util.List)
-	 */
-	@Override
-	public ResultJson getResultJson(String[] propertyNames, List<Filter> filters) {
-		return dao.getResultJson(propertyNames, filters, null);
+	public List<?> getBySQL(String sql) {
+		return dao.getBySQL(sql);
 	}
 }

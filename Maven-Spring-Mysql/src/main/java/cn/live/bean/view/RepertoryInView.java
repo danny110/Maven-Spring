@@ -26,6 +26,7 @@ public class RepertoryInView implements Serializable {
 
 	@Id
 	private String id; // 入库表ID
+	private String rawMaterialId; // 原料编号
 	private String rawMaterialName; // 原料名称
 	private String specification; // 规格
 	private Units units; // 单位
@@ -43,6 +44,14 @@ public class RepertoryInView implements Serializable {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getRawMaterialId() {
+		return rawMaterialId;
+	}
+
+	public void setRawMaterialId(String rawMaterialId) {
+		this.rawMaterialId = rawMaterialId;
 	}
 
 	public String getRawMaterialName() {

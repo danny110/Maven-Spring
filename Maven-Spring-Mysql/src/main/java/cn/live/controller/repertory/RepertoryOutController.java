@@ -103,7 +103,7 @@ public class RepertoryOutController {
 			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("outDate", beginTime));
 			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("outDate", endTime));
 			if (StringUtils.isNotBlank(rawMaterialName) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
-				page = 0;
+				page = 1;
 			}
 			List<Order> orders = new ArrayList<Order>();
 			orders.add(Order.desc("outDate"));
@@ -199,8 +199,8 @@ public class RepertoryOutController {
 		orders.add(Order.asc("name"));
 		orders.add(Order.asc("specification"));
 		
-		ResultJson resultJson = rawMaterialManager.getResultJson(new String[]{"id", "name", "specification", "units"}, filters, orders);
-		model.addAttribute("resultJson", resultJson);
+		List<RawMaterial> rawMaterials = rawMaterialManager.getList(filters, orders);
+		model.addAttribute("rawMaterials", rawMaterials);
 		return "repertory/out/new";
 	}
 	
