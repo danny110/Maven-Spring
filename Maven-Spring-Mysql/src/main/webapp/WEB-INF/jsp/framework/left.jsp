@@ -20,6 +20,7 @@
 		<a href="javascript:void(0)" class="DownA">报表中心</a>
 		<ul>
 			<li><a href="<c:url value='/admin/report/in/list'/>" target="reportIn">进货报表</a></li>
+			<li><a href="<c:url value='/admin/report/out/list'/>" target="reportOut">出货报表</a></li>
       	</ul>
 	</li>
 	<li class="DownLi">

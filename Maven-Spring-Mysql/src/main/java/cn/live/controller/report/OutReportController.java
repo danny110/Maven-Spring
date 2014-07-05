@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.live.manager.RawMaterialManager;
-import cn.live.manager.RepertoryInViewManager;
+import cn.live.manager.RepertoryOutViewManager;
 import cn.live.util.Filter;
 import cn.live.util.Order;
 import cn.live.util.ResultJson;
@@ -25,14 +25,14 @@ import cn.live.util.ResultJson;
  *
  */
 @Controller
-@RequestMapping("/admin/report/in/")
-public class InReportController {
+@RequestMapping("/admin/report/out/")
+public class OutReportController {
 	
 	/**
-	 * @Fields repertoryInViewManager : 入库视图
+	 * @Fields repertoryOutViewManager : 出库视图
 	 */
-	@Resource(name = "repertoryInViewManager")
-	private RepertoryInViewManager repertoryInViewManager;
+	@Resource(name = "repertoryOutViewManager")
+	public RepertoryOutViewManager repertoryOutViewManager;
 	
 	/**
 	 * @Fields rawMaterialManager : 原料
@@ -52,8 +52,7 @@ public class InReportController {
 
 	/**
 	 * @Title: list
-	 * @Description: TODO 进货报表
-	 * @param @param companyName
+	 * @Description: TODO 出货报表
 	 * @param @param rawMaterialName
 	 * @param @param specification
 	 * @param @param loginCode
@@ -67,36 +66,34 @@ public class InReportController {
 	 * @throws
 	 */
 	@RequestMapping(value = "/list")
-	public String list(String companyName, String rawMaterialName, String specification, String loginCode, String beginTime, String endTime, Integer page, Integer size, Model model) {
+	public String list(String rawMaterialName, String specification, String loginCode, String beginTime, String endTime, Integer page, Integer size, Model model) {
 		try {
 			/*
 			 * 合计数据
 			 * */
-			Map<String, Float> sum = repertoryInViewManager.getSumBySQL(companyName, rawMaterialName, specification, loginCode, beginTime, endTime);
+			Map<String, Float> sum = repertoryOutViewManager.getSumBySQL(rawMaterialName, specification, loginCode, beginTime, endTime);
 			/*
 			 * 分页数据
 			 * */
 			List<Filter> filters = new ArrayList<Filter>();
-			if (StringUtils.isNotBlank(companyName)) filters.add(Filter.like("companyName", "%" + companyName + "%"));
 			if (StringUtils.isNotBlank(rawMaterialName)) filters.add(Filter.like("rawMaterialName", "%" + rawMaterialName + "%"));
 			if (StringUtils.isNotBlank(specification)) filters.add(Filter.like("specification", "%" + specification + "%"));
 			if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.like("loginCode", "%" + loginCode + "%"));
-			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("inDate", beginTime));
-			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("inDate", endTime));
-			if (StringUtils.isNotBlank(companyName) || StringUtils.isNotBlank(rawMaterialName) || StringUtils.isNotBlank(specification) || StringUtils.isNotBlank(loginCode) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
+			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("outDate", beginTime));
+			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("outDate", endTime));
+			if (StringUtils.isNotBlank(loginCode) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
 				page = 1;
 			}
 			List<Order> orders = new ArrayList<Order>();
-			orders.add(Order.desc("inDate"));
+			orders.add(Order.desc("outDate"));
 			
 			page = page == null ? PAGE : page;
 			size = size == null ? SIZE : size;
 			
-			ResultJson resultJson = repertoryInViewManager.getResultJson(page, size, new String[]{"id", "rawMaterialName", "specification", "units","companyName","num","unitPrice","sum","mark","loginCode","inDate"}, filters, orders);
+			ResultJson resultJson = repertoryOutViewManager.getResultJson(page, size, new String[]{"id", "rawMaterialName", "specification","num","units","mark","loginCode","outDate"}, filters, orders);
 			model.addAttribute("sum", sum); // 合计
-			model.addAttribute("companyName", companyName); // 单位名称
-			model.addAttribute("specification", specification); // 规格
 			model.addAttribute("rawMaterialName", rawMaterialName); // 原料名称
+			model.addAttribute("specification", specification); // 原料规格
 			model.addAttribute("loginCode", loginCode); // 经手人
 			model.addAttribute("beginTime", beginTime); // 开始日期
 			model.addAttribute("endTime", endTime); // 结束日期
@@ -104,7 +101,7 @@ public class InReportController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "report/inList";
+		return "report/outList";
 	}
 	
 }

@@ -31,6 +31,8 @@ public interface RepertoryInViewManager extends BaseManager<RepertoryInView, Str
 	 * @Title: getSumBySQL
 	 * @Description: TODO 通过 SQL 获取合计
 	 * @param @param companyName 进货单位名称
+	 * @param @param specification 原料规格
+	 * @param @param companyName 进货单位名称
 	 * @param @param loginCode 经手人
 	 * @param @param beginTime 开始日期
 	 * @param @param endTime 结束日期
@@ -38,5 +40,5 @@ public interface RepertoryInViewManager extends BaseManager<RepertoryInView, Str
 	 * @return Map<String,Float>
 	 * @throws
 	 */
-	Map<String, Float> getSumBySQL(String companyName, String loginCode, String beginTime, String endTime);
+	Map<String, Float> getSumBySQL(String companyName, String rawMaterialName, String specification, String loginCode, String beginTime, String endTime);
 }

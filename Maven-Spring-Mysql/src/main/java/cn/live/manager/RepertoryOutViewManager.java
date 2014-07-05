@@ -25,4 +25,18 @@ public interface RepertoryOutViewManager extends BaseManager<RepertoryOutView, S
 	 * @throws
 	 */
 	Map<String, Float> getSumBySQL(String rawMaterialId, String loginCode, String beginTime, String endTime);
+	
+	/**
+	 * @Title: getSumBySQL
+	 * @Description: TODO 通过 SQL 获取合计
+	 * @param @param rawMaterialName
+	 * @param @param specification
+	 * @param @param loginCode
+	 * @param @param beginTime
+	 * @param @param endTime
+	 * @param @return
+	 * @return Map<String,Float>
+	 * @throws
+	 */
+	Map<String, Float> getSumBySQL(String rawMaterialName, String specification, String loginCode, String beginTime, String endTime);
 }

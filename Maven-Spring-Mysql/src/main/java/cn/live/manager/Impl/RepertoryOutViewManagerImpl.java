@@ -73,4 +73,58 @@ public class RepertoryOutViewManagerImpl extends BaseManagerImpl<RepertoryOutVie
 		}
 		return data;
 	}
+	
+	/* (non-Javadoc)
+	 * <p>Title: getSumBySQL</p>
+	 * <p>Description: </p>
+	 * @param rawMaterialName
+	 * @param specification
+	 * @param loginCode
+	 * @param beginTime
+	 * @param endTime
+	 * @return
+	 * @see cn.live.manager.RepertoryOutViewManager#getSumBySQL(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public Map<String, Float> getSumBySQL(String rawMaterialName, String specification, String loginCode, String beginTime, String endTime) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select ");
+		sql.append("sum(num) as nums ");
+		sql.append("from ");
+		sql.append("repertoryOut_view ");
+		sql.append("where 1=1 ");
+		if (StringUtils.isNotBlank(rawMaterialName)) {
+			sql.append("and rawMaterialName like '%");
+			sql.append(rawMaterialName);
+			sql.append("%' ");
+		}
+		if (StringUtils.isNotBlank(specification)) {
+			sql.append("and specification like '%");
+			sql.append(specification);
+			sql.append("%' ");
+		}
+		if (StringUtils.isNotBlank(loginCode)) {
+			sql.append("and loginCode like '%");
+			sql.append(loginCode);
+			sql.append("%' ");
+		}
+		if (StringUtils.isNotBlank(beginTime)) {
+			sql.append("and outDate >= '");
+			sql.append(beginTime);
+			sql.append("' ");
+		}
+		if (StringUtils.isNotBlank(endTime)) {
+			sql.append("and outDate <= '");
+			sql.append(endTime);
+			sql.append("' ");
+		}
+		List<?> list = this.getBySQL(sql.toString());
+		Map<String, Float> data = new HashMap<String, Float>();
+		if (list == null || list.size() == 0) {
+			data.put("nums", 0F);
+		} else {
+			data.put("nums", Float.valueOf(list.get(0) == null ? "0" : list.get(0).toString()));
+		}
+		return data;
+	}
 }

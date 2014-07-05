@@ -83,18 +83,21 @@ public class RepertoryInViewManagerImpl extends BaseManagerImpl<RepertoryInView,
 		return data;
 	}
 	
+
 	/* (non-Javadoc)
 	 * <p>Title: getSumBySQL</p>
 	 * <p>Description: </p>
 	 * @param companyName
+	 * @param rawMaterialName
+	 * @param specification
 	 * @param loginCode
 	 * @param beginTime
 	 * @param endTime
 	 * @return
-	 * @see cn.live.manager.RepertoryInViewManager#getSumBySQL(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 * @see cn.live.manager.RepertoryInViewManager#getSumBySQL(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public Map<String, Float> getSumBySQL(String companyName, String loginCode, String beginTime, String endTime) {
+	public Map<String, Float> getSumBySQL(String companyName, String rawMaterialName, String specification, String loginCode, String beginTime, String endTime) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("select ");
 		sql.append("sum(num) as nums, sum(sum) as sums ");
@@ -104,6 +107,16 @@ public class RepertoryInViewManagerImpl extends BaseManagerImpl<RepertoryInView,
 		if (StringUtils.isNotBlank(companyName)) {
 			sql.append("and companyName like '%");
 			sql.append(companyName);
+			sql.append("%' ");
+		}
+		if (StringUtils.isNotBlank(rawMaterialName)) {
+			sql.append("and rawMaterialName like '%");
+			sql.append(rawMaterialName);
+			sql.append("%' ");
+		}
+		if (StringUtils.isNotBlank(specification)) {
+			sql.append("and specification like '%");
+			sql.append(specification);
 			sql.append("%' ");
 		}
 		if (StringUtils.isNotBlank(loginCode)) {
