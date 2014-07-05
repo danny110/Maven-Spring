@@ -32,7 +32,7 @@ public class RepertoryOutView implements Serializable {
 	private Units units; // 单位
 	private String mark; // 备注
 	private String loginCode; // 创建帐号
-	private String createDate; // 创建时间
+	private String outDate; // 创建时间
 
 	public String getId() {
 		return id;
@@ -90,12 +90,12 @@ public class RepertoryOutView implements Serializable {
 		this.loginCode = loginCode;
 	}
 
-	public String getCreateDate() {
-		return createDate;
+	public String getOutDate() {
+		return outDate;
 	}
 
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
+	public void setOutDate(String outDate) {
+		this.outDate = outDate;
 	}
 
 	public static long getSerialversionuid() {

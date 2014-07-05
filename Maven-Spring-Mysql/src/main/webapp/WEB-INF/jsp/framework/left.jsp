@@ -11,9 +11,9 @@
 	<li class="DownLi">
 		<a href="javascript:void(0)" class="DownA">库存管理</a>
 		<ul>
-			<li><a href="<c:url value='/admin/repertory/in/list'/>">进货单</a></li>
-			<li><a href="<c:url value='/admin/repertory/out/list'/>">出库信息</a></li>
-			<li><a href="<c:url value='/admin/repertory/over/list'/>">库存统计</a></li>
+			<li><a href="<c:url value='/admin/repertory/in/list'/>">进货</a></li>
+			<li><a href="<c:url value='/admin/repertory/out/list'/>">出库</a></li>
+			<li><a href="<c:url value='/admin/repertory/over/list'/>">库存</a></li>
       	</ul>
 	</li>
 	<li class="DownLi">

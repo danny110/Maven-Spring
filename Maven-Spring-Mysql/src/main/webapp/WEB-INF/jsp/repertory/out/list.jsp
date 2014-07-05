@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/jquery.ui.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/lhgdialog.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/loginPage.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/jquery.validity.css'/>"/>
@@ -14,6 +15,8 @@
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/ico.css'/>"/>
 
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery.ui.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery.ui.datepicker-zh-CN.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.lhgdialog.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.validity.js'/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/jquery.inspager.js"/>"></script>
@@ -69,20 +72,23 @@ $(document).ready(function () {
 <div id="RightTd">
 	<!-- 表单开始 -->
 	<form id="vform" method="POST" action="">
-		<div id="Head">入库信息</div>
 		<div id="ButtonDiv">
 			<table border="0" cellspacing="0" cellpadding="0" id="SearchTable">
 				<tr>
 					<td>
-						<label for="rawMaterialName">请输入原料名称：</label>
+						<label for="rawMaterialName">原料名称：</label>
 						<input type="text" name="rawMaterialName" id="rawMaterialName" value="${rawMaterialName }" class="inputtext" title="请输入原料名称" />
 					</td>
 					<td>
-						<label for="beginTime">请输入开始时间：</label>
+						<label for="loginCode">经手人：</label>
+						<input type="text" name="loginCode" id="loginCode" value="${loginCode }" class="inputtext" title="请输入经手人" />
+					</td>
+					<td>
+						<label for="beginTime">开始时间：</label>
 						<input type="text" name="beginTime" id="beginTime" value="${beginTime }" class="inputtext" title="请输入开始时间" />
 					</td>
 					<td>
-						<label for="endTime">请输入结束时间：</label>
+						<label for="endTime">结束时间：</label>
 						<input type="text" name="endTime" id="endTime" value="${endTime }" class="inputtext" title="请输入结束时间" />
 					</td>
 					<td>
@@ -97,8 +103,14 @@ $(document).ready(function () {
 						<img src="<c:url value='/resources/images/mian/menu_left.png'/>" width="3" height="33" />
 					</td>
 					<td class="ButtonTd">
-						<a id="new" href="javascript:void(0);" class="ButtonAll bottonAdd png">增加</a>
+						<a id="new" href="javascript:void(0);" class="ButtonAll bottonAdd png">出库新增</a>
 					</td>
+					<td class="ButtonTd TdLast">
+						<a id="batchDel" href="javascript:void(0);" class="ButtonAll bottonDel png">批量删除</a>
+					</td>
+					<td>
+    					<img src="<c:url value='/resources/images/mian/menu_right.png'/>" width="3" height="33" />
+    				</td>
 				</tr>
 			</table>
 		</div>
@@ -106,14 +118,14 @@ $(document).ready(function () {
 			<table width="100%" border="0" cellspacing="1" cellpadding="0" id="ListTable">
 				<tr class="title">
 					<td style="width:32px;"><input name="SelectCK" type="checkbox" onclick="SelectAll(this)"/></td>
-					<td style="width:80px;">原料</td>
+					<td style="min-width: 150px;">原料</td>
 					<td style="width:80px;">规格</td>
 					<td style="width:80px;">出库数量</td>
 					<td style="width:50px;">单位</td>
-					<td>备注</td>
-					<td style="width:80px;">创建用户</td>
-					<td style="width:150px;">创建时间</td>
-					<td style="width:80px;">操作</td>
+					<td style="width:80px;">经手人</td>
+					<td style="width:100px;">出库日期</td>
+					<td style="min-width: 150px;">备注</td>
+					<td style="width:50px;">操作</td>
 				</tr>
 				<c:forEach var="row" items="${ResultJson.rows }">
 				<tr onmouseover="$(this).addClass('MouseOn')" onmouseout="$(this).removeClass('MouseOn')" ondblclick="checkedInfo(this)">
@@ -122,12 +134,11 @@ $(document).ready(function () {
 					<td>${row.specification }</td>
 					<td>${row.num }</td>
 					<td>${row.units }</td>
-					<td class="tdleft">${row.mark }</td>
 					<td>${row.loginCode }</td>
-					<td>${row.createDate }</td>
+					<td>${row.outDate }</td>
+					<td>${row.mark }</td>
 					<td>
-						<a href="javascript:void(0);" onclick="view('${row.id }');">查看</a>&nbsp;
-						<a href="javascript:void(0);" onclick="batchDel('${row.id }');">删除</a>
+						<a href="javascript:void(0);" onclick="view('${row.id }');">查看</a>
 					</td>
 				</tr>
 				</c:forEach>
@@ -165,29 +176,47 @@ var PageClick = function (pageclickednumber) {
 };
 $("#InsPageDiv").pager({ pagenumber: pageindex, pagecount: pagecount, numcount: numcount, buttonClickCallback: PageClick });
 
-function batchDel(ids) {
-	if (confirm("确定要删除吗？")) {
-		$.ajax({
-			url: "<c:url value='/admin/repertory/out/del'/>",
-    		data: {
-    			ids : ids
-    		},
-    		type: "POST",
-    		dataType: "json",
-    		success: function(data) {
-    			if( data.isSuccess ){
-    				location.reload();
-    			}else {
-    				alert(data.errorReason);
-					return false;
-    			}
-    	 	 },error : function() {
-		    	alert("操作失败，请联系管理员！");
-				return false;
+$(function() {
+	$( "#beginTime" ).datepicker({
+		onSelect:function(dateText,inst){
+			$("#endTime").datepicker("option","minDate",dateText);
 			}
-		});
-	};
-};
+	});
+	$( "#endTime" ).datepicker({
+		onSelect:function(dateText,inst){
+			$("#beginTime").datepicker("option","maxDate",dateText);
+			}
+	});
+	// 批量删除
+	$("#batchDel").click(function() {
+		var ids = getSelectIds();
+		if (ids == "") {
+			alert("请选择需要删除的数据行！");
+			return;
+		}
+		if (confirm("确定要删除吗？")) {
+			$.ajax({
+				url: "<c:url value='/admin/repertory/out/del'/>",
+	    		data: {
+	    			ids : ids
+	    		},
+	    		type: "POST",
+	    		dataType: "json",
+	    		success: function(data) {
+	    			if( data.isSuccess ){
+	    				location.reload();
+	    			}else {
+	    				alert(data.errorReason);
+						return false;
+	    			}
+	    	 	 },error : function() {
+			    	alert("操作失败，请联系管理员！");
+					return false;
+				}
+			});
+		};
+	});
+});
 
 //获取被选中 ID
 function getSelectIds() {

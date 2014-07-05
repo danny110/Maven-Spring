@@ -84,6 +84,7 @@ public class RepertoryOutController {
 	 * @Title: list
 	 * @Description: TODO 出库管理列表
 	 * @param @param rawMaterialName
+	 * @param @param loginCode
 	 * @param @param beginTime
 	 * @param @param endTime
 	 * @param @param page
@@ -94,23 +95,25 @@ public class RepertoryOutController {
 	 * @throws
 	 */
 	@RequestMapping(value = "/list")
-	public String list(String rawMaterialName, String beginTime, String endTime, Integer page, Integer size, Model model) {
+	public String list(String rawMaterialName,String loginCode, String beginTime, String endTime, Integer page, Integer size, Model model) {
 		try {
 			List<Filter> filters = new ArrayList<Filter>();
 			if (StringUtils.isNotBlank(rawMaterialName)) filters.add(Filter.like("rawMaterialName", "%" + rawMaterialName + "%"));
-			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("createDate", beginTime));
-			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("createDate", endTime));
+			if (StringUtils.isNotBlank(loginCode)) filters.add(Filter.like("loginCode", "%" + loginCode + "%"));
+			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("outDate", beginTime));
+			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("outDate", endTime));
 			if (StringUtils.isNotBlank(rawMaterialName) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
 				page = 0;
 			}
 			List<Order> orders = new ArrayList<Order>();
-			orders.add(Order.desc("createDate"));
+			orders.add(Order.desc("outDate"));
 			
 			page = page == null ? PAGE : page;
 			size = size == null ? SIZE : size;
 			
-			ResultJson resultJson = repertoryOutViewManager.getResultJson(page, size, new String[]{"id", "rawMaterialName", "specification","num","units","mark","loginCode","createDate"}, filters, orders);
+			ResultJson resultJson = repertoryOutViewManager.getResultJson(page, size, new String[]{"id", "rawMaterialName", "specification","num","units","mark","loginCode","outDate"}, filters, orders);
 			model.addAttribute("rawMaterialName", rawMaterialName);
+			model.addAttribute("loginCode", loginCode);
 			model.addAttribute("beginTime", beginTime);
 			model.addAttribute("endTime", endTime);
 			model.addAttribute("ResultJson", resultJson);
@@ -262,16 +265,7 @@ public class RepertoryOutController {
 		try {
 			if (StringUtils.isNotBlank(id)) {
 				RepertoryOut repertoryOut = repertoryOutManager.findById(id);
-				
-				List<Filter> filters = new ArrayList<Filter>();
-				filters.add(Filter.eq("enabled", true));
-				filters.add(Filter.eq("isDeleted", false));
-				
-				List<Order> orders = new ArrayList<Order>();
-				orders.add(Order.asc("name"));
-				orders.add(Order.asc("specification"));
-				
-				List<RawMaterial> rawMaterials = rawMaterialManager.getList(filters, orders);
+				List<RawMaterial> rawMaterials = rawMaterialManager.getList();
 				RawMaterial rawMaterial = new RawMaterial();
 				for (RawMaterial material : rawMaterials) {
 					if (material.getId().equals(repertoryOut.getRawMaterialId())) {

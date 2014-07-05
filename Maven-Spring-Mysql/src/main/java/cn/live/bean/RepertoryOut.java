@@ -26,6 +26,7 @@ public class RepertoryOut implements Serializable {
 	private String id;
 	private String rawMaterialId; // 原料 ID
 	private Float num; // 数量
+	private String outDate; // 出库日期
 	private String mark; // 备注
 	private String userId; // 创建用户
 	private String createDate; // 创建时间
@@ -54,6 +55,14 @@ public class RepertoryOut implements Serializable {
 
 	public void setNum(Float num) {
 		this.num = num;
+	}
+
+	public String getOutDate() {
+		return outDate;
+	}
+
+	public void setOutDate(String outDate) {
+		this.outDate = outDate;
 	}
 
 	public String getMark() {

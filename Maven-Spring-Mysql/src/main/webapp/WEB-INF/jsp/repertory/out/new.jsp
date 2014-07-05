@@ -5,18 +5,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<style type="text/css">
-body{font-size: 13pt; margin: 15px auto; padding: 0;}
-table{margin: 0 auto;}
-td{line-height: 30px;}
-.td{float: right;}
-.input{width: 150px;}
-</style>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/jquery.ui.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/newAndView.css'/>"/>
 <script type="text/javascript">
 var webRootPath='${pageContext.request.contextPath}';
 </script>
-
-<script type="text/javascript" src="<c:url value='/resources/jqGrid/js/jquery-1.9.0.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery.ui.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery.ui.datepicker-zh-CN.js'/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/zDialog.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/zDrag.js"/>"></script>
 </head>
@@ -25,31 +21,35 @@ var webRootPath='${pageContext.request.contextPath}';
 <form id="vform" method="post">
 	<table>
 		<tr>
-			<td class="td"><span style="color: red;">*</span>原料：</td>
-			<td>
-				<select id="rawMaterialId" name="rawMaterialId" class="input">
+			<td class="td100"><span style="color: red;">*</span>原料：</td>
+			<td class="td150">
+				<select id="rawMaterialId" name="rawMaterialId" style="width: 150px;">
 				<option value=""></option>
 				<c:forEach var="raw" items="${resultJson.rows }">				
-					<option value="${raw.id }" svalue="${raw.specification }"  sunits="${raw.units }">${raw.name }(${raw.specification })</option>
+					<option value="${raw.id }" svalue="${raw.specification }"  sunits="${raw.units }">${raw.name }（规格：${raw.specification }）</option>
 				</c:forEach>
 				</select>
 			</td>
 		</tr>
 		<tr>
-			<td class="td">规格：</td>
-			<td><input id="specification" type="text" class="input" disabled="disabled" /></td>
+			<td class="td100">规格：</td>
+			<td class="td150"><input id="specification" type="text" class="input" disabled="disabled" /></td>
 		</tr>
 		<tr>
-			<td class="td">数量：</td>
-			<td><input id="num" name="num" class="input"/></td>
+			<td class="td100">数量：</td>
+			<td class="td150"><input id="num" name="num" class="input"/></td>
 		</tr>
 		<tr>
-			<td class="td">单位：</td>
-			<td><input id="units" name="units" class="input" disabled="disabled"/></td>
+			<td class="td100">单位：</td>
+			<td class="td150"><input id="units" name="units" class="input" disabled="disabled"/></td>
 		</tr>
 		<tr>
-			<td class="td">备注：</td>
-			<td><textarea id="mark" name="mark" rows="" cols="" class="input">暂无备注</textarea></td>
+			<td class="td100"><span style="color: red;">*</span>出库日期：</td>
+			<td class="td150"><input id="outDate" name="outDate" class="input"/></td>
+		</tr>
+		<tr>
+			<td class="td100">备注：</td>
+			<td class="td150"><textarea id="mark" name="mark" rows="" cols=""  style="width: 144px;">暂无备注</textarea></td>
 		</tr>
 		<tr>
 			<td></td>
@@ -66,6 +66,7 @@ var $rawMaterialId = $("#rawMaterialId");
 var $specification = $("#specification");
 var $num = $("#num");
 var $units = $("#units");
+var $outDate = $("#outDate");
 var $mark = $("#mark");
 
 $(function() {
@@ -74,6 +75,8 @@ $(function() {
 		$specification.val($(this).find("option:selected").attr("svalue"));
 		$units.val($(this).find("option:selected").attr("sunits"));
 	});
+	
+	$( "#outDate" ).datepicker();
 	
 	/*提交*/
 	$("#btn_add").click(function() {
@@ -85,12 +88,17 @@ $(function() {
 			alert("数量不能为空！");
 			return;
 		}
+		if ($outDate.val() == "") {
+			alert("出库日期不能为空！");
+			return;
+		}
 		
 		$.ajax({
 			url: "<c:url value='/admin/repertory/out/add'/>",
     		data: {
     			rawMaterialId : $rawMaterialId.val(),
     			num : $num.val(),
+    			outDate : $outDate.val(),
     			mark : $mark.val()
     		},
     		type: "POST",
