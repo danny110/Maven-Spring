@@ -26,8 +26,20 @@
 	<table border="0" cellspacing="0" cellpadding="0" id="SearchTable" class="search">
 		<tr>
 			<td>
+				<label for="companyName">进货单位：</label>
+				<input type="text" name="companyName" id="companyName" value="${companyName }" class="inputtext" style="width: 120px;" title="请输入进货单位" />
+			</td>
+			<td>
+				<label for="rawMaterialName">原料：</label>
+				<input type="text" name="rawMaterialName" id="rawMaterialName" value="${rawMaterialName }" class="inputtext" style="width: 120px;" title="请输入原料名称" />
+			</td>
+			<td>
+				<label for="specification">规格：</label>
+				<input type="text" name="specification" id="specification" value="${specification }" class="inputtext" style="width: 120px;" title="请输入原料规格" />
+			</td>
+			<td>
 				<label for="loginCode">经手人：</label>
-				<input type="text" name="loginCode" id="loginCode" value="${loginCode }" class="inputtext" title="请输入经手人" />
+				<input type="text" name="loginCode" id="loginCode" value="${loginCode }" class="inputtext" style="width: 120px;" title="请输入经手人" />
 			</td>
 			<td>
 				<label for="beginTime">开始时间：</label>
@@ -43,23 +55,35 @@
 		</tr>
 	</table>
 	<div class="buttonTop"><img src="<c:url value='/resources/images/height5px.gif'/>" width="8" height="5" /></div>
-	<div class="info">原料：${rawMaterial.name }（规格：${rawMaterial.specification }）&nbsp;&nbsp;单位：${rawMaterial.units.toString() }&nbsp;&nbsp;出库数量合计：${sum.nums }</div>
+	<div class="info">进货数量合计：${sum.nums }&nbsp;&nbsp;金额合计（￥）：${sum.sums }</div>
 </div>
 <div class="ListTable">
 	<table width="100%" border="0" cellspacing="1" cellpadding="0" id="ListTable">
 		<tr class="title">
 			<td style="width:32px;"><input name="SelectCK" type="checkbox" onclick="SelectAll(this)"/></td>
-			<td style="width:80px;">出库数量</td>
+			<td style="min-width: 150px;">进货单位</td>
+			<td style="width:80px;">原料</td>
+			<td style="width:50px;">规格</td>
+			<td style="width:80px;">单价(元)</td>
+			<td style="width:80px;">进货数量</td>
+			<td style="width:50px;">单位</td>
+			<td style="width:80px;">合计</td>
 			<td style="width:80px;">经手人</td>
-			<td style="width:100px;">出库日期</td>
+			<td style="width:100px;">进货日期</td>
 			<td style="min-width: 150px;">备注</td>
 		</tr>
 		<c:forEach var="row" items="${ResultJson.rows }">
 		<tr onmouseover="$(this).addClass('MouseOn')" onmouseout="$(this).removeClass('MouseOn')" ondblclick="checkedInfo(this)">
 			<td><input name="SelectID" type="checkbox" value="${row.id }"/></td>
+			<td>${row.companyName }</td>
+			<td>${row.rawMaterialName }</td>
+			<td>${row.specification }</td>
+			<td>${row.unitPrice }</td>
 			<td>${row.num }</td>
+			<td>${row.units }</td>
+			<td>${row.sum }</td>
 			<td>${row.loginCode }</td>
-			<td>${row.outDate }</td>
+			<td>${row.inDate }</td>
 			<td>${row.mark }</td>
 		</tr>
 		</c:forEach>
@@ -82,7 +106,7 @@ var PageClick = function (pageclickednumber) {
 	// 赋值
 	$("#page").val(pageclickednumber);
 	$("#size").val(pagenum);
-	document.getElementById("vform").action="<c:url value='/admin/repertory/over/outView-${rawMaterialId }'/>";
+	document.getElementById("vform").action="<c:url value='/admin/report/in/list'/>";
 	document.getElementById("vform").submit();
 };
 $("#InsPageDiv").pager({ pagenumber: pageindex, pagecount: pagecount, numcount: numcount, buttonClickCallback: PageClick }); 

@@ -17,6 +17,12 @@
       	</ul>
 	</li>
 	<li class="DownLi">
+		<a href="javascript:void(0)" class="DownA">报表中心</a>
+		<ul>
+			<li><a href="<c:url value='/admin/report/in/list'/>" target="reportIn">进货报表</a></li>
+      	</ul>
+	</li>
+	<li class="DownLi">
 		<a href="javascript:void(0)" class="DownA">资料</a>
 		<ul>
 			<li><a href="<c:url value='/admin/rawMaterial/list'/>">原料</a></li>

@@ -27,7 +27,7 @@
 		<tr>
 			<td>
 				<label for="companyName">进货单位：</label>
-				<input type="text" name="companyName" id="companyName" value="${companyName }" class="inputtext" title="请输入原料名称" />
+				<input type="text" name="companyName" id="companyName" value="${companyName }" class="inputtext" title="请输入进货单位" />
 			</td>
 			<td>
 				<label for="loginCode">经手人：</label>
@@ -78,6 +78,8 @@
 		</tr>
 	</table>
 </div>
+<input type="hidden" id="page" name="page" value="${ResultJson.page }"/>
+<input type="hidden" id="size" name="size" value="${ResultJson.size }"/>
 </form>
 <script type="text/javascript">
 var pagenum=${ResultJson.size }; //一页多少条
