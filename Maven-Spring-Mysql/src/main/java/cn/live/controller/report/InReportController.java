@@ -92,7 +92,7 @@ public class InReportController {
 			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("inDate", beginTime));
 			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("inDate", endTime));
 			if (StringUtils.isNotBlank(companyName) || StringUtils.isNotBlank(rawMaterialName) || StringUtils.isNotBlank(specification) || StringUtils.isNotBlank(loginCode) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
-				page = 1;
+//				page = 1;
 			}
 			List<Order> orders = new ArrayList<Order>();
 			orders.add(Order.desc("inDate"));

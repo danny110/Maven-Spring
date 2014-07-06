@@ -82,7 +82,7 @@ public class ClientController {
 			filters.add(Filter.eq("enabled", enabled));
 		}
 		if (StringUtils.isNotBlank(name) || enabled != null) {
-			page = 1;
+//			page = 1;
 		}
 		filters.add(Filter.eq("isDeleted", false));
 		

@@ -83,7 +83,7 @@ public class RepertoryOverController {
 			List<Filter> filters = new ArrayList<Filter>();
 			if (StringUtils.isNotBlank(rawMaterialName)) filters.add(Filter.like("rawMaterialName", "%" + rawMaterialName + "%"));
 			if (StringUtils.isNotBlank(rawMaterialName)) {
-				page = 1;
+//				page = 1;
 			}
 			List<Order> orders = new ArrayList<Order>();
 			orders.add(Order.desc("overNum"));
@@ -142,7 +142,7 @@ public class RepertoryOverController {
 			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("inDate", beginTime));
 			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("inDate", endTime));
 			if (StringUtils.isNotBlank(companyName) || StringUtils.isNotBlank(loginCode) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
-				page = 1;
+//				page = 1;
 			}
 			List<Order> orders = new ArrayList<Order>();
 			orders.add(Order.desc("inDate"));
@@ -205,7 +205,7 @@ public class RepertoryOverController {
 			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("outDate", beginTime));
 			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("outDate", endTime));
 			if (StringUtils.isNotBlank(loginCode) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
-				page = 1;
+//				page = 1;
 			}
 			List<Order> orders = new ArrayList<Order>();
 			orders.add(Order.desc("outDate"));

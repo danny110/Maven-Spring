@@ -85,7 +85,7 @@ public class UserController {
 				filters.add(Filter.eq("enabled", enabled));
 			}
 			if (StringUtils.isNotBlank(loginCode) || enabled != null) {
-				page = 1;
+//				page = 1;
 			}
 			filters.add(Filter.eq("isDeleted", false));
 			
