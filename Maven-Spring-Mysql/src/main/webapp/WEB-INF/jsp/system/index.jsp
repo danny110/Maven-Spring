@@ -5,29 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/lhgdialog.css'/>"/>
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/loginPage.css'/>"/>
-
-<script type="text/javascript">
-var  webRoot='${pageContext.request.contextPath}';
-</script>
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/login.css'/>"/>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery.js'/>"></script>
-<script type="text/javascript" src="<c:url value='/resources/js/jquery.lhgdialog.js'/>"></script>
-<script type="text/javascript">
-$(document).ready(function () {
-	$("#LoginDiv").css("padding-top",(($(document.body).height()-220)/2)+"px");
-	$(window).resize(function(){
-	    $("#LoginDiv").css("padding-top",((($(document.body).height()>=$("#LoginDiv").height()?$(document.body).height():$("#LoginDiv").height())-$("#LoginDiv").height())/2)+"px");
-    });
-});
-
-$(document).keydown(function(e){ 
-	var curKey = e.which; 
-	if(curKey == 13){ 
-		$("#login").click();
-	} 
-}); 
-</script>
 </head>
 <body>
 <form id="vform" method="post">
@@ -55,8 +34,15 @@ $(document).keydown(function(e){
 <script type="text/javascript">
 var $loginCode = $("#loginCode");
 var $password = $("#password");
-$(function() {
-	/*提交*/
+
+$(document).ready(function () {
+	// 页面自适应
+	$("#LoginDiv").css("padding-top",(($(document.body).height()-220)/2)+"px");
+	$(window).resize(function(){
+	    $("#LoginDiv").css("padding-top",((($(document.body).height()>=$("#LoginDiv").height()?$(document.body).height():$("#LoginDiv").height())-$("#LoginDiv").height())/2)+"px");
+    });
+	
+	// 登陆验证
 	$("#login").click(function() {
 		if ($loginCode.val() == "") {
 			alert("帐号不能为空！");
@@ -89,6 +75,14 @@ $(function() {
 		});
     });
 });
+
+// 回车键
+$(document).keydown(function(e){ 
+	var curKey = e.which; 
+	if(curKey == 13){ 
+		$("#login").click();
+	} 
+}); 
 </script>
 </body>
 </html>

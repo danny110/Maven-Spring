@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+@IMPORT url("base.css");
+
+#LoginDiv{width:420px; margin:0 auto;}
+#LoginDiv .top49px{height:49px; background-image:url(../images/mian/login_top.gif); padding-left:52px; font-size:18px; font-weight:bolder; line-height:49px; color:#036;}
+#LoginDiv .textDiv{border:1px solid #bbbbbb; border-bottom:0px; background-color:#FFF; padding-bottom:20px; padding-top:20px;}
+#LoginDiv .bottom5px{ height:5px; background-image:url(../images/mian/login_bottom.gif); overflow:hidden;}
+#loginTable{ width:400px; margin:0 auto;}
+#loginTable .tdright{ width:80px; padding-right:10px; line-height:35px; text-align:right; font-size:14px;}
+#loginTable input{width:250px;padding:1px 3px; height:21px; line-height:21px; border:1px solid #7e9db9;}
+#loginTable .aheight{ height:37px; padding-top:5px; vertical-align:top; cursor: pointer;}
+#loginTable a{width:102px; height:35px; line-height:35px; text-decoration:none; font-size:15px; text-align:center; background-image:url(../images/lan_org.gif);font-weight:bolder;color:#FFF; margin-left:-1px; display:block;}
+#loginTable a:hover{background-image:url(../images/lan_over.gif);color:#FFF;}
