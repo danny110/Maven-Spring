@@ -23,13 +23,13 @@ import cn.live.util.ResultJson;
 
 /**
  * @ClassName: RepertoryInCollection
- * @Description: TODO 库存统计
+ * @Description: TODO 库存 - 原料
  * @author FOAMVALUE FOAMVALUE@LIVE.CN
  * @date 2014年6月22日 上午6:46:09
  *
  */
 @Controller
-@RequestMapping("/admin/repertory/over/")
+@RequestMapping("/admin/repertory/rawMaterial/")
 public class RepertoryOverController {
 	
 	/**
@@ -82,9 +82,6 @@ public class RepertoryOverController {
 		try {
 			List<Filter> filters = new ArrayList<Filter>();
 			if (StringUtils.isNotBlank(rawMaterialName)) filters.add(Filter.like("rawMaterialName", "%" + rawMaterialName + "%"));
-			if (StringUtils.isNotBlank(rawMaterialName)) {
-//				page = 1;
-			}
 			List<Order> orders = new ArrayList<Order>();
 			orders.add(Order.desc("overNum"));
 			
@@ -97,7 +94,7 @@ public class RepertoryOverController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "repertory/over/list";
+		return "repertory/rawMaterial/list";
 	}
 	
 	/**
@@ -141,9 +138,6 @@ public class RepertoryOverController {
 			}
 			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("inDate", beginTime));
 			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("inDate", endTime));
-			if (StringUtils.isNotBlank(companyName) || StringUtils.isNotBlank(loginCode) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
-//				page = 1;
-			}
 			List<Order> orders = new ArrayList<Order>();
 			orders.add(Order.desc("inDate"));
 			
@@ -163,7 +157,7 @@ public class RepertoryOverController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "repertory/over/inView";
+		return "repertory/rawMaterial/inView";
 	}
 	
 	/**
@@ -204,9 +198,6 @@ public class RepertoryOverController {
 			}
 			if (StringUtils.isNotBlank(beginTime)) filters.add(Filter.ge("outDate", beginTime));
 			if (StringUtils.isNotBlank(endTime)) filters.add(Filter.le("outDate", endTime));
-			if (StringUtils.isNotBlank(loginCode) || StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
-//				page = 1;
-			}
 			List<Order> orders = new ArrayList<Order>();
 			orders.add(Order.desc("outDate"));
 			
@@ -225,6 +216,6 @@ public class RepertoryOverController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "repertory/over/outView";
+		return "repertory/rawMaterial/outView";
 	}
 }

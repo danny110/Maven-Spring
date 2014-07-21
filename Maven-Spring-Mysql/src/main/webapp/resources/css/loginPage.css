@@ -50,7 +50,7 @@ li,ul,div,p,img,a{list-style:none;padding:0; margin:0;border:0px;height:auto;}
 .menuLi_Tr{display:none; width:210px;}
 .menuLi_Li{border:1px solid #cccccc; border-top:0px; vertical-align:top; overflow:auto;}
 .menuLi_Li ul{padding:0px 10px;}
-.menuLi_Li li{line-height:27px;height:27px;background:url(../images/mian/menu_li.gif) 0px 8px no-repeat; padding:1px 3px 1px 20px;overflow:hidden;}
+.menuLi_Li li{line-height:25px;height:25px;background:url(../images/mian/menu_li.gif) 0px 8px no-repeat; padding:1px 3px 1px 20px;overflow:hidden;}
 .menuLi_Li li.DownLi{font-size:14px; padding-left:10px; height:auto;overflow:visible;}
 .menuLi_Li li.DownLi a.DownA{display:block; margin-left:-20px;margin-right:-13px; background:#EEE; font-weight:bolder; padding-left:10px;}
 .menuLi_Li li.DownLi ul{padding:3px 0px;}

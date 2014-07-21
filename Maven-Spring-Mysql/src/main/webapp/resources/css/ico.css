@@ -1,7 +1,6 @@
 @charset "utf-8";
-.readTimes{background-image:url(../images/ico/mydocs.gif);}
+/*图标*/
 .reTimes{background-image:url(../images/ico/re.gif);}
-.newsTimes{background-image:url(../images/ico/eye.gif);}
 .prosTimes{background-image:url(../images/ico/star.gif);}
 .serTimes{background-image:url(../images/ico/usergroup.gif);}
 .rolesTimes{background-image:url(../images/ico/folders.gif);}

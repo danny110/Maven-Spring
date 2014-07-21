@@ -20,7 +20,7 @@
 	</div>
 <div class="midTd" id="MianMid"><img src="<c:url value='/resources/images/height5px.gif'/>" width="8" height="5" /></div>
 <script type="text/javascript">
-/*新增原料*/
+// 修改密码
 function reset() {
 	var diag = new Dialog();
 	diag.Width = 450;
@@ -29,7 +29,6 @@ function reset() {
 	diag.Title = "修改密码";
 	diag.CancelEvent = function () {
 		diag.close();
-		location.reload();
 	};
 	diag.show();
 };

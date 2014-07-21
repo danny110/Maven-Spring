@@ -5,14 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/lhgdialog.css'/>"/>
-<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/loginPage.css'/>"/>
-<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/ico.css'/>"/>
-
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/home.css'/>"/>
 <script type="text/javascript" src="<c:url value='/resources/jqGrid/js/jquery-1.9.0.min.js'/>"></script>
-<script type="text/javascript" src="<c:url value='/resources/js/jquery.lhgdialog.js'/>"></script>
-<script type="text/javascript" src="<c:url value='/resources/js/jquery.validity.js'/>"></script>
-<script type="text/javascript" src="<c:url value='/resources/js/Common.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/baseJS.js'/>"></script>
 <script type="text/javascript">
 var webRootPath='${pageContext.request.contextPath}';
 </script>
@@ -47,17 +42,12 @@ $(document).ready(function () {
 <!--中间工作区域开始-->
 <div class="WorkMian" id="MianWork">
 <!--左边导航开始-->
-<div class="menuTd" id="MenuTd">
-	<%@include file="../framework/left.jsp"%>
-</div>
+<%@include file="../framework/menu.jsp"%>
 <!--左边导航结束-->
-
-<!--切换左边导航开始-->
-<div id="CenterTd" class="splitTd" onClick="DisPlayMenu()"></div>
-<!--切换左边导航结束-->
 
 <!--工作区域开始-->
 <div id="RightTd">
+<iframe id="workArea" src="<c:url value='/admin/rawMaterial/in/list'/>"></iframe>
 </div>
 <!--工作区域结束-->
 </div>

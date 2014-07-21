@@ -1,7 +1,9 @@
 @CHARSET "UTF-8";
+@IMPORT url("ico.css");
 html,body{height:100%; overflow:hidden;}
-body,td,th,div,li,ul{font-size:12px;font-family:"微软雅黑",Arial, Helvetica, sans-serif;color: #000;}
+body,td,th,div,li,ul{font-size:12px; font-family:"微软雅黑",Arial, Helvetica, sans-serif; color: #000;}
 body{background-image:url(../images/mian/login_bg.gif); margin:0;padding:0; border:0}
+iframe{height: 100%; width: 100%; margin: 0; padding: 0; border: 0;}
 a{font-size:12px;text-decoration:none;}
 a:hover{color:#000;}
 h1,h2,h3,h4,h5,h6 {font-weight:bold;margin:0px;padding:0px;}

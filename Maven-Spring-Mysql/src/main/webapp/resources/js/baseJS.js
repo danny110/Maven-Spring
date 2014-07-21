@@ -3,7 +3,7 @@ $(document).ready(function(){
 	/**
 	 * 删除验证
 	 * */
-    $("body").on("click","[optype='delete']",function(){
+    /*$("body").on("click","[optype='delete']",function(){
        var $this=$(this);
        if(confirm("您确定要删除这条数据?")){
            var opurl=$this.attr("opurl");
@@ -22,12 +22,12 @@ $(document).ready(function(){
                }
            });
        }
-   });
+   });*/
     
     /**
 	 * 禁用/启用验证
 	 * */
-    $("body").on("click","[optype='enabled']",function(){
+    /*$("body").on("click","[optype='enabled']",function(){
        var $this=$(this);
        var enabled = $this.attr("enabled");
        var message = "";
@@ -51,5 +51,37 @@ $(document).ready(function(){
                }
            });
        }
-   });
+   });*/
 });
+
+function setCookie(name, value) {
+    var today = new Date();
+    var expires = new Date();
+    expires.setTime(today.getTime() + 1000 * 60 * 60 * 24 * 365);
+    try {
+        document.cookie = name + "=" + encodeURIComponent(value) + "; expires=" + expires.toGMTString();
+    } catch (e) {
+        document.cookie = name + "=" + escape(value) + "; expires=" + expires.toGMTString();
+    }
+}
+
+function getCookie(Name) {
+    var search = Name + "=";
+    if (document.cookie.length > 0) {
+        offset = document.cookie.indexOf(search);
+        if (offset != -1) {
+            offset += search.length;
+            end = document.cookie.indexOf(";", offset);
+            if (end == -1) end = document.cookie.length;
+            try {
+                return decodeURIComponent(document.cookie.substring(offset, end)); //用uneccape不能解析中文
+            } catch (e) {
+                return unescape(document.cookie.substring(offset, end)); //用uneccape不能解析中文
+            }
+        } else {
+            return ('');
+        }
+    } else {
+        return ('');
+    }
+}
